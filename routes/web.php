@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return 'Welcome!';
 });
+
+Route::resource('admin/department', 'Department');
