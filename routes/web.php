@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('admin/department', 'Department');
+
+Route::resource('admin/filament', 'Filament');
