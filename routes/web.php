@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'Welcome!';
 });
+
+Route::resource('admin/department', 'Department');
