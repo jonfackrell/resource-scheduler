@@ -13,17 +13,8 @@ class Department extends Controller
      */
     public function index()
     {
-        return ('Department Index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $departments = Department::all();
+        return view('admin.department.index', compact('departments'));
     }
 
     /**
@@ -34,20 +25,10 @@ class Department extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'Dapartment saved!';
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -56,7 +37,10 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $department = Department::find($id);
+
+        return view('admin.departmnet.edit', compact('department'));
     }
 
     /**
