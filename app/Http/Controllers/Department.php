@@ -13,7 +13,7 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
+        $departments = \App\Models\Department::all();
         return view('admin.department.index', compact('departments'));
     }
 
