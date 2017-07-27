@@ -7,10 +7,10 @@
   {!! BootForm::submit('Submit') !!}
 {!! BootForm::close() !!}
 
-<!-- @foreach($departments as $department)
+@foreach($departments as $department)
 
 	<p>
 		<a href="/admin/department/{{ $department->id }}">{{ $department->name }}</a>
 	</p>
 
-@endforeach -->
+@endforeach
