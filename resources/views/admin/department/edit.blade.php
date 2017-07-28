@@ -6,4 +6,4 @@
   {!! BootForm::email('Email', 'email') !!}
   {!! BootForm::password('Password', 'password') !!}
   {!! BootForm::submit('Submit') !!}
-{!! BootForm::close() !!}
+{!! BootForm::close() !!} 
