@@ -3,12 +3,10 @@
 @section('content')
 
 	{!! BootForm::open()->action('admin/filament')->post() !!}
-	  {!! BootForm::text('Type', 'first_name') !!}
-	  {!! BootForm::text('Cost', 'last_name') !!}
-	  {!! BootForm::date('Color', 'date_of_birth') !!}
-	  {!! BootForm::email('Email', 'email') !!}
-	  {!! BootForm::password('Password', 'password') !!}
-	  {!! BootForm::submit('Submit') !!}
+	  {!! BootForm::text('Name', 'name') !!}
+	  {!! BootForm::textarea('Description', 'description') !!}
+	  {!! BootForm::text('Quantity', 'quantity') !!}
+	  
 	{!! BootForm::close() !!} 
 
 	@foreach($filaments as $filament)
