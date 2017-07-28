@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Filament extends Model
 {
     //
+    protected $fillable = ['name', 'description', 'quantity'];
 }

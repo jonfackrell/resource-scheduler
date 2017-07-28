@@ -14,7 +14,7 @@
     @foreach($departments as $department)
 
         <p>
-            <a href="/admin/department/{{ $department->id }}">{{ $department->name }}</a>
+            <a href="/admin/department/{{ $department->id }}/edit">{{ $department->name }}</a>
         </p>
 
     @endforeach

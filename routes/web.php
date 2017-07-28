@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return 'Welcome!';
+    return view('welcome');
 });
 
-Route::resource('admin/department', 'Department');
+Route::resource('admin/department', 'DepartmentController');
 
-Route::resource('admin/filament', 'Filament');
+Route::resource('admin/filament', 'FilamentController');
