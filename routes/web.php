@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::resource('admin/department', 'DepartmentController');
 
 Route::resource('admin/filament', 'FilamentController');
+
+Route::resources('admin/user', 'UserController');
