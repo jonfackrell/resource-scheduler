@@ -6,7 +6,7 @@
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::textarea('Description', 'description') !!}
 	  {!! BootForm::text('Quantity', 'quantity') !!}
-	  
+	  {!! BootForm::submit('Submit') !!}
 	{!! BootForm::close() !!} 
 
 	@foreach($filaments as $filament)

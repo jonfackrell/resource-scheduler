@@ -5,7 +5,7 @@
     {!! BootForm::open()->action('admin/department')->post() !!}
       {!! BootForm::text('Name', 'name') !!}
       {!! BootForm::textarea('Description', 'description') !!}
-      
+      {!! BootForm::submit('Submit') !!}
     {!! BootForm::close() !!}
 
     @foreach($departments as $department)
