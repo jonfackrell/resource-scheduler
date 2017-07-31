@@ -30,7 +30,7 @@ class DepartmentController extends Controller
         $department->fill($request->all());
         $department->save();
 
-        return 'Dapartment saved!';
+        return redirect()->route('department.index');
     }
 
     
@@ -57,7 +57,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = Department::find($id);
+        $department->fill($request->all());
+        $department->save();
+
+        return redirect()->route('department.index');
     }
 
     /**

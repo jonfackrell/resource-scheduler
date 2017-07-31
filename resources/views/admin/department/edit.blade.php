@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{!! BootForm::open()->action('admin/department', $department)->put() !!}
+	{!! BootForm::open()->action(route('department.update', $department))->put() !!}
 	  {!! BootForm::bind($department) !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::text('Description', 'description') !!}

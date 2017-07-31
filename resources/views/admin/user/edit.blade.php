@@ -2,8 +2,8 @@
 
 @section('content')
 
-	{!! BootForm::open()->action('admin/filament', $filament)->put() !!}
-	  {!! BootForm::bind($filament) !!}
+	{!! BootForm::open()->action('admin/user', $user)->put() !!}
+	  {!! BootForm::bind($user) !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::text('Description', 'description') !!}
 	  {!! BootForm::text('Quantity', 'quantity') !!}

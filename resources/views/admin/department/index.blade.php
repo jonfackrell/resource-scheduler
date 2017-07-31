@@ -2,7 +2,8 @@
 
 @section('content')
 
-    {!! BootForm::open()->action('admin/department')->post() !!}
+    {!! BootForm::open()->action(route('department.index'))->post() !!}
+
       {!! BootForm::text('Name', 'name') !!}
       {!! BootForm::textarea('Description', 'description') !!}
       {!! BootForm::submit('Submit') !!}

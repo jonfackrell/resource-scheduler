@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', function () {
+
+//Route::group(['middleware' => ['web']], function() {
+	
+	Route::get('/', function () {
     return view('welcome');
-});
+	});
 
-Route::resource('admin/department', 'DepartmentController');
+	Route::resource('/admin/department', 'DepartmentController');
 
-Route::resource('admin/filament', 'FilamentController');
+	Route::resource('/admin/filament', 'FilamentController');
 
-Route::resources('admin/user', 'UserController');
+	Route::resource('/admin/user', 'UserController');
+
+
+//});
+
