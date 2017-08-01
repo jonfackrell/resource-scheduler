@@ -24,6 +24,8 @@
     <link href="/css/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="/css/daterangepicker.css" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
@@ -980,6 +982,9 @@
 <!-- bootstrap-daterangepicker -->
 <script src="/js/moment.min.js"></script>
 <script src="/js/daterangepicker.js"></script>
+<!-- Bootstrap Colorpicker -->
+<script src="/js/bootstrap-colorpicker.min.js"></script>
+
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
