@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{!! BootForm::open()->action('admin/filament', $filament)->put() !!}
+	{!! BootForm::open()->action(route('filament.update', $filament))->put() !!}
 	  {!! BootForm::bind($filament) !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::text('Description', 'description') !!}

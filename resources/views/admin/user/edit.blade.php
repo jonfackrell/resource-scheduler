@@ -2,14 +2,15 @@
 
 @section('content')
 
-	{!! BootForm::open()->action('admin/user', $user)->put() !!}
+	{!! BootForm::open()->action(route('user.update', $user))->put() !!}
 	  {!! BootForm::bind($user) !!}
-	  {!! BootForm::text('Name', 'name') !!}
-	  {!! BootForm::text('Description', 'description') !!}
-	  {!! BootForm::text('Quantity', 'quantity') !!}
-	  {!! BootForm::text('Created at', 'created_at') !!}
-	  {!! BootForm::text('Updated at', 'updated_at') !!}
-	  {!! BootForm::text('Deleted at', 'deleted_at') !!}
+	  {!! BootForm::text('Firstname', 'first_name') !!}
+	  {!! BootForm::text('Lastname', 'last_name') !!}
+	  {!! BootForm::email('Email', 'email') !!}
+      
+	  {!! BootForm::select('Department', 'department')->options($departments) !!}
+	  
+	  
 	  {!! BootForm::submit('Submit') !!}
 	  
 	{!! BootForm::close() !!} 

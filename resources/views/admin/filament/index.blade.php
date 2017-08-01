@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{!! BootForm::open()->action('admin/filament')->post() !!}
+	{!! BootForm::open()->action(route('filament.index'))->post() !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::textarea('Description', 'description') !!}
 	  {!! BootForm::text('Quantity', 'quantity') !!}

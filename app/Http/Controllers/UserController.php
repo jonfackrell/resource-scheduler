@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Department;
 
 class UserController extends Controller
 {
@@ -15,7 +16,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.user.index', compact('users'));
+        $departments = Department::all()->pluck('name','id')->all();
+        return view('admin.user.index', compact('users', 'departments'));
     }
 
     /**
@@ -38,6 +40,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->fill($request->all());
+        $user->password = "password";
         $user->save();
 
         return 'User saved!';
@@ -64,7 +67,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('admin.user.edit', compact('user'));
+        $departments = Department::all()->pluck('name','id')->all();
+        return view('admin.user.edit', compact('user', 'departments'));
     }
 
     /**
@@ -76,7 +80,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+
+        return redirect()->route('user.index');
     }
 
     /**

@@ -42,7 +42,7 @@ class FilamentController extends Controller
         $filament->fill($request->all());
         $filament->save();
 
-        return 'Filament saved!';
+        return redirect()->route('filament.index');
     }
 
     /**
@@ -79,7 +79,11 @@ class FilamentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $filament = Filament::find($id);
+        $filament->fill($request->all());
+        $filament->save();
+
+        return redirect()->route('filament.index');
         
     }
 

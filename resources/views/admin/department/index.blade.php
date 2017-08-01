@@ -4,8 +4,8 @@
 
     {!! BootForm::open()->action(route('department.index'))->post() !!}
 
-      {!! BootForm::text('Name', 'name') !!}
-      {!! BootForm::textarea('Description', 'description') !!}
+      {!! BootForm::text('Name', 'name')->required() !!}
+      {!! BootForm::textarea('Description', 'description')->required() !!}
       {!! BootForm::submit('Submit') !!}
     {!! BootForm::close() !!}
 
