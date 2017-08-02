@@ -23,6 +23,7 @@
 	Route::resource('/admin/filament', 'FilamentController');
 
 	Route::resource('/admin/user', 'UserController');
+	Route::resource('/admin/color', 'ColorController');
 
 
 //});
