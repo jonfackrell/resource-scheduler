@@ -69,6 +69,6 @@ $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
         'time' => $faker->randomDigit(2, 12),
         'weight' => $faker->randomDigit(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
-        'status' => $faker->randomElement(['PENDING_APPROVAL', 'PENDING_PRINT', 'PRINTING', 'PRINTING_COMPLETE'])
+        'status' => $faker->randomDigit(1, 4)
     ];
 });

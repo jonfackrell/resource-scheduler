@@ -14,9 +14,7 @@
 
 //Route::group(['middleware' => ['web']], function() {
 	
-	Route::get('/', function () {
-    return view('welcome');
-	});
+	Route::get('/admin', 'AdminController@index');
 
 	Route::resource('/admin/department', 'DepartmentController');
 
@@ -24,6 +22,10 @@
 
 	Route::resource('/admin/user', 'UserController');
 	Route::resource('/admin/color', 'ColorController');
+
+	Route::resource('/admin/status', 'StatusController');
+
+
 
 
 //});

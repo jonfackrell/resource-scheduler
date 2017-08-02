@@ -1,16 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    Filaments
+    Statuses
 @endsection
 
 @section('content')
 
-	{!! BootForm::open()->action(route('filament.update', $filament))->put() !!}
-	  {!! BootForm::bind($filament) !!}
+	{!! BootForm::open()->action(route('status.update', $status))->put() !!}
+	  {!! BootForm::bind($status) !!}
 	  {!! BootForm::text('Name', 'name') !!}
-	  {!! BootForm::text('Description', 'description') !!}
-	  
 	  {!! BootForm::submit('Submit') !!}
 	  
 	{!! BootForm::close() !!} 

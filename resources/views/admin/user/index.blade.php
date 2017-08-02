@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    Users
+@endsection
+
 @section('content')
 
 	{!! BootForm::open()->action(route('user.index'))->post() !!}

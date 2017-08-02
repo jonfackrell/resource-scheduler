@@ -1,5 +1,5 @@
 {
-  "name": "McKay Website",
+  "name": "resource-scheduler",
   "dependencies": {
     "livestampjs": "~1.1.2",
     "momentjs": "~2.10.6",
