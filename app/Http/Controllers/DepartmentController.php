@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Department;
 
-class Department extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = \App\Models\Department::all();
+        $departments = Department::all();
         return view('admin.department.index', compact('departments'));
     }
 
@@ -25,7 +26,11 @@ class Department extends Controller
      */
     public function store(Request $request)
     {
-        return 'Dapartment saved!';
+        $department = new Department();
+        $department->fill($request->all());
+        $department->save();
+
+        return redirect()->route('department.index');
     }
 
     
@@ -38,9 +43,9 @@ class Department extends Controller
     public function edit($id)
     {
         
-        $department = Department::find($id);
+            $department = Department::find($id);
 
-        return view('admin.departmnet.edit', compact('department'));
+            return view('admin.department.edit', compact('department'));
     }
 
     /**
@@ -52,7 +57,11 @@ class Department extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = Department::find($id);
+        $department->fill($request->all());
+        $department->save();
+
+        return redirect()->route('department.index');
     }
 
     /**
