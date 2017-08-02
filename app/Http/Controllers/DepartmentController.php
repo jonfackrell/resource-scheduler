@@ -42,10 +42,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        
-            $department = Department::find($id);
-
-            return view('admin.department.edit', compact('department'));
+        $department = Department::find($id);
+        return view('admin.department.edit', compact('department'));
     }
 
     /**

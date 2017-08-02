@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    Filaments
+@endsection
+
 @section('content')
 
 	{!! BootForm::open()->action(route('filament.update', $filament))->put() !!}

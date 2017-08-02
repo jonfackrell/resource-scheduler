@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $statuses = ['PENDING_APPROVAL', 'PENDING_PRINT', 'PRINTING', 'PRINTING_COMPLETE'];
+        $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete'];
 
         $departments = factory(App\Models\Department::class, 5)->create();
         $users = factory(App\Models\User::class, 10)->create();

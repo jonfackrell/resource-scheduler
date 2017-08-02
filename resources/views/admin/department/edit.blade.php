@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    Departments
+@endsection
+
 @section('content')
 
 	{!! BootForm::open()->action(route('department.update', $department))->put() !!}

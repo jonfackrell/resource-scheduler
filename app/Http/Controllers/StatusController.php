@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
 
-class Statuses extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,17 +14,8 @@ class Statuses extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $statuses = Status::all();
+        return view('admin.status.index', compact('statuses'));
     }
 
     /**
@@ -34,18 +26,11 @@ class Statuses extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $status = new Status();
+        $status->fill($request->all());
+        $status->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('status.index');
     }
 
     /**
@@ -56,7 +41,8 @@ class Statuses extends Controller
      */
     public function edit($id)
     {
-        //
+        $status = Status::find($id);
+        return view('admin.status.edit', compact('status'));
     }
 
     /**
@@ -68,7 +54,11 @@ class Statuses extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = Status::find($id);
+        $status->fill($request->all());
+        $status->save();
+
+        return redirect()->route('status.index');
     }
 
     /**
