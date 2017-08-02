@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
-use App\Models\Department;
 
-class DepartmentController extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('admin.department.index', compact('departments'));
+        $statuses = Status::all();
+        return view('admin.status.index', compact('statuses'));
     }
 
     /**
@@ -26,14 +26,13 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $department = new Department();
-        $department->fill($request->all());
-        $department->save();
+        $status = new Status();
+        $status->fill($request->all());
+        $status->save();
 
-        return redirect()->route('department.index');
+        return redirect()->route('status.index');
     }
 
-    
     /**
      * Show the form for editing the specified resource.
      *
@@ -42,8 +41,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department = Department::find($id);
-        return view('admin.department.edit', compact('department'));
+        $status = Status::find($id);
+        return view('admin.status.edit', compact('status'));
     }
 
     /**
@@ -55,11 +54,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $department = Department::find($id);
-        $department->fill($request->all());
-        $department->save();
+        $status = Status::find($id);
+        $status->fill($request->all());
+        $status->save();
 
-        return redirect()->route('department.index');
+        return redirect()->route('status.index');
     }
 
     /**

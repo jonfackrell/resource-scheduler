@@ -17,4 +17,12 @@ class PrintJob extends Model
         $this->attributes['options'] = json_encode( $val );
     }
 
+    /**
+     * Get the status name.
+     */
+    public function currentStatus()
+    {
+        return $this->belongsTo('App\Models\Status', 'status', 'id');
+    }
+
 }

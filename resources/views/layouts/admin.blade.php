@@ -106,10 +106,12 @@
                                     <li><a href="other_charts.html">Other Charts</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-cog"></i>Settings <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                                    <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                                    <li><a href="{{ route('department.index') }}">Departments</a></li>
+                                    <li><a href="{{ route('filament.index') }}">Filaments</a></li>
+                                    <li><a href="{{ route('status.index') }}">Statuses</a></li>
+                                    <li><a href="{{ route('user.index') }}">Users</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -318,7 +320,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Form Design <small>different form elements</small></h2>
+                            <h2>@yield('title')</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
