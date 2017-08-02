@@ -11,12 +11,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $statuses = ['PENDING_APPROVAL', 'PENDING_PRINT', 'PRINTING', 'PRINTING_COMPLETE'];
+
         $departments = factory(App\Models\Department::class, 5)->create();
         $users = factory(App\Models\User::class, 10)->create();
         $filaments = factory(App\Models\Filament::class, 20)->create();
         $colors = factory(App\Models\Color::class, 10)->create();
         $patrons = factory(App\Models\Patron::class, 100)->create();
         $printJobs = factory(App\Models\PrintJob::class, 60)->create();
+
+        foreach ($statuses as $status){
+            App\Models\Status::create([
+                'name' => $status
+            ]);
+        }
 
         foreach ($filaments as $filament){
             foreach ($colors as $color){
