@@ -25,6 +25,18 @@
 
 	Route::resource('/admin/status', 'StatusController');
 
+	Route::get('file', 'PrintJobController@showUploadForm')->name('upload.file');
+
+	Route::post('file', 'PrintJobController@storeFile');
+
+
+
+
+
+
+
+	
+
 
 
 

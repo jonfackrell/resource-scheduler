@@ -4,11 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
+
     "content-hash": "e5fd00c1da42edef3da6f86a06735e96",
-=======
-    "content-hash": "0b2bf9113f4bcde5ac1fd13c6bdf0e1b",
->>>>>>> develop
     "packages": [
         {
             "name": "adamwathan/bootforms",

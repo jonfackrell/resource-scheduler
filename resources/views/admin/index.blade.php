@@ -21,7 +21,7 @@
                 <div role="tabpanel" class="tab-pane fade @if($loop->first) active @endif in" id="tab_content{{ $key }}" aria-labelledby="home-tab">
                     @foreach($printJob as $row)
                         <p>
-                            {{ $row->id }} {{ $row->currentStatus->name or ''}}
+                            {{ $row->id }} {{ $row->currentStatus->name or ''}} {{ $row->options->infill }}
                         </p>
                     @endforeach
                 </div>
