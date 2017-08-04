@@ -15,6 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-users');
+
         $users = User::all();
         $departments = Department::all()->pluck('name','id')->all();
         return view('admin.user.index', compact('users', 'departments'));
@@ -38,10 +40,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-users');
+
         $user = new User();
         $user->fill($request->all());
-        $user->password = "password";
+        $user->password = str_random(64);
         $user->save();
+
+        $token = app('auth.password.broker')->createToken($user);
+        $user->sendPasswordResetNotification($token);
 
         return redirect()->route('user.index');
     }
@@ -65,6 +72,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+
+        $this->authorize('edit-users');
+
         $user = User::find($id);
 
         $departments = Department::all()->pluck('name','id')->all();
@@ -80,6 +90,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit-users');
+
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
@@ -95,6 +107,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete-users');
     }
 }

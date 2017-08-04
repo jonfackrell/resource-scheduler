@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PrintJob;
+use App\Models\Status;
 use Illuminate\Http\Request;
-use App\Models\Filament;
 
-
-class FilamentController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,9 @@ class FilamentController extends Controller
      */
     public function index()
     {
-        $this->authorize('view-filaments');
-
-        $filaments = Filament::all();
-        return view('admin.filament.index', compact('filaments'));
+        $statuses = Status::where('accept_payment', 1)->pluck('id')->all();
+        $printJobs = PrintJob::with('currentStatus')->whereIn('status', $statuses)->paginate(20);
+        return view('admin.payment.index', compact('printJobs'));
     }
 
     /**
@@ -39,13 +38,7 @@ class FilamentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create-filaments');
-
-        $filament = new Filament();
-        $filament->fill($request->all());
-        $filament->save();
-
-        return redirect()->route('filament.index');
+        //
     }
 
     /**
@@ -67,11 +60,7 @@ class FilamentController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('edit-filaments');
-
-        $filament = Filament::find($id);
-
-        return view('admin.filament.edit', compact('filament'));
+        //
     }
 
     /**
@@ -83,14 +72,7 @@ class FilamentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('edit-filaments');
-
-        $filament = Filament::find($id);
-        $filament->fill($request->all());
-        $filament->save();
-
-        return redirect()->route('filament.index');
-        
+        //
     }
 
     /**
@@ -101,6 +83,6 @@ class FilamentController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete-filaments');
+        //
     }
 }

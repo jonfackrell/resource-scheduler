@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Notifications\SendNewPasswordNotification;
+use App\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +28,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isSuperUser(){
+        return true;
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new SendNewPasswordNotification($token));
+    }
+
 }

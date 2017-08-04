@@ -18,11 +18,18 @@ class PrintJob extends Model
     }
 
     /**
-     * Get the status name.
+     * Get the status.
      */
     public function currentStatus()
     {
-        return $this->belongsTo('App\Models\Status', 'status', 'id');
+        return $this->belongsTo(Status::class, 'status', 'id');
     }
 
+    /**
+     * Get the patron.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(Patron::class, 'patron', 'id');
+    }
 }
