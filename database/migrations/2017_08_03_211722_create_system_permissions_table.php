@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFilamentsTable extends Migration
+class CreateSystemPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class AddFilamentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('filaments', function (Blueprint $table) {
+        Schema::create('system_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->integer('cost')->nullable();
+            $table->string('label');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +28,6 @@ class AddFilamentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filaments');
+        Schema::dropIfExists('system_permissions');
     }
 }

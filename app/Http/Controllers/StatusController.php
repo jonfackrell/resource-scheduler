@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
 
-class Department extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,10 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = \App\Models\Department::all();
-        return view('admin.department.index', compact('departments'));
+        $this->authorize('view-statuses');
+
+        $statuses = Status::all();
+        return view('admin.status.index', compact('statuses'));
     }
 
     /**
@@ -25,10 +28,15 @@ class Department extends Controller
      */
     public function store(Request $request)
     {
-        return 'Dapartment saved!';
+        $this->authorize('create-statuses');
+
+        $status = new Status();
+        $status->fill($request->all());
+        $status->save();
+
+        return redirect()->route('status.index');
     }
 
-    
     /**
      * Show the form for editing the specified resource.
      *
@@ -37,10 +45,10 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        
-        $department = Department::find($id);
+        $this->authorize('edit-statuses');
 
-        return view('admin.departmnet.edit', compact('department'));
+        $status = Status::find($id);
+        return view('admin.status.edit', compact('status'));
     }
 
     /**
@@ -52,7 +60,13 @@ class Department extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('edit-statuses');
+
+        $status = Status::find($id);
+        $status->fill($request->all());
+        $status->save();
+
+        return redirect()->route('status.index');
     }
 
     /**
@@ -63,6 +77,6 @@ class Department extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete-statuses');
     }
 }

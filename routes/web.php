@@ -11,10 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return 'Welcome!';
-});
 
-Route::resource('admin/department', 'Department');
+//Route::group(['middleware' => ['web']], function() {
+    Auth::routes();
 
-Route::resource('admin/filament', 'Filament');
+	Route::get('/admin', 'AdminController@index');
+
+	Route::resource('/admin/department', 'DepartmentController');
+
+	Route::resource('/admin/filament', 'FilamentController');
+
+	Route::resource('/admin/user', 'UserController');
+
+	Route::resource('/admin/status', 'StatusController');
+
+
+
+	Route::resource('/payment', 'PaymentController');
+
+
+
+
+//});
+

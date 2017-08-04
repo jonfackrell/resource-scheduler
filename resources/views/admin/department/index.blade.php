@@ -1,20 +1,22 @@
 @extends('layouts.admin')
 
+@section('title')
+    Departments
+@endsection
+
 @section('content')
 
-    {!! BootForm::open()->action('admin/department')->post() !!}
-      {!! BootForm::text('First Name', 'first_name') !!}
-      {!! BootForm::text('Last Name', 'last_name') !!}
-      {!! BootForm::date('Date of Birth', 'date_of_birth') !!}
-      {!! BootForm::email('Email', 'email') !!}
-      {!! BootForm::password('Password', 'password') !!}
+    {!! BootForm::open()->action(route('department.index'))->post() !!}
+
+      {!! BootForm::text('Name', 'name')->required() !!}
+      {!! BootForm::textarea('Description', 'description')->required() !!}
       {!! BootForm::submit('Submit') !!}
     {!! BootForm::close() !!}
 
     @foreach($departments as $department)
 
         <p>
-            <a href="/admin/department/{{ $department->id }}">{{ $department->name }}</a>
+            <a href="/admin/department/{{ $department->id }}/edit">{{ $department->name }}</a>
         </p>
 
     @endforeach

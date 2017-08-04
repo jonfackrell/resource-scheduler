@@ -17,4 +17,19 @@ class PrintJob extends Model
         $this->attributes['options'] = json_encode( $val );
     }
 
+    /**
+     * Get the status.
+     */
+    public function currentStatus()
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
+    }
+
+    /**
+     * Get the patron.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(Patron::class, 'patron', 'id');
+    }
 }
