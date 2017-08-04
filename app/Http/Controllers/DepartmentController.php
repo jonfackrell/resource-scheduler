@@ -14,6 +14,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-departments');
         $departments = Department::all();
         return view('admin.department.index', compact('departments'));
     }
@@ -26,6 +27,8 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-departments');
+
         $department = new Department();
         $department->fill($request->all());
         $department->save();
@@ -42,6 +45,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('edit-departments');
+
         $department = Department::find($id);
         return view('admin.department.edit', compact('department'));
     }
@@ -55,6 +60,8 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit-departments');
+
         $department = Department::find($id);
         $department->fill($request->all());
         $department->save();
@@ -70,6 +77,6 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete-departments');
     }
 }
