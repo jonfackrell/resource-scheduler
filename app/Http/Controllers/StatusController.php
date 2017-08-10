@@ -14,6 +14,8 @@ class StatusController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-statuses');
+
         $statuses = Status::all();
         return view('admin.status.index', compact('statuses'));
     }
@@ -26,6 +28,8 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-statuses');
+
         $status = new Status();
         $status->fill($request->all());
         $status->save();
@@ -41,6 +45,8 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('edit-statuses');
+
         $status = Status::find($id);
         return view('admin.status.edit', compact('status'));
     }
@@ -54,6 +60,8 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit-statuses');
+
         $status = Status::find($id);
         $status->fill($request->all());
         $status->save();
@@ -69,6 +77,6 @@ class StatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete-statuses');
     }
 }

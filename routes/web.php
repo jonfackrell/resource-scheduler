@@ -13,7 +13,8 @@
 
 
 //Route::group(['middleware' => ['web']], function() {
-	
+    Auth::routes();
+
 	Route::get('/admin', 'AdminController@index');
 
 	Route::resource('/admin/department', 'DepartmentController');
@@ -36,6 +37,10 @@
 
 
 	
+
+
+
+	Route::resource('/payment', 'PaymentController');
 
 
 
