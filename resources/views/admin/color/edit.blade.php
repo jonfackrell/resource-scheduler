@@ -8,8 +8,8 @@
 	  <div id="cp2" class="input-group colorpicker-component">
 	  {!! BootForm::text('Color', 'hex_code') !!}
   		
-    <span class="input-group-addon"><i></i></span>
-	</div>
+    	<span class="input-group-addon"><i></i></span>
+	  </div>
 	
 	  
 	  {!! BootForm::submit('Submit') !!}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PrintJob;
 use Illuminate\Http\Request;
 
 class PrintJobController extends Controller
@@ -16,11 +17,21 @@ class PrintJobController extends Controller
     	
     	if($request->hasFile('filename')) {
 
-    		return $request->filename->store('public/upload');
+    	    //$filename = $request->filename->getClientOriginalName();
+            //$filesize = $request->filename->getClientSize();
+    		$filename = $request->filename->store('public/upload');
 
-    		 // return 'yes';
+    		$file = PrintJob::find(1);
+    		$file->filename = $filename;
+    		$file->department = 3;
+    		$file->save();
+
+
+            return 'yes';
 
     	}
+
+    	return $request->all();
 
 
     }

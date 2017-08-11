@@ -25,6 +25,7 @@ class PrintJob extends Model
         return $this->belongsTo(Status::class, 'status', 'id');
     }
 
+
     /**
      * Get the patron.
      */
@@ -32,4 +33,11 @@ class PrintJob extends Model
     {
         return $this->belongsTo(Patron::class, 'patron', 'id');
     }
+
+
+    protected $fillable = [
+        'patron', 'color', 'filament', 'department'
+    ];
+
+
 }
