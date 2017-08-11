@@ -15,7 +15,7 @@ class CreatePrintJobsTable extends Migration
     {
         Schema::create('print_jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('patron')->unsigned()->index();
+            $table->integer('patron')->unsigned();
             $table->integer('department')->unsigned();
             $table->integer('filament')->unsigned();
             $table->integer('color')->unsigned();
