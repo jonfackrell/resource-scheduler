@@ -22,6 +22,7 @@ class UploadFileController extends Controller
         $filaments = Filament::all()->pluck('name', 'id')->all();
         $departments = Department::all()->pluck('name','id')->all();
         $patrons = Patron::get()->first();
+        //$options = Printjob::all()->pluck('options')->all();
 
 
         return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patrons'));
@@ -46,12 +47,10 @@ class UploadFileController extends Controller
      */
     public function store(Request $request)
     {
-        $printjobs = PrintJob::all();
+        
         $printjob = new PrintJob;
         $printjob->fill($request->all());
         $departments = Department::all()->pluck('name','id')->all();
-
-
 
 
         if($request->hasFile('filename')) {
@@ -65,7 +64,6 @@ class UploadFileController extends Controller
 
         $printjob->save();
 
-        //return view('uploadfile.index', compact('printjobs', 'departments'));
         return redirect()->route('uploadfile.index');
 
     }

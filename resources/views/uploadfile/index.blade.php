@@ -6,7 +6,7 @@
 
 @section('content')
 
-    {!! BootForm::open()->action(route('uploadfile.store'))->post()->enctype('multipart/form-data') !!}
+    {!! BootForm::open()->action(route('uploadfile.index'))->post()->enctype('multipart/form-data') !!}
     {{--{!! BootForm::bind($printjobs) !!}--}}
 
     {!! BootForm::file('File', 'filename')->required() !!}
@@ -15,6 +15,8 @@
     {!! BootForm::select('Filament', 'filament')->options($filaments) !!}
     {!! BootForm::text('Color', 'color') !!}
     {!! BootForm::select('Department', 'department')->options($departments) !!}
+    
+
     {!! BootForm::submit('Submit') !!}
     {!! BootForm::close() !!}
 
