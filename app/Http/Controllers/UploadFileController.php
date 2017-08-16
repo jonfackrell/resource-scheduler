@@ -21,11 +21,30 @@ class UploadFileController extends Controller
         $printjobs = PrintJob::all();
         $filaments = Filament::all()->pluck('name', 'id')->all();
         $departments = Department::all()->pluck('name','id')->all();
-        $patrons = Patron::get()->first();
+
+        $patron = Patron::all()->filter(function($item) {
+        return $item->remember_token == 'Yuvug2motm';
+        })->first();
+
+        
+
+        // $desired_object;
+
+        // foreach ($patrons as $patron) {
+        //     if ($patron->remember_token == 'HUe6sr39L8') {
+        //         $desired_object = $patron;
+        //         break;
+        //     }
+        // }
+
+        // $patrons = $desired_object;
+
+
+        // $patrons = Patron::get()->where('remember_token', 'HUe6sr39L8');
         //$options = Printjob::all()->pluck('options')->all();
 
 
-        return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patrons'));
+        return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patron'));
 
     }
 
@@ -87,11 +106,13 @@ class UploadFileController extends Controller
      */
     public function edit($id)
     {
+        
         $printjob = PrintJob::find($id);
+        $patron = Patron::find($printjob->patron);
         $filaments = Filament::all()->pluck('name', 'id')->all();
 
         $departments = Department::all()->pluck('name','id')->all();
-        return view('uploadfile.edit', compact('printjob', 'departments','filaments'));
+        return view('uploadfile.edit', compact('printjob', 'departments','filaments', 'patron'));
     }
 
     /**

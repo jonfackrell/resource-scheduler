@@ -5,16 +5,23 @@
 @endsection
 
 @section('content')
+<div>
+<p><b>Patron<br></b>{{ $patron->first_name . ' ' . $patron->last_name}}</p>
+</div>
 
     {!! BootForm::open()->action(route('uploadfile.index'))->post()->enctype('multipart/form-data') !!}
-    {{--{!! BootForm::bind($printjobs) !!}--}}
+    {{--{!! BootForm::bind($patron) !!}--}}
 
-    {!! BootForm::file('File', 'filename')->required() !!}
+    
 
-    {!! BootForm::text('Patron', 'patron')->value($patrons->first_name) !!}
+    {!! BootForm::text('Patron id', 'patron')->value($patron->id) !!}
+
+    {!! BootForm::select('Department', 'department')->options($departments) !!}
+
     {!! BootForm::select('Filament', 'filament')->options($filaments) !!}
     {!! BootForm::text('Color', 'color') !!}
-    {!! BootForm::select('Department', 'department')->options($departments) !!}
+    
+    {!! BootForm::file('File', 'filename')->required() !!}
     
 
     {!! BootForm::submit('Submit') !!}
@@ -23,7 +30,7 @@
     @foreach($printjobs as $printjob)
 
         <p>
-            <a href="/uploadfile/{{ $printjob->id }}/edit">{{ $printjob->patron }} {{ $printjob->filament }}</a>
+            <a href="/uploadfile/{{ $printjob->id }}/edit">{{ $printjob->patron }} {{ $printjob->department }}</a>
         </p>
 
     @endforeach

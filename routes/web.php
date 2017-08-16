@@ -33,12 +33,7 @@
 	Route::post('file', 'PrintJobController@storeFile');
 
 
-
-
-
-
-
-	
+	Route::resource('/patron', 'PatronController');
 
 
 
