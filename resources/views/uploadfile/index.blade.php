@@ -16,7 +16,7 @@
 
     {!! BootForm::text('Patron id', 'patron')->value($patron->id) !!}
 
-    {!! BootForm::select('Department', 'department')->options($departments) !!}
+    {!! BootForm::select('Department', 'department')->options($departments)->select(6) !!}
 
     {!! BootForm::select('Filament', 'filament')->options($filaments) !!}
     {!! BootForm::text('Color', 'color') !!}

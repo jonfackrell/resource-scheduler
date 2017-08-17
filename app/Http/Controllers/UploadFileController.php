@@ -22,9 +22,7 @@ class UploadFileController extends Controller
         $filaments = Filament::all()->pluck('name', 'id')->all();
         $departments = Department::all()->pluck('name','id')->all();
 
-        $patron = Patron::all()->filter(function($item) {
-        return $item->remember_token == 'Yuvug2motm';
-        })->first();
+        $patron = Patron::find(request()->get('id'));
 
         
 
@@ -140,7 +138,8 @@ class UploadFileController extends Controller
         //save the stuff.
         $printjob->save();
 
-        return redirect()->route('uploadfile.index');
+        // return redirect()->route('uploadfile.index');
+        return "done";
 
 
     }

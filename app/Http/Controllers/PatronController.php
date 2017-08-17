@@ -41,9 +41,12 @@ class PatronController extends Controller
         $patron->fill($request->all());
         $patron->password = str_random(64);
         $token = $patron->remember_token = str_random(10);
-        $patron->save();
         
-        return redirect()->route('uploadfile.index', compact('patron'));
+        $patron->save();
+        $id = $patron->id;
+        
+        // Redirect::to('/add1')->with('values', $passvalues);
+        return redirect()->route('uploadfile.index', ['id' => $id]);
     }
 
     /**

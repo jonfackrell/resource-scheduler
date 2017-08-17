@@ -39,7 +39,11 @@
 
 	Route::resource('/payment', 'PaymentController');
 
+	Route::get('/test', function(){
 
+		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
+
+	});
 
 
 //});
