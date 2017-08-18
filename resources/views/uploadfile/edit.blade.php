@@ -16,10 +16,8 @@
     {!! BootForm::select('Department', 'department')->options($departments) !!}
     {!! BootForm::select('Filament', 'filament')->options($filaments) !!}
     {!! BootForm::text('Color', 'color') !!}
-
-    
+   
     {!! BootForm::file('File', 'filename') !!}
-
 
     {!! BootForm::submit('Submit') !!}
 

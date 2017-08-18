@@ -10,10 +10,8 @@
 	  {!! BootForm::text('First Name', 'first_name') !!}
   	  {!! BootForm::text('Last Name', 'last_name') !!}
       {!! BootForm::email('Email', 'email') !!}
-      {!! BootForm::select('Department', 'department')->options($departments) !!}
       {!! BootForm::submit('Submit') !!}
 	{!! BootForm::close() !!} 
-
 	
 
 @endsection
