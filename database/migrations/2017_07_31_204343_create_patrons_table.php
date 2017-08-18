@@ -19,7 +19,7 @@ class CreatePatronsTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('department')->nullable()->unsigned();
+            
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
