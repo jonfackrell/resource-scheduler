@@ -24,6 +24,7 @@ class CreatePrintJobsTable extends Migration
             $table->integer('weight')->nullable();
             $table->json('options')->nullable();
             $table->integer('status')->unsigned()->nullable();
+            $table->integer('cost')->default(0);
             $table->boolean('paid')->default(0);
             $table->timestamps();
             $table->softDeletes();

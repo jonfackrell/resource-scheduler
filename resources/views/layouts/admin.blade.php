@@ -81,7 +81,9 @@
 
         @include('layouts.parts.top-navigation')
 
-        @include('layouts.parts.top-tiles')
+        <!-- page content -->
+        <div class="right_col" role="main">
+
 
             <div class="row">
 
