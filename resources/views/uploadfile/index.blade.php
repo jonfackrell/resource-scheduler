@@ -12,9 +12,9 @@
     {!! BootForm::open()->action(route('uploadfile.index'))->post()->enctype('multipart/form-data') !!}
     {{--{!! BootForm::bind($patron) !!}--}}
 
-    
 
-    
+
+     {!! BootForm::hidden('patron', 'patron')->value($patron->id) !!}
 
     {!! BootForm::select('Department', 'department')->options($departments) !!}
 
