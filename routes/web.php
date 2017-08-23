@@ -41,7 +41,7 @@
 
 	Route::get('/test', function(){
 
-		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
+		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('3'));
 
 	});
 
