@@ -20,6 +20,12 @@ class CreatePrintersTable extends Migration
             $table->integer('department')->unsigned();
             $table->timestamps();
         });
+
+        Schema::create('departments_printers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('department')->unsigned();
+            $table->timestamps();
+        });
     }
 
     /**
