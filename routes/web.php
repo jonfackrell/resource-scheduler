@@ -45,6 +45,7 @@
 
 	});
 	
+	Route::resource('/admin/printer', 'PrinterController');
  
 
 //});

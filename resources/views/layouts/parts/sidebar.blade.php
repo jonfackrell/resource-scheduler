@@ -56,6 +56,9 @@
                     @can('view-users')
                         <li><a href="{{ route('user.index') }}">Users</a></li>
                     @endcan
+                    @can('view-printers')
+                        <li><a href="{{ route('printer.index') }}">Printers</a></li>
+                    @endcan
                 </ul>
             </li>
         </ul>
