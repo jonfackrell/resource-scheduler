@@ -61,7 +61,7 @@ $factory->define(App\Models\Color::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
-        'patron' => $faker->randomDigit(1, 10),
+        'patron' => $faker->randomDigit(1, 20),
         'department' => $faker->randomDigit(0, 5),
         'filament' => $faker->randomDigit(0, 20),
         'color' => $faker->randomDigit(0, 10),

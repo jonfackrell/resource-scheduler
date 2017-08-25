@@ -16,6 +16,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $statuses = Status::all();
+        
         foreach($statuses as $status){
             $printJobs[$status->id] = PrintJob::with('currentStatus')->where('status', $status->id)->paginate(20);
         }

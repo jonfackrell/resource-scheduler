@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePatronsTable extends Migration
+class CreatePrintersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreatePatronsTable extends Migration
      */
     public function up()
     {
-        Schema::create('patrons', function (Blueprint $table) {
+        Schema::create('printers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
-            
-            $table->rememberToken();
+            $table->string('name');
+            $table->string('description');
+            $table->integer('department')->unsigned();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +29,6 @@ class CreatePatronsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patrons');
+        Schema::dropIfExists('printers');
     }
 }
