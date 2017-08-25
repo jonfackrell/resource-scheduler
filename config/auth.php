@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'public' => [
+            'driver' => 'session',
+            'provider' => 'patrons',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -68,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'patrons' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Patron::class,
         ],
 
         // 'users' => [

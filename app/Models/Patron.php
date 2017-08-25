@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Patron extends Model
+class Patron extends Authenticatable
 {
+    use Notifiable;
     //
 }

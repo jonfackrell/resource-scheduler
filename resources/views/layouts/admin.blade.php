@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>@yield('title')</title>
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,6 +29,9 @@
 
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
+
+    @stack('styles')
+
 </head>
 
 <body class="nav-md">
@@ -89,7 +92,9 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>@yield('title')</h2>
+
                             <ul class="nav navbar-right panel_toolbox">
+                                <!--
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
                                 <li class="dropdown">
@@ -103,8 +108,11 @@
                                 </li>
                                 <li><a class="close-link"><i class="fa fa-close"></i></a>
                                 </li>
+                                -->
                             </ul>
+
                             <div class="clearfix"></div>
+
                         </div>
                         <div class="x_content">
                             <br>
@@ -760,6 +768,8 @@
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
+
+@stack('scripts')
 
 </body>
 </html>

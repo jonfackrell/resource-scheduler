@@ -28,9 +28,7 @@
 
 
 	Route::resource('/payment', 'PaymentController');
-
-
-
+	Route::post('/update-payment-status', 'PaymentController@updatePaymentStatus');
 
 //});
 
