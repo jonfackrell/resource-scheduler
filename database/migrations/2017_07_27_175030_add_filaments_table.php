@@ -18,6 +18,7 @@ class AddFilamentsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->integer('quantity')->nullable();
+            $table->integer('cost')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

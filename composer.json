@@ -7,9 +7,10 @@
     "require": {
         "php": ">=5.6.4",
         "adamwathan/bootforms": "^0.9.0",
+        "laracasts/utilities": "^2.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "subfission/cas": "^2.0"
+        "spatie/eloquent-sortable": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -39,7 +40,8 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan migrate:refresh --seed"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",

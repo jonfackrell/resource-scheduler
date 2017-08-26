@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Patron;
+use App\Models\Department;
 
-class Department extends Controller
+class PatronController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +15,18 @@ class Department extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('admin.department.index', compact('departments'));
+        $departments = Department::all()->pluck('name', 'id')->all();
+        return view('patron.index', compact('departments'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+       
     }
 
     /**
@@ -25,10 +37,29 @@ class Department extends Controller
      */
     public function store(Request $request)
     {
-        return 'Dapartment saved!';
+        $patron = new Patron();
+        $patron->fill($request->all());
+        $patron->password = str_random(64);
+        $token = $patron->remember_token = str_random(10);
+        
+        $patron->save();
+        $id = $patron->id;
+        
+        // Redirect::to('/add1')->with('values', $passvalues);
+        return redirect()->route('uploadfile.index', ['id' => $id]);
     }
 
-    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -37,10 +68,7 @@ class Department extends Controller
      */
     public function edit($id)
     {
-        
-        $department = Department::find($id);
-
-        return view('admin.departmnet.edit', compact('department'));
+        //
     }
 
     /**
