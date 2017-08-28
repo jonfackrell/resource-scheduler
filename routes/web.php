@@ -26,6 +26,8 @@
 
 	Route::resource('/admin/status', 'StatusController');
 
+	Route::get('/options', 'UploadFileController@options')->name('options');
+	Route::post('/printers', 'UploadFileController@printers')->name('printers');
 	Route::resource('/uploadfile', 'UploadFileController');
 
 	Route::get('file', 'PrintJobController@showUploadForm')->name('upload.file');
@@ -39,14 +41,19 @@
 
 	Route::resource('/payment', 'PaymentController');
 
+	Route::post('/update-payment-status', 'PaymentController@updatePaymentStatus');
+
+
 	Route::get('/test', function(){
 
+        auth()->login(\App\Models\Patron::findOrFail(3));
 		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
 
 	});
 	
 	Route::resource('/admin/printer', 'PrinterController');
  
+
 
 //});
 

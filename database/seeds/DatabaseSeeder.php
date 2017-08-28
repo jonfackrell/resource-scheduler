@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 
 
         $departments = factory(App\Models\Department::class, 5)->create();
+        $printers = factory(App\Models\Printer::class, 3)->create();
         $users = factory(App\Models\User::class, 10)->create();
         $filaments = factory(App\Models\Filament::class, 20)->create();
         $colors = factory(App\Models\Color::class, 10)->create();

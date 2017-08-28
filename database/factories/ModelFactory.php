@@ -45,6 +45,14 @@ $factory->define(App\Models\Department::class, function (Faker\Generator $faker)
     ];
 });
 
+$factory->define(App\Models\Printer::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence(1),
+        'description' => $faker->paragraph(2),
+        'image' => 'https://www.lulzbot.com/sites/default/files/TAZ_6_Angle_Main_Product_Page.png',
+        'department' => $faker->numberBetween(1, 5),
+    ];
+});
 
 $factory->define(App\Models\Filament::class, function (Faker\Generator $faker) {
     return [
@@ -61,12 +69,12 @@ $factory->define(App\Models\Color::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
-        'patron' => $faker->randomDigit(1, 20),
-        'department' => $faker->randomDigit(0, 5),
-        'filament' => $faker->randomDigit(0, 20),
-        'color' => $faker->randomDigit(0, 10),
+        'patron' => $faker->numberBetween(1, 20),
+        'department' => $faker->numberBetween(1, 5),
+        'filament' => $faker->numberBetween(1, 20),
+        'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,
-        'time' => $faker->randomDigit(2, 12),
+        'time' => $faker->numberBetween(60, 3600),
         'weight' => $faker->randomDigit(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
         'status' => $faker->randomDigit(1, 4)

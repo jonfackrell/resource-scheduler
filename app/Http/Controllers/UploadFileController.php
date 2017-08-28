@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CostCalculator;
 use Illuminate\Http\Request;
 use App\Models\PrintJob;
 use App\Models\Department;
@@ -43,6 +44,34 @@ class UploadFileController extends Controller
 
 
         return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patron'));
+
+    }
+
+
+    /**
+     * Display a options form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function options()
+    {
+
+        return view('uploadfile.model-options');
+
+    }
+
+    /**
+     * Display a listing of printers.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function printers(Request $request)
+    {
+        session(['weight' => $request->get('weight'), 'time' => $request->get('time')]);
+        $calulator = new CostCalculator(['weight' => session('weight'), 'time' => session('time')]);
+        $printers = $calulator->bestPrinterPrice();
+
+        return view('uploadfile.choose-printer', compact('printers'));
 
     }
 
