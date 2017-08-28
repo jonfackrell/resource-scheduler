@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Printer extends Model
 {
 
+
     protected $appends = ['costToPrint', 'timeToPrint'];
 
     protected $fillable = ['name', 'description', 'department'];
@@ -14,9 +15,9 @@ class Printer extends Model
     /**
      * The department that owns the printer.
      */
-    public function owningDepartment()
+    public function departmentOwner()
     {
-        return $this->belongsTo(Department::class, 'department', 'id');
+        return $this->belongsTo('App\Models\Department', 'department');
     }
 
     public function patronCostToPrint($params)
@@ -26,4 +27,8 @@ class Printer extends Model
         $this->attributes['costToPrint'] = $cost;
         $this->attributes['timeToPrint'] = 24;
     }
+
+
+
+
 }

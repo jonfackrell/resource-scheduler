@@ -179,7 +179,9 @@ return [
 
 
         // https://github.com/adamwathan/bootforms
-        AdamWathan\BootForms\BootFormsServiceProvider::class
+        AdamWathan\BootForms\BootFormsServiceProvider::class,
+        // https://github.com/subfission/cas/wiki/Installation
+        Subfission\Cas\CasServiceProvider::class,
 
     ],
 
@@ -233,6 +235,7 @@ return [
         
     
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
+        'Cas' => Subfission\Cas\Facades\Cas::class,
 
     ],
 
