@@ -30,12 +30,9 @@
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
 
-<<<<<<< HEAD
+
     @stack('styles')
 
-=======
-    
->>>>>>> develop
 </head>
 
 <body class="nav-md">
@@ -714,7 +711,7 @@
                 </div>
             </div>
 
-            -->
+
         </div>
         <!-- /page content -->
 

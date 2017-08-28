@@ -14,7 +14,7 @@ class Filament extends Model
      */
     public function colors()
     {
-        return $this->belongsToMany('Color', 'filaments_colors', 'color', 'filament');
+        return $this->belongsToMany(Color::class, 'filaments_colors', 'color', 'filament');
     }
 
 }
