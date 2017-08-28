@@ -44,7 +44,9 @@
 		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
 
 	});
-
+	
+	Route::resource('/admin/printer', 'PrinterController');
+ 
 
 //});
 
