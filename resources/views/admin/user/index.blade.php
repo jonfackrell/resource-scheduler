@@ -20,12 +20,6 @@
             <a href="/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
         </p>
 
-    @endforeach<!-- @foreach($users as $user)
-
-        <p>
-            <a href="/admin/user/{{ $user->id }}/edit">{{ $user->name }}</a>
-        </p>
-
-  @endforeach -->
+    @endforeach
 
 @endsection

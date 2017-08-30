@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 
 @section('title')
-    Filaments
+    Printer
 @endsection
 
 @section('content')
 
-	{!! BootForm::open()->action(route('filament.update', $filament))->put() !!}
-	  {!! BootForm::bind($filament) !!}
+	{!! BootForm::open()->action(route('printer.update', $printer))->put() !!}
+	  {!! BootForm::bind($printer) !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::text('Description', 'description') !!}
+	  
 	  
 	  {!! BootForm::submit('Submit') !!}
 	  

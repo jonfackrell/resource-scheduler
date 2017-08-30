@@ -1,22 +1,22 @@
 @extends('layouts.admin')
 
 @section('title')
-	Filaments
+	Printer
 @endsection
 
 @section('content')
 
-	{!! BootForm::open()->action(route('filament.index'))->post() !!}
+	{!! BootForm::open()->action(route('printer.index'))->post() !!}
 	  {!! BootForm::text('Name', 'name') !!}
 	  {!! BootForm::textarea('Description', 'description') !!}
 	  
 	  {!! BootForm::submit('Submit') !!}
 	{!! BootForm::close() !!} 
 
-	@foreach($filaments as $filament)
+	@foreach($printers as $printer)
 
         <p>
-            <a href="/admin/filament/{{ $filament->id }}/edit">{{ $filament->name }}</a>
+            <a href="/admin/printer/{{ $printer->id }}/edit">{{ $printer->name }}</a>
         </p>
 
     @endforeach
