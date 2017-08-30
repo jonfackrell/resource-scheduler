@@ -21,7 +21,23 @@
                 <div role="tabpanel" class="tab-pane fade @if($loop->first) active @endif in" id="tab_content{{ $key }}" aria-labelledby="home-tab">
                     @foreach($printJob as $row)
                         <p>
-                            {{ $row->id }} {{ $row->currentStatus->name or ''}} {{ $row->options->infill }}
+                            {{ $row->owner->first_name or ''}}
+                            {{ $row->owner->last_name  or '' }} 
+                            <br>
+                            {{ $row->currentStatus->name or ''}} {{ $row->options->infill }}
+
+                            <br>
+
+                            <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-success btn-sm"></i>Edit</a>
+
+                            <a href="/download/{{ $row->filename }}" class="btn btn-success btn-sm"></i>Download</a>
+
+                             {!! BootForm::open()->action(route('admin.update', $row->id ))->put() !!}                              
+                              {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update') !!}                              
+                            {!! BootForm::close() !!} 
+
+
+                            
                         </p>
                     @endforeach
                 </div>
@@ -33,3 +49,19 @@
 
 
 @endsection
+
+@push('custom-scripts')
+    
+    <script type="text/javascript">
+        $(function(){
+
+            $(document).on('change', '.status-update', function(){
+                var $select = $(this);
+                console.log('Selected');
+                $select.closest('form').submit();
+            });
+
+        });
+    </script>
+    
+@endpush

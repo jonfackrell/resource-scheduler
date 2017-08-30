@@ -22,4 +22,16 @@ class AdminController extends Controller
         }
         return view('admin.index', compact('printJobs', 'statuses'));
     }
+
+
+    public function update(Request $request, $id)
+    {
+        //$this->authorize();
+        $printJob = PrintJob::find($id);
+        $printJob->status = 3;
+        $printJob->save();
+
+        return redirect()->back();
+        
+    }
 }

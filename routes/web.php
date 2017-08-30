@@ -50,8 +50,14 @@
 		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
 
 	});
+
+	Route::get('download/{filename}', function ($filename) {
+    	return response()->download(storage_path('app') . '/' . $filename);
+	})->where('filename', '(.*)');
 	
 	Route::resource('/admin/printer', 'PrinterController');
+
+	Route::put('/admin/{id}','AdminController@update')->name('admin.update');
  
 
 

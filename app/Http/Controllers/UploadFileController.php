@@ -161,7 +161,10 @@ class UploadFileController extends Controller
             $filename = $request->filename->store('public/upload');
 
             // return 'yes';
+            
             $printjob->filename = $filename;
+
+
         }
 
         //save the stuff.
