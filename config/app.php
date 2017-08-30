@@ -181,7 +181,7 @@ return [
         // https://github.com/adamwathan/bootforms
         AdamWathan\BootForms\BootFormsServiceProvider::class,
         // https://github.com/subfission/cas/wiki/Installation
-        Subfission\Cas\CasServiceProvider::class,
+        //Subfission\Cas\CasServiceProvider::class,
 
     ],
 

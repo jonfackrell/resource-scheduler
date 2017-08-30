@@ -51,7 +51,7 @@
 
 @endsection
 
-@push('scripts')
+@push('custom-scripts')
     <script>
         $(function(){
 

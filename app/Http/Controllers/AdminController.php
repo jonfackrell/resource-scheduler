@@ -28,7 +28,7 @@ class AdminController extends Controller
     {
         //$this->authorize();
         $printJob = PrintJob::find($id);
-        $printJob->status = 3;
+        $printJob->status = $request->status;
         $printJob->save();
 
         return redirect()->back();

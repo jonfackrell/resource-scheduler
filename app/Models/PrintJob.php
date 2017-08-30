@@ -52,5 +52,10 @@ class PrintJob extends Model
         return $this->attributes['cost'];
     }
 
+    public function getFilament()
+    {
+        return $this->belongsTo(Filament::class, 'filament', 'id');
+    }
+
 
 }
