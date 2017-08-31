@@ -9,6 +9,7 @@
 namespace App;
 
 
+use App\Models\Filament;
 use App\Models\Printer;
 use App\Models\PrintJob;
 
@@ -20,11 +21,13 @@ class CostCalculator
         $this->params = $params;
     }
 
-    function bestPrinterPrice()
+    function bestPrinterPrice($filament)
     {
-        $printers = Printer::all();
-        $printers->each(function($printer, $key){
-            $printer->patronCostToPrint($this->params);
+        $printers = Printer::whereHas('filaments', function($query) use ($filament){
+            $query->where('filament', $filament->id);
+        })->get();
+        $printers->each(function($printer, $key) use ($filament){
+            $printer->patronCostToPrint($this->params, $filament);
         });
         $printers = $printers->sortBy('costToPrint');
         return $printers;

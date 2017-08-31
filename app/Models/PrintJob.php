@@ -41,7 +41,7 @@ class PrintJob extends Model
 
 
     protected $fillable = [
-        'patron', 'color', 'filament', 'department'
+        'patron', 'color', 'filament', 'department', 'original_filename', 'filename'
     ];
 
     /**
