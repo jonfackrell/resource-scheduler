@@ -49,7 +49,7 @@
                             </td>
 
                             <td>
-                            {{ $row->getFilament->name or 'bust' }}
+                            {{ $row->getFilament->name or '' }}
                             </td>
 
                             <td>
@@ -63,7 +63,7 @@
                             <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>
                             
 
-                            <a href="/download/{{ $row->filename }}" class="btn btn-success btn-sm"></i>Download</a>
+                            <a href="/download/{{ $row->filename }}" class="btn btn-success btn-xs"></i>Download</a>
                             </td>
                         </tr>
                     
