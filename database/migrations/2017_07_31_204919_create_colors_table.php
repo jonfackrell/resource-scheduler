@@ -21,8 +21,9 @@ class CreateColorsTable extends Migration
 
         Schema::create('filaments_colors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('filament');
-            $table->integer('color');
+            $table->integer('filament')->unsigned();
+            $table->integer('color')->unsigned();
+            $table->integer('department')->unsigned();
             $table->integer('quantity')->nullable();
         });
 

@@ -16,16 +16,20 @@ class CreatePrintersTable extends Migration
         Schema::create('printers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->string('image');
             $table->integer('department')->unsigned();
+            $table->integer('flat_fee')->default(0);
+            $table->integer('per_hour')->default(0);
+            $table->integer('overtime_fee')->default(0);
+            $table->integer('overtime_start')->default(0);
             $table->timestamps();
         });
 
-        Schema::create('departments_printers', function (Blueprint $table) {
+        Schema::create('printers_filaments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('department')->unsigned();
-            $table->timestamps();
+            $table->integer('printer')->unsigned();
+            $table->integer('filament')->unsigned();
         });
     }
 
@@ -36,6 +40,7 @@ class CreatePrintersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('printers_filaments');
         Schema::dropIfExists('printers');
     }
 }

@@ -30,7 +30,9 @@
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
 
-
+    <style>
+        .container{width:100%;padding:0}
+    </style>
     @stack('styles')
 
 </head>

@@ -41,7 +41,7 @@ $factory->define(App\Models\Patron::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Department::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word(),
-        'description' => $faker->paragraph(3)
+        'description' => $faker->paragraph(2)
     ];
 });
 
@@ -51,13 +51,21 @@ $factory->define(App\Models\Printer::class, function (Faker\Generator $faker) {
         'description' => $faker->paragraph(2),
         'image' => 'https://www.lulzbot.com/sites/default/files/TAZ_6_Angle_Main_Product_Page.png',
         'department' => $faker->numberBetween(1, 5),
+        'flat_fee' => $faker->numberBetween(0, 3),
+        'per_hour' => $faker->numberBetween(0, 2),
+        'overtime_fee' => $faker->numberBetween(0, 1),
+        'overtime_start' => $faker->numberBetween(12, 24)
     ];
 });
 
 $factory->define(App\Models\Filament::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->sentence(1),
-        'description' => $faker->paragraph(2)
+        'description' => $faker->paragraph(2),
+        'department' => $faker->numberBetween(1, 5),
+        'cost_per_gram' => 2.5,
+        'add_cost_per_gram' => 5,
+        'multiplier' => $faker->numberBetween(1, 3)
     ];
 });
 

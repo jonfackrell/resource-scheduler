@@ -9,7 +9,7 @@ class Color extends Model
     public $timestamps = false;
     protected $fillable = ['name', 'hex_code'];
 
-public function filaments()
+    public function filaments()
     {
 
 

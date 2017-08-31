@@ -15,7 +15,7 @@
 //Route::group(['middleware' => ['web']], function() {
     Auth::routes();
 
-	Route::get('/admin', 'AdminController@index');
+	Route::get('/admin', 'AdminController@index')->name('admin');
 
 	Route::resource('/admin/department', 'DepartmentController');
 
@@ -26,8 +26,11 @@
 
 	Route::resource('/admin/status', 'StatusController');
 
+	// Workflow for choosing best-priced printer
 	Route::get('/options', 'UploadFileController@options')->name('options');
-	Route::post('/printers', 'UploadFileController@printers')->name('printers');
+	Route::get('/printers', 'UploadFileController@printers')->name('printers');
+	Route::get('/uploads', 'UploadFileController@upload')->name('uploads');
+
 	Route::resource('/uploadfile', 'UploadFileController');
 
 	Route::get('file', 'PrintJobController@showUploadForm')->name('upload.file');
@@ -39,7 +42,7 @@
 
 
 
-	Route::resource('/payment', 'PaymentController');
+	Route::resource('/admin/payment', 'PaymentController');
 
 	Route::post('/update-payment-status', 'PaymentController@updatePaymentStatus');
 

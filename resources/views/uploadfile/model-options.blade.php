@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.public')
 
 @section('title')
     Tell us a little about your model
@@ -6,7 +6,7 @@
 
 @section('content')
 
-    {!! BootForm::open()->action(route('printers'))->post()->enctype('multipart/form-data') !!}
+    {!! BootForm::open()->action(route('printers'))->get() !!}
     {!! BootForm::text('Estimated Time', 'time')->required() !!}
     {!! BootForm::text('Weight (in grams)', 'weight')->required() !!}
     {!! BootForm::submit('Submit') !!}
