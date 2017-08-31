@@ -19,6 +19,7 @@ class CreatePrintJobsTable extends Migration
             $table->integer('department')->unsigned();
             $table->integer('filament')->unsigned();
             $table->integer('color')->unsigned();
+            $table->string('original_filename')->nullable();
             $table->string('filename')->nullable();
             $table->integer('time')->nullable();
             $table->integer('weight')->nullable();
