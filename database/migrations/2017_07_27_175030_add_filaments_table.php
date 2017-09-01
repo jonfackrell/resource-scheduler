@@ -18,9 +18,6 @@ class AddFilamentsTable extends Migration
             $table->integer('department')->unsigned();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->integer('cost_per_gram')->default(0);
-            $table->integer('add_cost_per_gram')->default(0);
-            $table->integer('multiplier')->default(1);
             $table->integer('order_column');
             $table->timestamps();
             $table->softDeletes();

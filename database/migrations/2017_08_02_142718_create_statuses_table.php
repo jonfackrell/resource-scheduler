@@ -16,7 +16,9 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('department')->unsigned();
             $table->boolean('accept_payment')->default(0);
+            $table->boolean('dashboard_display')->default(0);
             $table->integer('order_column');
             $table->timestamps();
         });

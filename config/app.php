@@ -183,8 +183,9 @@ return [
         // https://github.com/subfission/cas/wiki/Installation
         //Subfission\Cas\CasServiceProvider::class,
 
+
         // https://github.com/barryvdh/laravel-debugbar/tree/2.4
-        Barryvdh\Debugbar\ServiceProvider::class,
+        //Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -239,7 +240,6 @@ return [
     
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

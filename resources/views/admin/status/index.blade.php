@@ -7,16 +7,146 @@
 @section('content')
 
 	{!! BootForm::open()->action(route('status.index'))->post() !!}
-	  {!! BootForm::text('Name', 'name') !!}
-	  {!! BootForm::submit('Submit') !!}
+        <div class="row">
+            <div class="col-md-3">
+                {!! BootForm::text('Name', 'name')->required() !!}
+            </div>
+            <div class="col-md-6">
+                {!! BootForm::checkbox('Accept Payment', 'accept_payment')->helpBlock('Statuses with this option checked will allow users to pay for their prints.') !!}
+                {!! BootForm::checkbox('Display in Dashboard', 'dashboard_display')->helpBlock('Statuses with this option checked will be added as a new tab to the admin dashboard.') !!}
+            </div>
+        </div>
+
+	    {!! BootForm::submit('Submit') !!}
 	{!! BootForm::close() !!} 
 
-	@foreach($statuses as $status)
-
-        <p>
-            <a href="/admin/status/{{ $status->id }}/edit">{{ $status->name }}</a>
-        </p>
-
-    @endforeach
+    @if($statuses->count() > 0)
+        <table class="table table-striped sorted_table">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Accept Payment</td>
+                    <td>Display in Dashboard</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($statuses as $status)
+                <tr data-id="{{ $status->id }}">
+                    <th>
+                        <a href="/admin/status/{{ $status->id }}/edit">{{ $status->name }}</a>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->accept_payment == 1) checked  @endif data-field="accept_payment"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->dashboard_display == 1) checked  @endif data-field="dashboard_display"/>
+                        </label>
+                    </td>
+                    <td>
+                        {!! BootForm::open()->action(route('status.destroy', $status->id))->delete() !!}
+                        {!! BootForm::submit('Delete', 'delete')->class('btn btn-danger btn-xs delete') !!}
+                        {!! BootForm::close() !!}
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+            <tfoot></tfoot>
+        </table>
+    @else
+        <div class="alert alert-danger" style="margin-top: 10px;">
+            <p>
+                You currently do not have any Statuses setup in your system.
+            </p>
+        </div>
+    @endif
 
 @endsection
+
+@push('styles')
+	<link rel="stylesheet" href="/css/jquery-sortable.css" />
+@endpush
+
+@push('custom-scripts')
+	<script src="/js/jquery-sortable.min.js"></script>
+	<script>
+		$(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('input.flat').on('ifChecked', function(event){
+                var $checkbox = $(this);
+                var statusid = $checkbox.closest('tr').data('id');
+                var field = $checkbox.data('field');
+                var data = {};
+                data[field] = 1;
+                $.ajax({
+                    type: "PUT",
+                    url: '/admin/status/' + statusid,
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            });
+            $('input.flat').on('ifUnchecked', function(event){
+                var $checkbox = $(this);
+                var statusid = $checkbox.closest('tr').data('id');
+                var field = $checkbox.data('field');
+                var data = {};
+                data[field] = 0;
+                $.ajax({
+                    type: "PUT",
+                    url: '/admin/status/' + statusid,
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            });
+
+            var $table = $('.sorted_table').sortable({
+                containerSelector: 'table',
+                itemPath: '> tbody',
+                itemSelector: 'tr',
+                delay: 100,
+                placeholder: '<tr class="placeholder"/>',
+                onDrop: function  ($item, container, _super) {
+                    var data = $table.sortable("serialize").get();
+
+                    var jsonString = JSON.stringify(data, null, ' ');
+
+                    _super($item, container);
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ route('status.sort') }}',
+                        data: {'order': jsonString},
+                        dataType: "json",
+                        success: function (data) {
+
+                        },
+                        error: function (data) {
+
+                        }
+                    });
+                }
+            });
+		});
+
+	</script>
+@endpush
