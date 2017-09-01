@@ -61,6 +61,8 @@
 	Route::resource('/admin/printer', 'PrinterController');
 
 	Route::put('/admin/{id}','AdminController@update')->name('admin.update');
+
+	Route::get('/admin/charts', 'ChartsController@index');
  
 
 

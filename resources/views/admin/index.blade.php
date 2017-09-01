@@ -70,6 +70,13 @@
                         
                     @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                {!! $printJob->links() !!}
+                            </td>
+                        </tr>
+                    </tfoot>
 
                     </table>
                 </div>
