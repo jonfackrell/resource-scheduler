@@ -57,10 +57,14 @@ class Printer extends Model implements Sortable
         }
         // Add tax tax to total cost
         $this->attributes['costToPrint'] = ( $cost * $this->departmentOwner->tax_rate );
-        $this->attributes['timeToPrint'] = 24;
+        $this->attributes['timeToPrint'] = $this->timeToPrint();
     }
 
 
+    public function timeToPrint()
+    {
+        return 24;
+    }
 
 
 }
