@@ -21,7 +21,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'department' => $faker->randomDigit(1, 5)
+        'department' => 1
     ];
 });
 
@@ -78,7 +78,7 @@ $factory->define(App\Models\Color::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
         'patron' => $faker->numberBetween(1, 20),
-        'department' => $faker->numberBetween(1, 5),
+        'department' => 1,
         'filament' => $faker->numberBetween(1, 20),
         'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,

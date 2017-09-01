@@ -47,7 +47,7 @@
                                     <span>Est. Start</span>
                                 </li>
                                 <li style="text-align: center; width: 49%;">
-                                    <h3>${!! money_format('%(#2n', $printer->costToPrint/100) !!}</h3>
+                                    <h3>${!! money_format('%(#2n', ($printer->costToPrint/100)) !!}</h3>
                                     <span>Cost</span>
                                 </li>
                             </ul>
@@ -62,7 +62,7 @@
                                     //dd($printer_filament->colors($printer->departmentOwner));
                                 @endphp
                                 @foreach($printer_filament->colors($printer->departmentOwner->id) as $color)
-                                    {!! BootForm::radio('<div style="height: 20px; width: 20px; display: inline-block;  background-color: #' . $color->hex_code . '"></div>', 'color')->addClass('hidden-radio')->inline()->value($color->id) !!}
+                                    {!! BootForm::radio('<div style="height: 20px; width: 20px; display: inline-block;  background-color: #' . $color->hex_code . '" title="' . $color->name . '"></div>', 'color')->addClass('hidden-radio')->inline()->value($color->id) !!}
                                 @endforeach
                             </div>
                         </p>

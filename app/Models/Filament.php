@@ -42,4 +42,12 @@ class Filament extends Model implements Sortable
         return $this->belongsToMany('App\Models\Printer', 'printers_filaments', 'filament', 'printer');
     }
 
+    /**
+     * The pricing options for the filament.
+     */
+    public function options($printerid)
+    {
+        return $this->hasOne('App\Models\PrinterFilament', 'filament', 'id')->where('printer', $printerid)->first();
+    }
+
 }

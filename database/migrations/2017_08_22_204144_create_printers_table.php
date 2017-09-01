@@ -23,6 +23,7 @@ class CreatePrintersTable extends Migration
             $table->integer('per_hour')->default(0);
             $table->integer('overtime_fee')->default(0);
             $table->integer('overtime_start')->default(0);
+            $table->integer('order_column');
             $table->timestamps();
         });
 
@@ -30,6 +31,9 @@ class CreatePrintersTable extends Migration
             $table->increments('id');
             $table->integer('printer')->unsigned();
             $table->integer('filament')->unsigned();
+            $table->float('cost_per_gram')->default(0);
+            $table->float('add_cost_per_gram')->default(0);
+            $table->float('multiplier')->default(1);
         });
     }
 

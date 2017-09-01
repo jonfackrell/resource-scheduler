@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
 
@@ -43,22 +44,10 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                    <a href="{{ route('admin') }}" class="site_title"><span></span></a>
                 </div>
 
                 <div class="clearfix"></div>
-
-                <!-- menu profile quick info -->
-                <div class="profile clearfix">
-                    <div class="profile_pic">
-                        <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-                    </div>
-                    <div class="profile_info">
-                        <span>Welcome,</span>
-                        <h2>John Doe</h2>
-                    </div>
-                </div>
-                <!-- /menu profile quick info -->
 
                 <br />
 
@@ -90,12 +79,10 @@
 
 
             <div class="row">
-
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>@yield('title')</h2>
-
                             <ul class="nav navbar-right panel_toolbox">
                                 <!--
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -115,6 +102,8 @@
                             </ul>
 
                             <div class="clearfix"></div>
+
+                            @include('layouts.parts.messages')
 
                         </div>
                         <div class="x_content">

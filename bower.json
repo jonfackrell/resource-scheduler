@@ -8,6 +8,8 @@
     "font-awesome": "fontawesome#~4.5.0",
     "datatables": "^1.10.12",
     "jquery-form": "^3.46.0",
-    "gentelella": "~1.4.0"
+    "gentelella": "~1.4.0",
+    "jquery-sortable": "~0.9.13",
+    "summernote": "^0.8.7"
   }
 }

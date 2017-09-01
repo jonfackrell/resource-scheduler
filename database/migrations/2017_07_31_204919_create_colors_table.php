@@ -24,7 +24,7 @@ class CreateColorsTable extends Migration
             $table->integer('filament')->unsigned();
             $table->integer('color')->unsigned();
             $table->integer('department')->unsigned();
-            $table->integer('quantity')->nullable();
+            $table->float('quantity')->nullable();
         });
 
     }

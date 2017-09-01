@@ -62,7 +62,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('edit-departments');
 
-        $department = Department::find($id);
+        $department = Department::findorFail($id);
         $department->fill($request->all());
         $department->save();
 
@@ -78,5 +78,10 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-departments');
+
+        $department = Department::findorFail($id);
+        $department->delete();
+
+        return redirect()->back();
     }
 }
