@@ -63,7 +63,8 @@ class DatabaseSeeder extends Seeder
 
         App\Models\Department::create([
             'name' => 'McKay Library',
-            'description' => 'MCK 140'
+            'description' => 'MCK 140',
+            'initial_status' => 1
         ]);
 
         App\Models\Department::create([
@@ -199,7 +200,8 @@ class DatabaseSeeder extends Seeder
             App\Models\Status::create([
                 'name' => $status,
                 'department' => \App\Models\User::first()->department,
-                'accept_payment' => rand(0, 1)
+                'accept_payment' => rand(0, 1),
+                'dashboard_display' => 1
             ]);
         }
 

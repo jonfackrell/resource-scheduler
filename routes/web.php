@@ -62,7 +62,8 @@
 	});
 
 	Route::get('download/{filename}', function ($filename) {
-    	return response()->download(storage_path('app') . '/' . $filename);
+	    $printJob = \App\Models\PrintJob::whereFilename($filename)->first();
+    	return response()->download(storage_path('app') . '/' . $filename, $printJob->original_filename);
 	})->where('filename', '(.*)');
 
     Route::post('/admin/printer/sort', 'PrinterController@sort')->name('printer.sort');

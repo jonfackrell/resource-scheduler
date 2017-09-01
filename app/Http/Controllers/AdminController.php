@@ -28,12 +28,12 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
-        //$this->authorize();
         $printJob = PrintJob::find($id);
-        $printJob->status = 3;
+        $originalStatus = $printJob->status;
+        $printJob->status = $request->status;
         $printJob->save();
 
-        return redirect()->back();
+        return redirect()->route('admin', ["#$originalStatus"]);
         
     }
 }

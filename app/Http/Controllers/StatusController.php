@@ -32,6 +32,7 @@ class StatusController extends Controller
 
         $status = new Status();
         $status->fill($request->all());
+        $status->department = auth()->user()->department;
         $status->save();
 
         return redirect()->route('status.index');

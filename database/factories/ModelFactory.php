@@ -79,12 +79,12 @@ $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
         'patron' => $faker->numberBetween(1, 20),
         'department' => 1,
-        'filament' => $faker->numberBetween(1, 20),
+        'filament' => $faker->numberBetween(1, 3),
         'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,
         'time' => $faker->numberBetween(60, 3600),
         'weight' => $faker->randomDigit(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
-        'status' => $faker->randomDigit(1, 4)
+        'status' => $faker->numberBetween(1, 4)
     ];
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CostCalculator;
 use App\Models\Printer;
 use App\Models\Setting;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Models\PrintJob;
 use App\Models\Department;
@@ -133,12 +134,14 @@ class UploadFileController extends Controller
         if($request->hasFile('filename')) {
 
             $filename = $request->filename->store('public/upload');
-
             // return 'yes';
             $printjob->filename = $filename;
             $printjob->original_filename = $request->filename->getClientOriginalName();
 
         }
+
+        $department = Department::findOrFail($request->get('department'));
+        $printjob->status = $department->initial_status;
 
         $printjob->save();
 

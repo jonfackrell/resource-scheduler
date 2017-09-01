@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Models\Department;
 
@@ -48,7 +49,8 @@ class DepartmentController extends Controller
         $this->authorize('edit-departments');
 
         $department = Department::find($id);
-        return view('admin.department.edit', compact('department'));
+        $statuses = Status::whereDepartment($id)->pluck('name', 'id');
+        return view('admin.department.edit', compact('department', 'statuses'));
     }
 
     /**
