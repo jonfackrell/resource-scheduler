@@ -10,4 +10,6 @@ class Status extends Model implements Sortable
 {
     use SortableTrait;
 
+    protected $fillable = ['name', 'accept_payment', 'dashboard_display'];
+
 }

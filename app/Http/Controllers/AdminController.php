@@ -15,10 +15,12 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $statuses = Status::all();
-        
+        $statuses = Status::whereDashboardDisplay(1)
+                        ->whereDepartment(auth()->user()->department)
+                        ->get();
+        $printJobs = [];
         foreach($statuses as $status){
-            $printJobs[$status->id] = PrintJob::with('currentStatus', 'getFilament', 'owner')->where('status', $status->id)->paginate(20);
+            $printJobs[$status->id] = PrintJob::with('currentStatus')->where('status', $status->id)->paginate(20, ['*'], str_slug($status->name));
         }
         return view('admin.index', compact('printJobs', 'statuses'));
     }
@@ -26,12 +28,12 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
-        //$this->authorize();
         $printJob = PrintJob::find($id);
+        $originalStatus = $printJob->status;
         $printJob->status = $request->status;
         $printJob->save();
 
-        return redirect()->back();
+        return redirect()->route('admin', ["#$originalStatus"]);
         
     }
 }

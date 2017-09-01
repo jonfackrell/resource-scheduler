@@ -10,16 +10,48 @@
 	  {!! BootForm::text('First Name', 'first_name') !!}
   	  {!! BootForm::text('Last Name', 'last_name') !!}
       {!! BootForm::email('Email', 'email') !!}
-      {!! BootForm::select('Department', 'department')->options($departments) !!}
       {!! BootForm::submit('Submit') !!}
-	{!! BootForm::close() !!} 
+	{!! BootForm::close() !!}
 
-	@foreach($users as $user)
 
-        <p>
-            <a href="/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
-        </p>
-
-    @endforeach
+    @if($users->count() > 0)
+        <table class="table table-striped sorted_table">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Created</td>
+                    <td>Updated</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($users as $user)
+                <tr data-id="{{ $user->id }}">
+                    <th>
+                        <a href="/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
+                    </th>
+                    <td>
+                        {{ $user->created_at->toDayDateTimeString() }}
+                    </td>
+                    <td>
+                        {{ $user->updated_at->toDayDateTimeString() }}
+                    </td>
+                    <td>
+                        {!! BootForm::open()->action(route('user.destroy', $user->id))->delete() !!}
+                        {!! BootForm::submit('Delete', 'delete')->class('btn btn-danger btn-xs delete') !!}
+                        {!! BootForm::close() !!}
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+            <tfoot></tfoot>
+        </table>
+    @else
+        <div class="alert alert-danger" style="margin-top: 10px;">
+            <p>
+                You currently do not have any Users setup in your system.
+            </p>
+        </div>
+    @endif
 
 @endsection

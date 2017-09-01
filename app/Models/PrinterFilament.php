@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FilamentColor extends Model
+class PrinterFilament extends Model
 {
 
-    protected $table = 'filaments_colors';
+    protected $table = 'printers_filaments';
 
     public $timestamps = false;
 

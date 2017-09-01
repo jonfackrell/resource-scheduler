@@ -23,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment('local')) {
+
+            // Service Providers
+            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
+
+            // Aliases
+            $this->app->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
+        }
     }
 }

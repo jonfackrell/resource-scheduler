@@ -19,11 +19,18 @@
 
 	Route::resource('/admin/department', 'DepartmentController');
 
+    Route::post('/admin/filament/sort', 'FilamentController@sort')->name('filament.sort');
+    Route::post('/admin/filament/{id}/toggle-printer', 'FilamentController@togglePrinter')->name('filament.toggle-printer');
+    Route::get('/admin/filament/{filamentid}/printer/{printerid}/colors', 'FilamentController@showColorManager')->name('filament.color-manager');
+    Route::post('/admin/filament/{filamentid}/printer/{printerid}/colors', 'FilamentController@updateColorManager')->name('filament.color-manager');
+    Route::get('/admin/filament/{filamentid}/printer/{printerid}/pricing', 'FilamentController@showPricingManager')->name('filament.pricing-manager');
+    Route::post('/admin/filament/{filamentid}/printer/{printerid}/pricing', 'FilamentController@updatePricingManager')->name('filament.pricing-manager');
 	Route::resource('/admin/filament', 'FilamentController');
 
 	Route::resource('/admin/user', 'UserController');
 	Route::resource('/admin/color', 'ColorController');
 
+	Route::post('/admin/status/sort', 'StatusController@sort')->name('status.sort');
 	Route::resource('/admin/status', 'StatusController');
 
 	// Workflow for choosing best-priced printer
@@ -55,9 +62,11 @@
 	});
 
 	Route::get('download/{filename}', function ($filename) {
-    	return response()->download(storage_path('app') . '/' . $filename);
+	    $printJob = \App\Models\PrintJob::whereFilename($filename)->first();
+    	return response()->download(storage_path('app') . '/' . $filename, $printJob->original_filename);
 	})->where('filename', '(.*)');
-	
+
+    Route::post('/admin/printer/sort', 'PrinterController@sort')->name('printer.sort');
 	Route::resource('/admin/printer', 'PrinterController');
 
 	Route::put('/admin/{id}','AdminController@update')->name('admin.update');

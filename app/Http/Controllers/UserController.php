@@ -17,9 +17,9 @@ class UserController extends Controller
     {
         $this->authorize('view-users');
 
-        $users = User::all();
-        $departments = Department::all()->pluck('name','id')->all();
-        return view('admin.user.index', compact('users', 'departments'));
+        $users = User::where('department', auth()->user()->department)->get();
+        //$departments = Department::all()->pluck('name','id')->all();
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -45,12 +45,15 @@ class UserController extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->password = str_random(64);
+        if(!$request->has('department')){
+            $user->department = auth()->user()->department;
+        }
         $user->save();
 
         $token = app('auth.password.broker')->createToken($user);
         $user->sendPasswordResetNotification($token);
 
-        return redirect()->route('user.index');
+        return redirect()->back()->with('success', "A new user account has been created for $user->first_name $user->last_name");
     }
 
     /**
@@ -108,5 +111,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-users');
+
+        $user = User::findorFail($id);
+        $user->delete();
+
+        return redirect()->back();
     }
 }
