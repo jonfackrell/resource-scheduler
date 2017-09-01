@@ -16,30 +16,62 @@
 
 
         </ul>
+
+
         <div id="myTabContent" class="tab-content">
+
+
+
             @foreach($printJobs as $key => $printJob)
                 <div role="tabpanel" class="tab-pane fade @if($loop->first) active @endif in" id="tab_content{{ $key }}" aria-labelledby="home-tab">
+
+                <table class="table table-striped projects">
+
+                <thead>
+                <tr>
+                    <th style="width: 20%">Project Name</th>
+                    <th>Filament</th>
+                    <th>Status</th>
+                    <th style="width: 20%">Actions</th>
+                </tr>
+            </thead>
                     @foreach($printJob as $row)
-                        <p>
-                            {{ $row->owner->first_name or ''}}
-                            {{ $row->owner->last_name  or '' }} 
+
+                    
+
+                    <tbody>
+                        <tr data-id="{{ $row->id }}">
+                            <td>
+                                {{ $row->owner->first_name or ''}}
+                                {{ $row->owner->last_name  or '' }} 
                             <br>
-                            {{ $row->currentStatus->name or ''}} {{ $row->options->infill }}
+                            <small>{{ $row->created_at->toDayDateTimeString() }}</small>
+                            </td>
 
-                            <br>
+                            <td>
+                            {{ $row->getFilament->name or '' }}
+                            </td>
 
-                            <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-success btn-sm"></i>Edit</a>
-
-                            <a href="/download/{{ $row->filename }}" class="btn btn-success btn-sm"></i>Download</a>
+                            <td>
 
                              {!! BootForm::open()->action(route('admin.update', $row->id ))->put() !!}                              
                               {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update') !!}                              
                             {!! BootForm::close() !!} 
+                            </td>
 
-
+                            <td>
+                            <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>
                             
-                        </p>
+
+                            <a href="/download/{{ $row->filename }}" class="btn btn-success btn-xs"></i>Download</a>
+                            </td>
+                        </tr>
+                    
+                        
                     @endforeach
+                    </tbody>
+
+                    </table>
                 </div>
             @endforeach
 

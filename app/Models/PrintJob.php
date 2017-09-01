@@ -41,7 +41,7 @@ class PrintJob extends Model
 
 
     protected $fillable = [
-        'patron', 'color', 'filament', 'department'
+        'patron', 'color', 'filament', 'department', 'original_filename', 'filename'
     ];
 
     /**
@@ -50,6 +50,11 @@ class PrintJob extends Model
     public function calculateCost()
     {
         return $this->attributes['cost'];
+    }
+
+    public function getFilament()
+    {
+        return $this->belongsTo(Filament::class, 'filament', 'id');
     }
 
 

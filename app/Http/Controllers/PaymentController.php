@@ -16,7 +16,10 @@ class PaymentController extends Controller
     public function index()
     {
         $statuses = Status::where('accept_payment', 1)->pluck('id')->all();
-        $printJobs = PrintJob::with('currentStatus')->whereIn('status', $statuses)->paginate(20);
+        $printJobs = PrintJob::with('currentStatus')
+                        ->whereIn('status', $statuses)
+                        ->where('paid', '<>', 1)
+                        ->paginate(20);
         return view('admin.payment.index', compact('printJobs'));
     }
 
@@ -84,5 +87,14 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function updatePaymentStatus(Request $request)
+    {
+        $printJob = PrintJob::findOrFail($request->get('id'));
+        $printJob->paid = $request->get('paid');
+        $printJob->save();
+        return response()->json(['status' => $request->get('paid')]);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Print Jobs
+    Print Jobs Pending Payment
 @endsection
 
 @section('content')
@@ -25,20 +25,75 @@
                             <small>{{ $printJob->created_at->toDayDateTimeString() }}</small>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-success btn-sm">{{ $printJob->currentStatus->name }}</button>
+                            <button type="button" class="btn btn-info btn-sm">{{ $printJob->currentStatus->name }}</button>
                         </td>
                         <td>
                             {{ $printJob->cost }}
                         </td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-usd"></i>&nbsp; Mark Paid </a>
+                            <a href="#" class="btn @if($printJob->paid == true) btn-success @else btn-primary @endif btn-sm toggle-print-job-payment-status @if($printJob->paid == true) paid @endif"><i class="fa fa-usd"></i>&nbsp; Mark Paid </a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        {!! $printJobs->links() !!}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
 
 
 
 
+
 @endsection
+
+@push('custom-scripts')
+    <script>
+        $(function(){
+
+            $(document).on('click', '.toggle-print-job-payment-status', function(event){
+                var $button = $(this);
+                $button.button('loading');
+                var id = $button.parents('tr').data('id');
+                if($button.hasClass('paid')){
+                    togglePrintJobPaymentStatus(id, 0);
+                }else{
+                    togglePrintJobPaymentStatus(id, 1);
+                }
+            });
+
+            function togglePrintJobPaymentStatus(id, paymentStatus){
+
+                $.ajax({
+                    url: "/update-payment-status",
+                    type: "POST",
+                    data: {'id': id, 'paid': paymentStatus},
+                    success: function(data){
+                        var $row = $('tr[data-id="' + id +'"]');
+                        var $button = $row.find('.toggle-print-job-payment-status');
+                        if(data.status == 1){
+                            $button.addClass('paid');
+                            $button.removeClass('btn-primary').addClass('btn-success');
+                        }else{
+                            $button.removeClass('paid');
+                            $button.removeClass('btn-success').addClass('btn-primary');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+
+                    },
+                   complete: function(){
+                       var $row = $('tr[data-id="' + id +'"]');
+                       var $button = $row.find('.toggle-print-job-payment-status');
+                       $button.button('reset');
+                   }
+                });
+
+            }
+        });
+    </script>
+@endpush

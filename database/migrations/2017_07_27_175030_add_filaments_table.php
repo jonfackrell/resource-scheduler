@@ -15,12 +15,21 @@ class AddFilamentsTable extends Migration
     {
         Schema::create('filaments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('department')->unsigned();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->integer('cost')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('cost_per_gram')->default(0);
+            $table->integer('add_cost_per_gram')->default(0);
+            $table->integer('multiplier')->default(1);
+            $table->integer('order_column');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('departments_filaments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('department')->unsigned();
+            $table->integer('filament')->unsigned();
         });
     }
 
@@ -31,6 +40,7 @@ class AddFilamentsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('departments_filaments');
         Schema::dropIfExists('filaments');
     }
 }

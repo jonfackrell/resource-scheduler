@@ -41,15 +41,31 @@ $factory->define(App\Models\Patron::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Department::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word(),
-        'description' => $faker->paragraph(3)
+        'description' => $faker->paragraph(2)
     ];
 });
 
+$factory->define(App\Models\Printer::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence(1),
+        'description' => $faker->paragraph(2),
+        'image' => 'https://www.lulzbot.com/sites/default/files/TAZ_6_Angle_Main_Product_Page.png',
+        'department' => $faker->numberBetween(1, 5),
+        'flat_fee' => $faker->numberBetween(0, 3),
+        'per_hour' => $faker->numberBetween(0, 2),
+        'overtime_fee' => $faker->numberBetween(0, 1),
+        'overtime_start' => $faker->numberBetween(12, 24)
+    ];
+});
 
 $factory->define(App\Models\Filament::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->sentence(1),
-        'description' => $faker->paragraph(2)
+        'description' => $faker->paragraph(2),
+        'department' => $faker->numberBetween(1, 5),
+        'cost_per_gram' => 2.5,
+        'add_cost_per_gram' => 5,
+        'multiplier' => $faker->numberBetween(1, 3)
     ];
 });
 
@@ -61,12 +77,12 @@ $factory->define(App\Models\Color::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
-        'patron' => $faker->randomDigit(1, 20),
-        'department' => $faker->randomDigit(0, 5),
-        'filament' => $faker->randomDigit(0, 20),
-        'color' => $faker->randomDigit(0, 10),
+        'patron' => $faker->numberBetween(1, 20),
+        'department' => $faker->numberBetween(1, 5),
+        'filament' => $faker->numberBetween(1, 20),
+        'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,
-        'time' => $faker->randomDigit(2, 12),
+        'time' => $faker->numberBetween(60, 3600),
         'weight' => $faker->randomDigit(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
         'status' => $faker->randomDigit(1, 4)

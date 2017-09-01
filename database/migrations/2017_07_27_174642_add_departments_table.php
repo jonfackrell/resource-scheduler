@@ -16,7 +16,8 @@ class AddDepartmentsTable extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('tax_rate')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

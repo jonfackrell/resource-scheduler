@@ -3,12 +3,8 @@
     <div class="menu_section">
         <h3>General</h3>
         <ul class="nav side-menu">
-            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li><a href="index.html">Dashboard</a></li>
-                    <li><a href="index2.html">Dashboard2</a></li>
-                    <li><a href="index3.html">Dashboard3</a></li>
-                </ul>
+            <li>
+                <a href="{{ route('admin') }}"><i class="fa fa-home"></i> Home</a>
             </li>
             <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
@@ -64,16 +60,10 @@
         </ul>
     </div>
     <div class="menu_section">
-        <h3>Live On</h3>
+        <h3>Web</h3>
         <ul class="nav side-menu">
-            <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li><a href="e_commerce.html">E-commerce</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="project_detail.html">Project Detail</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                    <li><a href="profile.html">Profile</a></li>
-                </ul>
+            <li>
+                <a href="{{ route('options') }}"><i class="fa fa-laptop"></i> Upload</a>
             </li>
             <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
