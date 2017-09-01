@@ -172,8 +172,8 @@ class UploadFileController extends Controller
         $printjob = PrintJob::find($id);
         $patron = Patron::find($printjob->patron);
         $filaments = Filament::all()->pluck('name', 'id')->all();
-
         $departments = Department::all()->pluck('name','id')->all();
+
         return view('uploadfile.edit', compact('printjob', 'departments','filaments', 'patron'));
     }
 
