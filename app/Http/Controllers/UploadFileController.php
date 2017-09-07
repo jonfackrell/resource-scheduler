@@ -145,7 +145,7 @@ class UploadFileController extends Controller
 
         $printjob->save();
 
-        return 'done';
+        return redirect()->route('history');
 
     }
 
@@ -219,5 +219,19 @@ class UploadFileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the history of uploads
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function history()
+    {
+        $public = Setting::where('group', 'PUBLIC')->get();
+        $printJobs = PrintJob::wherePatron(auth()->user()->id)->orderBy('updated_at', 'DESC')->paginate(20);
+
+        return view('patron.history', compact('printJobs', 'public'));
     }
 }

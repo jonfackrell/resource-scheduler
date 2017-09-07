@@ -87,7 +87,7 @@
     
     <script type="text/javascript">
         $(function(){
-            
+
             window.statuses = [];
             @foreach($printJobs as $key => $printJob)
                 window.statuses.push({

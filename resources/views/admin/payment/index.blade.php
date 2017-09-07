@@ -13,7 +13,7 @@
                     <th style="width: 20%">Project Name</th>
                     <th>Status</th>
                     <th>Cost</th>
-                    <th style="width: 20%">#Edit</th>
+                    <th style="width: 20%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                             <button type="button" class="btn btn-info btn-sm">{{ $printJob->currentStatus->name }}</button>
                         </td>
                         <td>
-                            {{ $printJob->cost }}
+                            $ {{ money_format('%i', $printJob->cost) }}
                         </td>
                         <td>
                             <a href="#" class="btn @if($printJob->paid == true) btn-success @else btn-primary @endif btn-sm toggle-print-job-payment-status @if($printJob->paid == true) paid @endif"><i class="fa fa-usd"></i>&nbsp; Mark Paid </a>

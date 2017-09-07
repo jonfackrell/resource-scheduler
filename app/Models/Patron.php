@@ -13,7 +13,7 @@ class Patron extends Authenticatable
     //
 
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'department'
+        'first_name', 'last_name', 'email', 'department', 'netid'
     ];
 
     public function fullName() {

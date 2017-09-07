@@ -10,7 +10,8 @@
         "laracasts/utilities": "^2.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "spatie/eloquent-sortable": "^3.3"
+        "spatie/eloquent-sortable": "^3.3",
+        "subfission/cas": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

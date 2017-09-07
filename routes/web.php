@@ -11,9 +11,10 @@
 |
 */
 
+Auth::routes();
 
-//Route::group(['middleware' => ['web']], function() {
-    Auth::routes();
+Route::group(['middleware' => ['auth']], function() {
+
 
 	Route::get('/admin', 'AdminController@index')->name('admin');
 
@@ -33,10 +34,7 @@
 	Route::post('/admin/status/sort', 'StatusController@sort')->name('status.sort');
 	Route::resource('/admin/status', 'StatusController');
 
-	// Workflow for choosing best-priced printer
-	Route::get('/options', 'UploadFileController@options')->name('options');
-	Route::get('/printers', 'UploadFileController@printers')->name('printers');
-	Route::get('/uploads', 'UploadFileController@upload')->name('uploads');
+
 
 	Route::resource('/uploadfile', 'UploadFileController');
 
@@ -72,6 +70,18 @@
 	Route::put('/admin/{id}','AdminController@update')->name('admin.update');
  
 
+});
 
-//});
+Route::group(['middleware' => ['cas.auth', 'patron.auth']], function() {
+    // Workflow for choosing best-priced printer
+    Route::get('/options', 'UploadFileController@options')->name('options');
+    Route::get('/printers', 'UploadFileController@printers')->name('printers');
+    Route::get('/uploads', 'UploadFileController@upload')->name('uploads');
+    Route::get('/history', 'UploadFileController@history')->name('history');
+    Route::get('/register', 'RegistrationController@edit')->name('register');
+    Route::put('/register', 'RegistrationController@update')->name('register');
+});
+
+
+
 

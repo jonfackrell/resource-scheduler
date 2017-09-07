@@ -29,7 +29,6 @@ class AuthServiceProvider extends ServiceProvider
     {
 
         if(Schema::hasTable('users')) {
-            auth()->login(User::find(1));
 
             Gate::before(function($user) {
                 if($user->isSuperUser()) {

@@ -59,6 +59,13 @@ class DatabaseSeeder extends Seeder
         $settings->group            = 'PUBLIC';
         $settings->order            = 5;
         $settings->save();
+        // TODO: Add logo url
+        $settings                   = new \App\Models\Setting();
+        $settings->name             = 'LOGO';
+        $settings->value            = '';
+        $settings->group            = 'PUBLIC';
+        $settings->order            = 5;
+        $settings->save();
 
 
         App\Models\Department::create([
