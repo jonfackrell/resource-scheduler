@@ -71,7 +71,7 @@
 
 	Route::put('/admin/{id}','AdminController@update')->name('admin.update');
 
-	Route::get('/admin/charts', 'ChartsController@index');
+	Route::get('/admin/charts', 'ChartsController@index')->name('charts');;
  
 
 

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\PrintJob;
+use App\Models\FilamentColor;
+use App\Models\Color;
+use App\Models\Filament;
+
 use App\Http\Requests;
 use Charts;
 
@@ -28,6 +32,21 @@ class ChartsController extends Controller
         //     // Setup what the values mean
         //     ->labels(['One', 'Two', 'Three']);
 
+        // $chart3 = Charts::database(FilamentColor::whereDepartment(auth()->user()->department)->get(), 'bar', 'google')
+            
+            // ->title('Filaments')
+
+            // ->groupBy('filament')
+            // ->labels(Filament::all()->pluck('name'));
+
+    //         $chart3 = Charts::multi('bar', 'highcharts')
+    //         ->title('Filament Colors')
+    // ->colors(['#ff0000', '#00ff00', '#0000ff'])
+    // ->labels(Color::all()->pluck('name'))
+    // ->dataset('PolyLite PLA', FilamentColor::where('department',auth()->user()->department)->where('filament', 1)->pluck('quantity'))
+    // ->dataset('nGEN', FilamentColor::where('department',auth()->user()->department)->where('filament', 2)->pluck('quantity'))
+    // ->dataset('NinjaFlex', FilamentColor::where('department',auth()->user()->department)->where('filament', 3)->pluck('quantity'));
+
 
            $chart2 = Charts::database(PrintJob::where('status', 4)->where('department', auth()->user()->department)->get(), 'line', 'highcharts')
             ->title('Prints Per Month')
@@ -40,9 +59,37 @@ class ChartsController extends Controller
             ->title('Printjobs by status')
             ->groupBy('status')
             ->colors(['#2196F3', '#FFC107', '#F44336', '#32CD32'])
-            ->labels(['Printed','Printing','Pending Approval', 'Printjob Approved']);
+            ->labels(['Denied','Printing Complete','Pending Print', 'Pending Approval','Printing',]);
+
+
+
+$filamentChart1 = Charts::multi('line', 'highcharts')
+            ->title('PolyLite PLA')
+    ->colors(Color::all()->pluck('hex_code')->all())
+    ->labels(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])
+
+    ->dataset('color', PrintJob::where('color', 1)->where('department', auth()->user()->department)
+        ->where('filament', 1)
+        ->whereYear('created_at','2017')
+        ->whereMonth('created_at', date('09'))
+        ->pluck('weight'));
+
+
+    
             
 
-        return view('admin.charts.index', ['chart' => $chart, 'chart2' => $chart2]);
+            
+
+    $chart3 = Charts::multi('bar', 'highcharts')
+            ->title('Filament Colors')
+    ->colors(Color::all()->pluck('hex_code')->all())
+    ->labels(Filament::all()->pluck('name'));
+
+    foreach (Color::all() as $color) {
+        $chart3 = $chart3->dataset($color->name, FilamentColor::where('department',auth()->user()->department)->where('color', $color->id)->pluck('quantity'));
+    } 
+    
+
+        return view('admin.charts.index', ['chart3' => $chart3, 'chart' => $chart, 'chart2' => $chart2, 'filamentChart1' => $filamentChart1]);
     }
 }

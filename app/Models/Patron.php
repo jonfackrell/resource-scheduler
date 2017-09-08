@@ -20,5 +20,10 @@ class Patron extends Authenticatable
         return $this->first_name . ' ' . $this->last_name;
 	}
 
+	public function sendDifferentFileNotification($token)
+    {
+        $this->notify(new sendDifferentFileNotification($token));
+    }
+
 
 }

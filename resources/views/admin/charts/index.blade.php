@@ -9,6 +9,9 @@
     {!! $chart->html() !!}
 
     {!! $chart2->html() !!}
+    {!! $chart3->html() !!}
+    {!! $filamentChart1->html() !!}
+
 
     
 @endsection
@@ -23,5 +26,7 @@
     {!! $chart->script() !!}
 
     {!! $chart2->script() !!}
+    {!! $chart3->script() !!}
+    {!! $filamentChart1->script() !!}
  
 @endpush

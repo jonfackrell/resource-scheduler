@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPickUpNotification extends Notification
+class SendPrintJobPrintingNotification extends Notification
 {
     use Queueable;
 
@@ -43,8 +43,8 @@ class SendPickUpNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Your Order is ready to be picked up')
-                    ->line('Your Order is ready to be picked up from the McKay Library.');
+                    ->subject('Your Order is currently printing')
+                    ->line('You order is currently printing and you will be notified though email when it is ready to be picked up.');
     }
 
     /**
