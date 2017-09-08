@@ -71,12 +71,12 @@ class ChartsController extends Controller
             $myArray = array();
             for ($i = 1; $i <= 12; $i++) {
                 $monthNumString = str_pad($i, 2, "0", STR_PAD_LEFT);
-                $myArray[$i] = PrintJob::where('color', $color)->where('department', auth()->user()->department)->where('filament', $filament)->whereMonth('created_at',date($monthNumString))->get()->sum->weight;
+                $myArray[$i] = PrintJob::where('color', $color)->where('department', auth()->user()->department)->where('filament', $filament)->where('status', 4)->whereMonth('created_at',date($monthNumString))->get()->sum->weight;
             }
             return $myArray;
         }
 
-            $filamentChart1 = Charts::multi('bar', 'highcharts')
+            $filamentChart1 = Charts::multi('line', 'highcharts')
                         ->title('PolyLite PLA')
                 ->colors(Color::all()->pluck('hex_code')->all())
                 ->labels(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
