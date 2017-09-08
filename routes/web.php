@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::group(['middleware' => ['cas.auth', 'patron.auth']], function() {
     // Workflow for choosing best-priced printer
+    Route::get('/', 'PublicController@index')->name('home');
     Route::get('/options', 'UploadFileController@options')->name('options');
     Route::get('/printers', 'UploadFileController@printers')->name('printers');
     Route::get('/uploads', 'UploadFileController@upload')->name('uploads');

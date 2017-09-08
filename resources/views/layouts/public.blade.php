@@ -35,6 +35,9 @@
             border-radius: 0px;
             margin: 0px 0px 30px 0px;
         }
+        .navbar-header{
+            background: #f8f8f8;
+        }
     </style>
 
     {!! $public->where('name', 'HEADER_CSS')->first()->value or '' !!}

@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         // TODO: Add logo url
         $settings                   = new \App\Models\Setting();
         $settings->name             = 'LOGO';
-        $settings->value            = '';
+        $settings->value            = '//library.byui.edu/images/byu-idaho-logo.png';
         $settings->group            = 'PUBLIC';
         $settings->order            = 5;
         $settings->save();
