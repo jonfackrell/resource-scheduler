@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPrintJobApprovedNotification extends Notification
+class PaymentReceivedNotification extends Notification
 {
     use Queueable;
 
@@ -18,9 +18,9 @@ class SendPrintJobApprovedNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($printJob)
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
     }
 
     /**
@@ -43,9 +43,8 @@ class SendPrintJobApprovedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Your Order was approved')
-                    ->line('The file you sent met the criteria. Please wait for further notifications on when to pick up your order.')
-                    ->action('View Printjob', url('/uploadfile/'. $this->id . '/edit'));
+                    ->subject('Payment Received')
+                    ->line('Thank you! We have received your payment.');
     }
 
     /**

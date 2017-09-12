@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $this->authorize('view-users');
 
-        $users = User::where('department', auth()->user()->department)->get();
+        $users = User::where('department', auth()->guard('web')->user()->department)->get();
         //$departments = Department::all()->pluck('name','id')->all();
         return view('admin.user.index', compact('users'));
     }
@@ -46,7 +46,7 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->password = str_random(64);
         if(!$request->has('department')){
-            $user->department = auth()->user()->department;
+            $user->department = auth()->guard('web')->user()->department;
         }
         $user->save();
 

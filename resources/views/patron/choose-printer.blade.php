@@ -1,14 +1,26 @@
 @extends('layouts.public')
 
 @section('title')
-    Choose a Printer
+    Choose a Filament & Printer
 @endsection
 
 @section('content')
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger" data-transitiongoal="33" style="width: 33%;" aria-valuenow="33"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12">
-        {!! BootForm::open()->action(route('printers'))->get() !!}
-        {!! BootForm::select('Filament', 'filament')->options($filaments->pluck('name', 'id'))->select($filament->id) !!}
+        {!! BootForm::open()->action(route('choose-printer'))->get() !!}
+        {!! BootForm::select('Filament', 'filament')
+                        ->options($filaments->pluck('name', 'id'))
+                        ->select($filament->id)
+                        ->helpBlock('This page will automatically reload if you select a new filament.')
+         !!}
         {!! BootForm::hidden('weight')->value(session('weight', request()->get('weight'))) !!}
         {!! BootForm::hidden('time')->value(session('time', request()->get('time'))) !!}
         {!! BootForm::close() !!}
@@ -19,7 +31,7 @@
 
     @foreach($printers as $key => $printer)
         <div class="col-md-3 col-xs-12 widget widget_tally_box">
-            {!! BootForm::open()->action(route('uploads'))->get()->id('printer-selection-form') !!}
+            {!! BootForm::open()->action(route('submit'))->get()->id('printer-selection-form') !!}
                 <div class="x_panel ">
                     <div class="x_content">
 
@@ -40,10 +52,20 @@
                         <h3 class="name">{!! $printer->name !!}</h3>
                         <h4 class="name">{!! $printer->departmentOwner->name !!}</h4>
 
+                        <p>Estimated Start</p>
+                        <p style="font-weight: bolder;">{!! $printer->timeToPrint->diffForHumans() !!}</p>
+                        <br />
+                        <table class="table">
+                            <tr style="font-size: 1.2em;">
+                                <th>Total Cost</th>
+                                <td style="text-align: right;">${!! money_format('%(#2n', $printer->costToPrint/100) !!}</td>
+                            </tr>
+                        </table>
+                        <!--
                         <div class="flex">
                             <ul class="list-inline count2">
                                 <li style="text-align: center; width: 49%;">
-                                    <h3>{!! $printer->timeToPrint !!}</h3>
+                                    <h3>{!! $printer->timeToPrint->diffForHumans() !!}</h3>
                                     <span>Est. Start</span>
                                 </li>
                                 <li style="text-align: center; width: 49%;">
@@ -52,10 +74,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <p>
-                            <div class="alert alert-danger" id="color-warning" style="display: none;">
-                                Please select a filament color.
-                            </div>
+                        -->
+                        <div>
+                            <p>Select a filament color from the following options:</p>
                             <div class="form-group">
                                 @php
                                     $printer_filament = $printer->filaments->where('id', $filament->id)->first();
@@ -65,7 +86,10 @@
                                     {!! BootForm::radio('<div style="height: 20px; width: 20px; display: inline-block;  background-color: #' . $color->hex_code . '" title="' . $color->name . '"></div>', 'color')->addClass('hidden-radio')->inline()->value($color->id) !!}
                                 @endforeach
                             </div>
-                        </p>
+                            <div class="alert alert-danger" id="color-warning" style="display: none;">
+                                Please select a filament color.
+                            </div>
+                        </div>
                         <p>
                             {!! BootForm::submit('Select')->class('btn btn-block btn-success') !!}
                         </p>
@@ -108,11 +132,12 @@
             });
 
             $(document).on('submit', '#printer-selection-form', function(){
-                if(!$("input[name='color']:checked").val()){
-                    $('#color-warning').show();
+                var $form = $(this);
+                if(!$form.find("input[name='color']:checked").val()){
+                    $form.find('#color-warning').show();
                     return false;
                 }else{
-                    $('#color-warning').hide();
+                    $form.find('#color-warning').hide();
                     return true;
                 }
             });

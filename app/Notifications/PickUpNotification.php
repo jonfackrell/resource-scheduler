@@ -7,20 +7,20 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendNewPasswordNotification extends Notification
+class PickUpNotification extends Notification
 {
     use Queueable;
 
-    protected $token;
+    public $id;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($id)
     {
-        $this->token = $token;
+        $this->id = $id;
     }
 
     /**
@@ -43,9 +43,9 @@ class SendNewPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Action Required: Please reset your password')
-                    ->line('Please click the link below to create your own password for your newly created account.')
-                    ->action('Create Password', url('/password/reset', ['token' => $this ->token]));
+                    ->subject('Your Order was not approved')
+                    ->line('The file you sent failed the criteria. Please upload a different file to be approved')
+                    ->action('Edit Printjob', url('/uploadfile/'. $this->id . '/edit'));
     }
 
     /**

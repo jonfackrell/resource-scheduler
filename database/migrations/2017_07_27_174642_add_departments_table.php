@@ -17,8 +17,10 @@ class AddDepartmentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->integer('tax_rate')->default(1);
+            $table->float('tax_rate')->default(1.065);
             $table->integer('initial_status')->unsigned()->nullable();
+            $table->longText('terms')->nullable();
+            $table->longText('payment_instructons')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

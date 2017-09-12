@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPickUpNotification extends Notification
+class PrintJobRejectionNotification extends Notification
 {
     use Queueable;
 

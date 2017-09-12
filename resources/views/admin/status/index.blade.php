@@ -8,12 +8,16 @@
 
 	{!! BootForm::open()->action(route('status.index'))->post() !!}
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 {!! BootForm::text('Name', 'name')->required() !!}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 {!! BootForm::checkbox('Accept Payment', 'accept_payment')->helpBlock('Statuses with this option checked will allow users to pay for their prints.') !!}
                 {!! BootForm::checkbox('Display in Dashboard', 'dashboard_display')->helpBlock('Statuses with this option checked will be added as a new tab to the admin dashboard.') !!}
+            </div>
+            <div class="col-md-4">
+                {!! BootForm::checkbox('In Queue', 'in_queue')->helpBlock('Statuses with this option checked will be calculated in wait times.') !!}
+                {!! BootForm::checkbox('Patrons Can Delete', 'can_delete')->helpBlock('Statuses with this option checked will let patrons delete their print jobs.') !!}
             </div>
         </div>
 
@@ -27,6 +31,9 @@
                     <td></td>
                     <td>Accept Payment</td>
                     <td>Display in Dashboard</td>
+                    <td>In Queue</td>
+                    <td>Patrons can Delete</td>
+                    <td>Notification</td>
                     <td></td>
                 </tr>
             </thead>
@@ -45,6 +52,26 @@
                         <label>
                             <input type="checkbox" class="flat" @if($status->dashboard_display == 1) checked  @endif data-field="dashboard_display"/>
                         </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->in_queue == 1) checked  @endif data-field="in_queue"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->can_delete == 1) checked  @endif data-field="can_delete"/>
+                        </label>
+                    </td>
+                    <td>
+                        {!! BootForm::open() !!}
+                        {!! BootForm::select('Notification', 'notification')
+                                        ->options($notifications->pluck('display_name', 'id')->prepend(' - Choose - ', 0))
+                                        ->select($status->notification)
+                                        ->hideLabel()
+                                        ->addClass('notification-update')
+                                        ->data('field', 'notification')!!}
+                        {!! BootForm::close() !!}
                     </td>
                     <td>
                         {!! BootForm::open()->action(route('status.destroy', $status->id))->delete() !!}
@@ -106,6 +133,26 @@
                 var field = $checkbox.data('field');
                 var data = {};
                 data[field] = 0;
+                $.ajax({
+                    type: "PUT",
+                    url: '/admin/status/' + statusid,
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            });
+
+            $(document).on('change', '.notification-update', function(){
+                var $select = $(this);
+                var statusid = $select.closest('tr').data('id');
+                var field = $select.data('field');
+                var data = {};
+                data[field] = $select.val();
                 $.ajax({
                     type: "PUT",
                     url: '/admin/status/' + statusid,

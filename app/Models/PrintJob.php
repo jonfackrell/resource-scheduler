@@ -39,6 +39,14 @@ class PrintJob extends Model
         return $this->belongsTo(Patron::class, 'patron', 'id');
     }
 
+    /**
+     * Get the department.
+     */
+    public function departmentOwner()
+    {
+        return $this->belongsTo(Department::class, 'department', 'id');
+    }
+
 
     protected $fillable = [
         'patron', 'color', 'filament', 'department', 'original_filename', 'filename'

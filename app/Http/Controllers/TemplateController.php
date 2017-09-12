@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PrintJob;
-use App\Models\Status;
-use App\Notifications\PaymentReceivedNotification;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class TemplateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +13,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $statuses = Status::where('accept_payment', 1)->pluck('id')->all();
-        $printJobs = PrintJob::with('currentStatus', 'owner')
-                        ->whereIn('status', $statuses)
-                        ->where('paid', '<>', 1)
-                        ->paginate(20);
-        return view('admin.payment.index', compact('printJobs'));
+        //
     }
 
     /**
@@ -88,19 +80,5 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-
-    public function updatePaymentStatus(Request $request)
-    {
-        $printJob = PrintJob::findOrFail($request->get('id'));
-        $printJob->paid = $request->get('paid');
-        $printJob->save();
-
-        if($printJob->paid == 1){
-            $printJob->owner->notify(new PaymentReceivedNotification($printJob));
-        }
-
-        return response()->json(['status' => $request->get('paid')]);
     }
 }

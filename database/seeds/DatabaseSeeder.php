@@ -71,7 +71,8 @@ class DatabaseSeeder extends Seeder
         App\Models\Department::create([
             'name' => 'McKay Library',
             'description' => 'MCK 140',
-            'initial_status' => 1
+            'initial_status' => 1,
+            'terms' => 'By clicking \'Submit\' you agree to paying the total cost listed within 2 weeks of printing.'
         ]);
 
         App\Models\Department::create([

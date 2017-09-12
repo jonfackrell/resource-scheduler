@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
-	Route::resource('/uploadfile', 'UploadFileController');
+	Route::resource('uploadfile', 'UploadFileController');
 
 	Route::get('file', 'PrintJobController@showUploadForm')->name('upload.file');
 
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/test', function(){
 
         auth()->login(\App\Models\Patron::findOrFail(3));
-		auth()->user()->notify(new App\Notifications\SendDifferentFileNotification('2'));
+		auth()->user()->notify(new App\Notifications\PrintJobRejectionNotification('2'));
 
 	});
 
@@ -73,12 +73,18 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::group(['middleware' => ['cas.auth', 'patron.auth']], function() {
-    // Workflow for choosing best-priced printer
+
     Route::get('/', 'PublicController@index')->name('home');
-    Route::get('/options', 'UploadFileController@options')->name('options');
-    Route::get('/printers', 'UploadFileController@printers')->name('printers');
-    Route::get('/uploads', 'UploadFileController@upload')->name('uploads');
-    Route::get('/history', 'UploadFileController@history')->name('history');
+    Route::get('/printers', 'PublicController@printers')->name('printers');
+    Route::get('/policy', 'PublicController@policy')->name('policy');
+
+    // Workflow for choosing best-priced printer
+    Route::get('/options', 'PatronController@options')->name('options');
+    Route::get('/choose-printer', 'PatronController@choosePrinter')->name('choose-printer');
+    Route::get('/uploads', 'PatronController@upload')->name('uploads');
+    Route::get('/submit', 'PatronController@submit')->name('submit');
+    Route::get('/history', 'PatronController@history')->name('history');
+
     Route::get('/register', 'RegistrationController@edit')->name('register');
     Route::put('/register', 'RegistrationController@update')->name('register');
 });

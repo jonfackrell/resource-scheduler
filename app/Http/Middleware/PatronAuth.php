@@ -16,7 +16,7 @@ class PatronAuth
     public function handle($request, Closure $next)
     {
 
-        if(auth()->guest()){
+        if(!\Auth::guard('patrons')->check()){
             cas()->authenticate();
 
 
@@ -28,9 +28,9 @@ class PatronAuth
                 ]);
             }
 
-            auth()->login($user);
+            auth()->guard('patrons')->login($user);
 
-            if(\Route::currentRouteName() != 'register' && strlen(auth()->user()->email) < 3){
+            if(\Route::currentRouteName() != 'register' && strlen(auth()->guard('patrons')->user()->email) < 3){
                return redirect()->to( route('register') );
             }
         }

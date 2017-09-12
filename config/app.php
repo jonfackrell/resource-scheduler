@@ -183,6 +183,9 @@ return [
         // https://github.com/subfission/cas/wiki/Installation
         Subfission\Cas\CasServiceProvider::class,
 
+        // https://github.com/Flynsarmy/laravel-db-blade-compiler
+        //Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
+
 
         // https://github.com/barryvdh/laravel-debugbar/tree/2.4
         //Barryvdh\Debugbar\ServiceProvider::class,
@@ -240,6 +243,7 @@ return [
     
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
+        //'DbView' => Flynsarmy\DbBladeCompiler\Facades\DbView::class,
 
     ],
 

@@ -15,7 +15,7 @@ class RegistrationController extends Controller
      */
     public function edit()
     {
-        $user = \App\Models\Patron::whereNetid(auth()->user()->netid)->first();
+        $user = \App\Models\Patron::whereNetid(auth()->guard('patrons')->user()->netid)->first();
         $public = Setting::where('group', 'PUBLIC')->get();
         return view('patron.registration', compact('user', 'public'));
     }

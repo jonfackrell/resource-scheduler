@@ -50,63 +50,6 @@ class UploadFileController extends Controller
 
     }
 
-
-    /**
-     * Display a options form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function options()
-    {
-
-        $public = Setting::where('group', 'PUBLIC')->get();
-        return view('uploadfile.model-options', compact('public'));
-
-    }
-
-    /**
-     * Display a listing of printers.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function printers(Request $request)
-    {
-        $public = Setting::where('group', 'PUBLIC')->get();
-        $filaments = Filament::all();
-        if($request->has('filament')){
-            $filament = $filaments->where('id', $request->get('filament'))->first();
-        }else{
-            $filament = $filaments->sortBy('order_column')->first();
-        }
-        session([
-            'weight' => $request->get('weight'),
-            'time' => $request->get('time'),
-            'filament' => $filament->id
-        ]);
-        $calulator = new CostCalculator(['weight' => session('weight'), 'time' => session('time')]);
-        $printers = $calulator->bestPrinterPrice($filament);
-        return view('uploadfile.choose-printer', compact('printers', 'filaments', 'filament', 'public'));
-    }
-
-    /**
-     * Display upload form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function upload(Request $request)
-    {
-        session([
-            'printer' => $request->get('printer'),
-            'color' => $request->get('color')
-        ]);
-        $public = Setting::where('group', 'PUBLIC')->get();
-        $color = Color::findOrFail(session('color'));
-        $printer = Printer::findOrFail(session('printer'));
-        $filament = Filament::findOrFail(session('filament'));
-        $printer->patronCostToPrint(['weight' => session('weight'), 'time' => session('time')], $filament);
-        return view('uploadfile.upload', compact('printer', 'filament', 'color', 'public'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -115,38 +58,6 @@ class UploadFileController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        
-        $printjob = new PrintJob;
-        $printjob->fill($request->all());
-        $printjob->patron = auth()->user()->id;
-
-
-        if($request->hasFile('filename')) {
-
-            $filename = $request->filename->store('public/upload');
-            // return 'yes';
-            $printjob->filename = $filename;
-            $printjob->original_filename = $request->filename->getClientOriginalName();
-
-        }
-
-        $department = Department::findOrFail($request->get('department'));
-        $printjob->status = $department->initial_status;
-
-        $printjob->save();
-
-        return redirect()->route('history');
-
     }
 
     /**
@@ -218,20 +129,11 @@ class UploadFileController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $filament = PrintJob::findorFail($id);
+        $filament->delete();
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the history of uploads
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function history()
-    {
-        $public = Setting::where('group', 'PUBLIC')->get();
-        $printJobs = PrintJob::wherePatron(auth()->user()->id)->orderBy('updated_at', 'DESC')->paginate(20);
-
-        return view('patron.history', compact('printJobs', 'public'));
-    }
 }

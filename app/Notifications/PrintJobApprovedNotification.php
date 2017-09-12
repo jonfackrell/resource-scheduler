@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendDifferentFileNotification extends Notification
+class PrintJobApprovedNotification extends Notification
 {
     use Queueable;
 
@@ -43,9 +43,9 @@ class SendDifferentFileNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Your Order was not approved')
-                    ->line('The file you sent failed the criteria. Please upload a different file to be approved')
-                    ->action('Edit Printjob', url('/uploadfile/'. $this->id . '/edit'));
+                    ->subject('Your Order was approved')
+                    ->line('The file you sent met the criteria. Please wait for further notifications on when to pick up your order.')
+                    ->action('View Printjob', url('/uploadfile/'. $this->id . '/edit'));
     }
 
     /**

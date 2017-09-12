@@ -6,7 +6,15 @@
 
 @section('content')
 
-    {!! BootForm::open()->action(route('uploadfile.index'))->post()->enctype('multipart/form-data') !!}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger" data-transitiongoal="66" style="width: 66%;" aria-valuenow="66"></div>
+            </div>
+        </div>
+    </div>
+
+    {!! BootForm::open()->action(route('submit'))->post()->enctype('multipart/form-data') !!}
 
     <div class="col-md-3 col-xs-12 widget widget_tally_box">
 
@@ -19,7 +27,7 @@
                             <span>&nbsp;</span>
                         </li>
                         <li>
-                            <img src="https://www.lulzbot.com/sites/default/files/TAZ_6_Angle_Main_Product_Page.png" alt="..." class="img-circle profile_img">
+                            <img src="{{ $printer->image }}" alt="..." class="img-circle profile_img">
                         </li>
                         <li>
                             <span>&nbsp;</span>
@@ -30,18 +38,24 @@
                 <h3 class="name">{!! $printer->name !!}</h3>
                 <h4 class="name">{!! $printer->departmentOwner->name !!}</h4>
 
-                <div class="flex">
-                    <ul class="list-inline count2">
-                        <li style="text-align: center; width: 49%;">
-                            <h3>{!! $printer->timeToPrint !!}</h3>
-                            <span>Est. Start</span>
-                        </li>
-                        <li style="text-align: center; width: 49%;">
-                            <h3>${!! money_format('%(#2n', $printer->costToPrint/100) !!}</h3>
-                            <span>Cost</span>
-                        </li>
-                    </ul>
-                </div>
+                <p>Estimated Start</p>
+                <p style="font-weight: bolder;">{!! $printer->timeToPrint->diffForHumans() !!}</p>
+                <br />
+
+                <table class="table">
+                    <tr>
+                        <th>Cost</th>
+                        <td style="text-align: right;">{{ money_format('%(#2n', $printer->netCostToPrint/100 ) }}</td>
+                    </tr>
+                    <tr>
+                        <th>+ Tax</th>
+                        <td style="text-align: right;">{{ money_format('%(#2n', $printer->tax/100 ) }}</td>
+                    </tr>
+                    <tr style="border-top: 2px solid #dedede; font-size: 1.2em;">
+                        <th>Total Cost</th>
+                        <td style="text-align: right;">${!! money_format('%(#2n', $printer->costToPrint/100) !!}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -59,7 +73,7 @@
                                     Weight
                                 </th>
                                 <td style="font-size: 16px;">
-                                    {{ session('weight') }}
+                                    {{ session('weight', request()->get('weight')) }} grams
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +81,7 @@
                                     Time
                                 </th>
                                 <td style="font-size: 16px;">
-                                    {{ session('time') }}
+                                    {{ session('time', request()->get('time')) }} minutes
                                 </td>
                             </tr>
                             <tr>
@@ -84,8 +98,10 @@
                     </table>
                 </div>
                 <div class="flex">
-                    {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a Cura file (.amf)') !!}
-
+                    {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> file (.amf)') !!}
+                    <div>
+                        {!! $department->terms !!}
+                    </div>
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
                     {!! BootForm::hidden('filament')->value(session('filament', request()->get('filament'))) !!}
                     {!! BootForm::hidden('color')->value(session('color', request()->get('color'))) !!}

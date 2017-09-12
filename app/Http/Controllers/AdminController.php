@@ -16,7 +16,8 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $statuses = Status::whereDashboardDisplay(1)
-                        ->whereDepartment(auth()->user()->department)
+                        ->whereDepartment(auth()->guard('web')->user()->department)
+                        ->orderBy('order_column', 'ASC')
                         ->get();
         $printJobs = [];
         foreach($statuses as $status){
@@ -25,6 +26,21 @@ class AdminController extends Controller
         return view('admin.index', compact('printJobs', 'statuses'));
     }
 
+    /**
+     * Edit the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $printJob = PrintJob::find($id);
+        $newStatus = $request->get('status');
+
+
+        return view('admin.edit');
+    }
 
     public function update(Request $request, $id)
     {
