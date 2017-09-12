@@ -49,6 +49,8 @@ class AdminController extends Controller
         $printJob->status = $request->status;
         $printJob->save();
 
+        
+
         return redirect()->route('admin', ["#$originalStatus"]);
         
     }

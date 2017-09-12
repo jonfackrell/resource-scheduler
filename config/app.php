@@ -190,6 +190,9 @@ return [
         // https://github.com/barryvdh/laravel-debugbar/tree/2.4
         //Barryvdh\Debugbar\ServiceProvider::class,
 
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+
+
     ],
 
     /*
@@ -244,6 +247,10 @@ return [
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
         //'DbView' => Flynsarmy\DbBladeCompiler\Facades\DbView::class,
+
+
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+
 
     ],
 

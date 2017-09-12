@@ -43,9 +43,8 @@ class PickUpNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Your Order was not approved')
-                    ->line('The file you sent failed the criteria. Please upload a different file to be approved')
-                    ->action('Edit Printjob', url('/uploadfile/'. $this->id . '/edit'));
+                    ->subject('Your Order is ready to be picked up')
+                    ->line('Your Order is ready to be picked up from the McKay Library.');
     }
 
     /**

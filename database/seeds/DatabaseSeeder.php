@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete'];
+        $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete', 'Denied'];
         $systemPermissions = [
             'view-departments' => 'View Departments', 'create-departments' => 'Create Departments', 'edit-departments' => 'Edit Departments', 'delete-departments' => 'Delete Departments',
             'view-filaments' => 'View Filaments', 'create-filaments' => 'Create Filaments','edit-filaments' => 'Edit Filaments', 'delete-filaments' => 'Delete Filaments',

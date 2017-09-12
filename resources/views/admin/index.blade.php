@@ -61,7 +61,9 @@
                                 {!! $printJob->fragment(str_slug($key))->links() !!}
                             </td>
                         </tr>
+
                         </tfoot>
+
                     </table>
                 </div>
             @endforeach
