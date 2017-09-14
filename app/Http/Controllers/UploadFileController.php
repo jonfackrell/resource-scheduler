@@ -28,24 +28,6 @@ class UploadFileController extends Controller
 
         $patron = Patron::find(request()->get('id'));
 
-        
-
-        // $desired_object;
-
-        // foreach ($patrons as $patron) {
-        //     if ($patron->remember_token == 'HUe6sr39L8') {
-        //         $desired_object = $patron;
-        //         break;
-        //     }
-        // }
-
-        // $patrons = $desired_object;
-
-
-        // $patrons = Patron::get()->where('remember_token', 'HUe6sr39L8');
-        //$options = Printjob::all()->pluck('options')->all();
-
-
         return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patron'));
 
     }
@@ -100,19 +82,17 @@ class UploadFileController extends Controller
         $printjob = PrintJob::find($id);
         $printjob->fill($request->all());
 
+        //save the stuff.
+        $printjob->save();
+
         if($request->hasFile('filename')) {
 
-            //$filename = $request->filename->getClientOriginalName();
-
-            $filename = $request->filename->store('public/upload');
-
-            // return 'yes';
+            $filename = $request->filename->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
             
             $printjob->filename = $filename;
             $printjob->original_filename = $request->filename->getClientOriginalName();
         }
 
-        //save the stuff.
         $printjob->save();
 
         // return redirect()->route('uploadfile.index');

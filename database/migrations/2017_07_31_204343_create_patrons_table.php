@@ -20,7 +20,7 @@ class CreatePatronsTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('netid')->unique();
             $table->string('password')->nullable();
-            
+            $table->string('inumber')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -6,7 +6,7 @@
 
 @section('content')
 
-	@if(auth()->user()->isSuperUser())
+	@if(auth()->guard('web')->user()->isSuperUser())
 		{!! BootForm::open()->action(route('filament.index'))->post() !!}
 		  {!! BootForm::text('Name', 'name') !!}
 		  {!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
@@ -52,7 +52,7 @@
 					@endforeach
 
 					<td>
-						@if(auth()->user()->isSuperUser())
+						@if(auth()->guard('web')->user()->isSuperUser())
 							{!! BootForm::open()->action(route('filament.destroy', $filament->id))->delete() !!}
 							{!! BootForm::submit('Delete', 'delete')->class('btn btn-danger btn-xs delete') !!}
 							{!! BootForm::close() !!}

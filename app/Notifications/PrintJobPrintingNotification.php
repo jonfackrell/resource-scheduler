@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPrintJobPrintingNotification extends Notification
+class PrintJobPrintingNotification extends Notification
 {
     use Queueable;
 
@@ -18,9 +18,11 @@ class SendPrintJobPrintingNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($printJob, $subject = '', $message = '')
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**

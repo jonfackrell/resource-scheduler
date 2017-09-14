@@ -16,7 +16,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $statuses = Status::where('accept_payment', 1)->pluck('id')->all();
+        $statuses = Status::whereAcceptPayment(1)
+                            ->whereDepartment(auth()->guard('web')->user()->department)
+                            ->pluck('id')
+                            ->all();
         $printJobs = PrintJob::with('currentStatus', 'owner')
                         ->whereIn('status', $statuses)
                         ->where('paid', '<>', 1)

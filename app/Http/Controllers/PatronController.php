@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CostCalculator;
+use App\Models\Color;
 use App\Models\Filament;
 use App\Models\Printer;
 use App\Models\PrintJob;
@@ -11,6 +12,7 @@ use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Models\Patron;
 use App\Models\Department;
+use Illuminate\Validation\Validator;
 
 class PatronController extends Controller
 {
@@ -23,27 +25,6 @@ class PatronController extends Controller
     {
         $departments = Department::all()->pluck('name', 'id')->all();
         return view('patron.index', compact('departments'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-       
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -112,6 +93,13 @@ class PatronController extends Controller
      */
     public function choosePrinter(Request $request)
     {
+
+        \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'hours' => 'numeric|max:120',
+            'minutes' => 'numeric|max:60',
+            'weight' => 'numeric|max:3000',
+        ])->validate();
+
         $public = Setting::where('group', 'PUBLIC')->get();
         $filaments = Filament::all();
         if($request->has('time')){
@@ -165,27 +153,30 @@ class PatronController extends Controller
     public function submit(Request $request)
     {
 
+        \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'filename' => 'file'
+        ])->validate();
+
         $printer = Printer::findOrFail(session('printer', $request->get('printer')));
         $filament = Filament::findOrFail(session('filament', $request->get('filament')));
         $printer->patronCostToPrint(['weight' => session('weight', $request->get('weight')), 'time' => session('time', $request->get('time'))], $filament);
 
         $printjob = new PrintJob;
         $printjob->fill($request->all());
+        $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
         $printjob->cost = $printer->costToPrint;
 
-
-        if($request->hasFile('filename')) {
-
-            $filename = $request->filename->store('public/upload');
-            // return 'yes';
-            $printjob->filename = $filename;
-            $printjob->original_filename = $request->filename->getClientOriginalName();
-
-        }
-
         $department = Department::findOrFail($printer->departmentOwner->id);
         $printjob->status = $department->initial_status;
+
+        $printjob->save();
+
+        if($request->hasFile('filename')) {
+            $filename = $request->file('filename')->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
+            $printjob->filename = $filename;
+            $printjob->original_filename = $request->filename->getClientOriginalName();
+        }
 
         $printjob->save();
 

@@ -41,6 +41,14 @@ class PrintJob extends Model
     }
 
     /**
+     * Get the printer.
+     */
+    public function selectedPrinter()
+    {
+        return $this->belongsTo(Printer::class, 'printer', 'id');
+    }
+
+    /**
      * Get the department.
      */
     public function departmentOwner()
@@ -50,7 +58,7 @@ class PrintJob extends Model
 
 
     protected $fillable = [
-        'patron', 'color', 'filament', 'department', 'original_filename', 'filename'
+        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed'
     ];
 
     /**
@@ -66,7 +74,12 @@ class PrintJob extends Model
         return $this->belongsTo(Filament::class, 'filament', 'id');
     }
 
-//attempt at sending an email to patron incomplete
+    public function getColor()
+    {
+        return $this->belongsTo(Color::class, 'color', 'id');
+    }
+
+    /*attempt at sending an email to patron incomplete
     public function setStatusAttribute($value)
     {
         // $patron = Patron::find($this->patron);
@@ -89,7 +102,7 @@ class PrintJob extends Model
 
         
     }
-
+    */
     public function sendDifferentFileNotification($token)
     {
         $this->notify(new sendDifferentFileNotification($token));

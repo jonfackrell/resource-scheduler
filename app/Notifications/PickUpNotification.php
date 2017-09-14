@@ -18,9 +18,11 @@ class PickUpNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($printJob, $subject = '', $message = '')
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**

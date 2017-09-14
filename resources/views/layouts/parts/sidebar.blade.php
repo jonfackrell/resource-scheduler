@@ -29,9 +29,6 @@
                     @can('view-colors')
                         <li><a href="{{ route('color.index') }}">Colors</a></li>
                     @endcan
-                    @can('view-charts')
-                        <li><a href="{{ route('charts') }}">3D Stats</a></li>
-                    @endcan
                 </ul>
             </li>
         </ul>

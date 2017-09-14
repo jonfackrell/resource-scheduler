@@ -10,8 +10,8 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <img src="images/img.jpg" alt="">
-                        @if(!auth()->guest())
-                            {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
+                        @if(!auth()->guard('web')->guest())
+                            {{ auth()->guard('web')->user()->first_name }} {{ auth()->guard('web')->user()->last_name }}
                         @endif
                         <span class=" fa fa-angle-down"></span>
                     </a>

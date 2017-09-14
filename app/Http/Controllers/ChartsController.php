@@ -48,14 +48,14 @@ class ChartsController extends Controller
     // ->dataset('NinjaFlex', FilamentColor::where('department',auth()->user()->department)->where('filament', 3)->pluck('quantity'));
 
 
-           $chart2 = Charts::database(PrintJob::where('status', 4)->where('department', auth()->user()->department)->get(), 'line', 'highcharts')
+           $chart2 = Charts::database(PrintJob::where('status', 4)->where('department', auth()->guard('web')->user()->department)->get(), 'line', 'highcharts')
             ->title('Prints Per Month')
             ->groupByMonth()
             ->labels(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])
             ->elementLabel("Prints")
             ->dimensions(0,500);
 
-            $chart = Charts::database(PrintJob::whereDepartment(auth()->user()->department)->get(), 'pie', 'highcharts')
+            $chart = Charts::database(PrintJob::whereDepartment(auth()->guard('web')->user()->department)->get(), 'pie', 'highcharts')
             ->title('Printjobs by status')
             ->groupBy('status')
             ->colors(['#2196F3', '#FFC107', '#F44336', '#32CD32'])
@@ -71,7 +71,7 @@ class ChartsController extends Controller
             $myArray = array();
             for ($i = 1; $i <= 12; $i++) {
                 $monthNumString = str_pad($i, 2, "0", STR_PAD_LEFT);
-                $myArray[$i] = PrintJob::where('color', $color)->where('department', auth()->user()->department)->where('filament', $filament)->where('status', 4)->whereMonth('created_at',date($monthNumString))->get()->sum->weight;
+                $myArray[$i] = PrintJob::where('color', $color)->where('department', auth()->guard('web')->user()->department)->where('filament', $filament)->where('status', 4)->whereMonth('created_at',date($monthNumString))->get()->sum->weight;
             }
             return $myArray;
         }
@@ -115,7 +115,7 @@ class ChartsController extends Controller
     ->labels(Filament::all()->pluck('name'));
 
     foreach (Color::all() as $color) {
-        $chart3 = $chart3->dataset($color->name, FilamentColor::where('department',auth()->user()->department)->where('color', $color->id)->pluck('quantity'));
+        $chart3 = $chart3->dataset($color->name, FilamentColor::where('department',auth()->guard('web')->user()->department)->where('color', $color->id)->pluck('quantity'));
     } 
     
 

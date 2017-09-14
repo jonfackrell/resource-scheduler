@@ -67,8 +67,13 @@ class Printer extends Model implements Sortable
     {
         $date = \Carbon\Carbon::now();
 
+        $statuses = Status::whereInQueue(1)
+            ->whereDepartment($this->attributes['department'])
+            ->pluck('id')
+            ->all();
+
         $time = PrintJob::select(\DB::raw('SUM(time) as total'))
-                    ->whereId($this->getKey())->first()->total;
+                    ->whereIn('status', $statuses)->first()->total + 30;
 
         return $date->addMinutes($time);
     }

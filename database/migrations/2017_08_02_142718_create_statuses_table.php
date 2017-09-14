@@ -22,6 +22,7 @@ class CreateStatusesTable extends Migration
             $table->boolean('in_queue')->default(0);
             $table->boolean('can_delete')->default(0);
             $table->boolean('dashboard_display')->default(0);
+            $table->boolean('subtract_inventory')->default(0);
             $table->integer('order_column');
             $table->timestamps();
         });

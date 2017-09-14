@@ -99,16 +99,20 @@
                 </div>
                 <div class="flex">
                     {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> file (.amf)') !!}
-                    <div>
-                        {!! $department->terms !!}
-                    </div>
+                    @if(strlen($department->terms) > 0)
+                        <div>
+                            {!! $department->terms !!}
+                        </div>
+                        <div style="margin: 10px 0px 0px 0px;">
+                            {!! BootForm::checkbox('<b>I agree</b>', 'accept_terms')->required()->inline() !!}
+                        </div>
+                    @endif
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
                     {!! BootForm::hidden('filament')->value(session('filament', request()->get('filament'))) !!}
                     {!! BootForm::hidden('color')->value(session('color', request()->get('color'))) !!}
                     {!! BootForm::hidden('printer')->value(session('printer', request()->get('printer'))) !!}
                     {!! BootForm::hidden('weight')->value(session('weight', request()->get('weight'))) !!}
                     {!! BootForm::hidden('time')->value(session('time', request()->get('time'))) !!}
-                    <br />
                     <br />
                     {!! BootForm::submit('Submit')->class('btn btn-block btn-success') !!}
                 </div>

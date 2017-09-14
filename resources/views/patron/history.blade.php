@@ -11,6 +11,7 @@
         <tr>
             <th style="width: 20%">Project Name</th>
             <th>Department</th>
+            <th>Estimated Start</th>
             <th>Status</th>
             <th>Cost</th>
             <th style="width: 20%"></th>
@@ -28,13 +29,18 @@
                         {{ $printJob->departmentOwner->name }}
                     </td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm">{{ $printJob->currentStatus->name or '' }}</button>
+                        @if($printJob->completed <> 1)
+                            {!! $printJob->selectedPrinter->timeToPrint()->diffForHumans() !!}
+                        @endif
+                    </td>
+                    <td>
+                        <button type="button" class="btn @if($printJob->completed <> 1) btn-success @else btn-info @endif  btn-sm">{{ $printJob->currentStatus->name or '' }}</button>
                     </td>
                     <td>
                         $ {{ money_format('%i', $printJob->cost) }}
                     </td>
                     <td>
-                        <button type="button" class="btn @if($printJob->paid == true) btn-success @else btn-warning @endif btn-sm">@if($printJob->paid == true) Payment Received @else Payment Pending @endif</button>
+                        <button type="button" class="btn @if($printJob->completed == true) btn-success @else btn-warning @endif btn-sm">@if($printJob->paid == true) Payment Received @else Payment Pending @endif</button>
                         @php
                             $status = \App\Models\Status::whereDepartment($printJob->department)->whereCanDelete(true)->pluck('id')->toArray();
                         @endphp

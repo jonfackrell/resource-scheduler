@@ -18,11 +18,11 @@ class GenericNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id, $subject, $body)
+    public function __construct($printJob, $subject = '', $message = '')
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
         $this->subject = $subject;
-        $this->body = $body;
+        $this->message = $message;
     }
 
     /**
@@ -46,7 +46,7 @@ class GenericNotification extends Notification
     {
         return (new MailMessage)
                     ->subject($this->subject)
-                    ->line($this->body);
+                    ->line($this->message);
     }
 
     /**

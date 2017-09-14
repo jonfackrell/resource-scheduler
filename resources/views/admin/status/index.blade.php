@@ -28,13 +28,15 @@
         <table class="table table-striped sorted_table">
             <thead>
                 <tr>
-                    <td></td>
-                    <td>Accept Payment</td>
-                    <td>Display in Dashboard</td>
-                    <td>In Queue</td>
-                    <td>Patrons can Delete</td>
-                    <td>Notification</td>
-                    <td></td>
+                    <th></th>
+                    <th>Display in Dashboard</th>
+                    <th>Accept Payment</th>
+                    <th>Subtract Inventory</th>
+                    <th>In Queue</th>
+                    <th>Completed</th>
+                    <th>Patrons can Delete</th>
+                    <th>Notification</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,17 +47,27 @@
                     </th>
                     <td>
                         <label>
-                            <input type="checkbox" class="flat" @if($status->accept_payment == 1) checked  @endif data-field="accept_payment"/>
-                        </label>
-                    </td>
-                    <td>
-                        <label>
                             <input type="checkbox" class="flat" @if($status->dashboard_display == 1) checked  @endif data-field="dashboard_display"/>
                         </label>
                     </td>
                     <td>
                         <label>
+                            <input type="checkbox" class="flat" @if($status->accept_payment == 1) checked  @endif data-field="accept_payment"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->subtract_inventory == 1) checked  @endif data-field="subtract_inventory"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
                             <input type="checkbox" class="flat" @if($status->in_queue == 1) checked  @endif data-field="in_queue"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" @if($status->completed == 1) checked  @endif data-field="completed"/>
                         </label>
                     </td>
                     <td>

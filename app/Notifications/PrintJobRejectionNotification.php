@@ -18,9 +18,11 @@ class PrintJobRejectionNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($printJob, $subject = '', $message = '')
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -45,7 +47,7 @@ class PrintJobRejectionNotification extends Notification
         return (new MailMessage)
                     ->subject('Your Order was not approved')
                     ->line('The file you sent failed the criteria. Please upload a different file to be approved')
-                    ->action('Edit Printjob', url('/uploadfile/'. $this->id . '/edit'));
+                    ->action('Edit Printjob', url('/uploadfile/'. $this->printJob->id . '/edit'));
     }
 
     /**

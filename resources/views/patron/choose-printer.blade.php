@@ -31,7 +31,7 @@
 
     @foreach($printers as $key => $printer)
         <div class="col-md-3 col-xs-12 widget widget_tally_box">
-            {!! BootForm::open()->action(route('submit'))->get()->id('printer-selection-form') !!}
+            {!! BootForm::open()->action(route('upload'))->get()->id('printer-selection-form') !!}
                 <div class="x_panel ">
                     <div class="x_content">
 

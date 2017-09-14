@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('/admin', 'AdminController@index')->name('admin');
 
+
 	Route::resource('/admin/department', 'DepartmentController');
 
     Route::post('/admin/filament/sort', 'FilamentController@sort')->name('filament.sort');
@@ -33,36 +34,31 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::post('/admin/status/sort', 'StatusController@sort')->name('status.sort');
 	Route::resource('/admin/status', 'StatusController');
+    Route::resource('/admin/payment', 'PaymentController');
 
+    Route::get('/admin/email/{id}', 'AdminController@createEmail')->name('admin.create-email');
+    Route::post('/admin/email/{id}', 'AdminController@sendEmail')->name('admin.send-email');
+    Route::get('/admin/{id}', 'AdminController@edit')->name('admin.edit');
 
 
 	Route::resource('uploadfile', 'UploadFileController');
-
 	Route::get('file', 'PrintJobController@showUploadForm')->name('upload.file');
 
-	Route::post('file', 'PrintJobController@storeFile');
-
-
 	Route::resource('/patron', 'PatronController');
-
-
-
-	Route::resource('/admin/payment', 'PaymentController');
 
 	Route::post('/update-payment-status', 'PaymentController@updatePaymentStatus');
 
 
 	Route::get('/test', function(){
 
-        auth()->login(\App\Models\Patron::findOrFail(3));
-		auth()->user()->notify(new App\Notifications\PrintJobRejectionNotification('2'));
+
 
 	});
 
 	Route::get('download/{filename}', function ($filename) {
 	    $printJob = \App\Models\PrintJob::whereFilename($filename)->first();
     	return response()->download(storage_path('app') . '/' . $filename, $printJob->original_filename);
-	})->where('filename', '(.*)');
+	})->where('filename', '(.*)')->name('download');
 
     Route::post('/admin/printer/sort', 'PrinterController@sort')->name('printer.sort');
 	Route::resource('/admin/printer', 'PrinterController');
@@ -83,8 +79,8 @@ Route::group(['middleware' => ['cas.auth', 'patron.auth']], function() {
     // Workflow for choosing best-priced printer
     Route::get('/options', 'PatronController@options')->name('options');
     Route::get('/choose-printer', 'PatronController@choosePrinter')->name('choose-printer');
-    Route::get('/uploads', 'PatronController@upload')->name('uploads');
-    Route::get('/submit', 'PatronController@submit')->name('submit');
+    Route::get('/upload', 'PatronController@upload')->name('upload');
+    Route::post('/submit', 'PatronController@submit')->name('submit');
     Route::get('/history', 'PatronController@history')->name('history');
 
     Route::get('/register', 'RegistrationController@edit')->name('register');

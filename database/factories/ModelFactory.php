@@ -80,6 +80,7 @@ $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
         'patron' => $faker->numberBetween(1, 20),
         'department' => 1,
+        'printer' => 1,
         'filament' => $faker->numberBetween(1, 3),
         'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,

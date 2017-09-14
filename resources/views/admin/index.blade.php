@@ -26,6 +26,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 20%">Project Name</th>
+                                <th>Printer</th>
                                 <th>Filament</th>
                                 <th>Status</th>
                                 <th style="width: 20%">Actions</th>
@@ -41,16 +42,24 @@
                                         <small>{{ $row->created_at->toDayDateTimeString() }}</small>
                                     </td>
                                     <td>
-                                        {{ $row->getFilament->name or '' }}
+                                        {{ $row->selectedPrinter->name }}
                                     </td>
                                     <td>
-                                        {!! BootForm::open()->action(route('admin.update', $row->id ))->put() !!}
-                                        {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update') !!}
+                                        <span style="font-weight: bold;margin-right: 6px;">Name: </span>{{ $row->getFilament->name or '' }}
+                                        <br />
+                                        <span style="font-weight: bold;margin-right: 6px;">Color: </span>
+                                        <div style="height: 20px; width: 20px; margin-right: 6px; margin-bottom: -5px; display: inline-block;  background-color: #{{ $row->getcolor->hex_code }}" ></div>
+                                        {{ $row->getcolor->name or '' }}
+                                    </td>
+                                    <td>
+                                        {!! BootForm::open()->action(route('admin.edit', $row->id ))->get() !!}
+                                        {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update input-sm') !!}
                                         {!! BootForm::close() !!}
                                     </td>
                                     <td>
-                                        <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>
-                                        <a href="/download/{{ $row->filename }}" class="btn btn-success btn-xs" title="{{ $row->original_filename }}"></i>Download</a>
+                                        <a href="{{ route('uploadfile.edit', $row->id) }}" class="btn btn-info btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('download', $row->filename) }}" class="btn btn-success btn-sm" title="Download {{ $row->original_filename }}"></i><i class="fa fa-download"></i></a>
+                                        <a href="{{ route('admin.create-email', $row->id) }}" class="btn btn-warning btn-sm" title="Email"></i><i class="fa fa-envelope"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

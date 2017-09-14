@@ -18,9 +18,11 @@ class PrintJobApprovedNotification extends Notification
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($printJob, $subject = '', $message = '')
     {
-        $this->id = $id;
+        $this->printJob = $printJob;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -45,7 +47,7 @@ class PrintJobApprovedNotification extends Notification
         return (new MailMessage)
                     ->subject('Your Order was approved')
                     ->line('The file you sent met the criteria. Please wait for further notifications on when to pick up your order.')
-                    ->action('View Printjob', url('/uploadfile/'. $this->id . '/edit'));
+                    ->action('View Printjob', url('/uploadfile/'. $this->printJob->id . '/edit'));
     }
 
     /**

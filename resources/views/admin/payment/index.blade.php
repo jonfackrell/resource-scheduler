@@ -11,6 +11,7 @@
             <thead>
                 <tr>
                     <th style="width: 20%">Project Name</th>
+                    <th>Department</th>
                     <th>Status</th>
                     <th>Cost</th>
                     <th style="width: 20%"></th>
@@ -25,7 +26,10 @@
                             <small>{{ $printJob->created_at->toDayDateTimeString() }}</small>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info btn-sm">{{ $printJob->currentStatus->name }}</button>
+                            {{ $printJob->departmentOwner->name }}
+                        </td>
+                        <td>
+                            <button type="button" class="btn @if($printJob->completed <> 1) btn-success @else btn-info @endif btn-sm">{{ $printJob->currentStatus->name }}</button>
                         </td>
                         <td>
                             $ {{ money_format('%i', $printJob->cost) }}

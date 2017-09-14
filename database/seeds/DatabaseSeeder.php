@@ -227,7 +227,7 @@ class DatabaseSeeder extends Seeder
             foreach ($filaments as $filament){
                 foreach ($colors as $color){
                     $filament->colors()->attach($color->id, [
-                        'quantity' => rand(0, 10),
+                        'quantity' => rand(250, 3000),
                         'department' => $department->id
                     ]);
                 }

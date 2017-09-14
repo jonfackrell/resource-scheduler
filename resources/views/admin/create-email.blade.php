@@ -6,11 +6,10 @@
 
 @section('content')
 
-    {!! BootForm::open()->action(route('admin.update', $printJob->id))->put() !!}
+    {!! BootForm::open()->action(route('admin.send-email', $printJob->id))->post() !!}
     {!! BootForm::text('Subject', 'subject') !!}
     {!! BootForm::textarea('Message', 'message')->addClass('summernote') !!}
-    {!! BootForm::hidden('new_status')->value($newStatus) !!}
-    {!! BootForm::submit('Save & Send')->class('btn btn-primary') !!}
+    {!! BootForm::submit('Send')->class('btn btn-primary') !!}
     {!! BootForm::close() !!}
 
 @endsection
