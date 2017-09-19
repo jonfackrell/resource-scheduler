@@ -6,7 +6,7 @@
 
 @section('content')
 
-	@if(auth()->guard('web')->user()->isSuperUser())
+	@if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('create-filaments'))
 		{!! BootForm::open()->action(route('filament.index'))->post() !!}
 		  {!! BootForm::text('Name', 'name') !!}
 		  {!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
@@ -46,7 +46,9 @@
 									$query->where('printer', $printer->id)->where('filament', $filament->id);
 								})->get()->count() > 0)
                                 <a href="{{ route('filament.color-manager', ['filamentid' => $filament->id, 'printerid' => $printer->id]) }}" class="btn btn-primary btn-xs colors" style="margin-top: 5px; margin-left: 10px;">Colors</a>
-                                <a href="{{ route('filament.pricing-manager', ['filamentid' => $filament->id, 'printerid' => $printer->id]) }}" class="btn btn-primary btn-xs colors" style="margin-top: 5px; margin-left: 5px;">Pricing</a>
+                                @if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('create-filaments'))
+                                    <a href="{{ route('filament.pricing-manager', ['filamentid' => $filament->id, 'printerid' => $printer->id]) }}" class="btn btn-primary btn-xs colors" style="margin-top: 5px; margin-left: 5px;">Pricing</a>
+                                @endif
                             @endif
 						</td>
 					@endforeach

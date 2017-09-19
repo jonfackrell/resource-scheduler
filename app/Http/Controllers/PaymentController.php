@@ -14,7 +14,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $statuses = Status::whereAcceptPayment(1)
                             ->whereDepartment(auth()->guard('web')->user()->department)
@@ -22,8 +22,13 @@ class PaymentController extends Controller
                             ->all();
         $printJobs = PrintJob::with('currentStatus', 'owner')
                         ->whereIn('status', $statuses)
-                        ->where('paid', '<>', 1)
-                        ->paginate(20);
+                        ->where('paid', '<>', 1);
+        if($request->has('q')){
+            $printJobs = $printJobs->whereHas('owner', function($query) use ($request){
+                $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%');
+            });
+        }
+        $printJobs = $printJobs->paginate(20);
         return view('admin.payment.index', compact('printJobs'));
     }
 

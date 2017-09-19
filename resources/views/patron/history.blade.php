@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title')
-    History
+    Printing History
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
             @foreach($printJobs as $key => $printJob)
                 <tr data-id="{{ $printJob->id }}">
                     <td>
-                        <a>{{ $printJob->owner->first_name  or '' }} {{ $printJob->owner->last_name  or '' }}</a>
+                        <a href="{{ route('show', $printJob->id) }}">{{ $printJob->original_filename  or '' }}</a>
                         <br>
                         <small>{{ $printJob->created_at->toDayDateTimeString() }}</small>
                     </td>

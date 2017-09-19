@@ -23,7 +23,13 @@ class AdminController extends Controller
                         ->get();
         $printJobs = [];
         foreach($statuses as $status){
-            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id)->paginate(20, ['*'], str_slug($status->name));
+            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id);
+            if($request->has('q')){
+                $printJobs[$status->id] = $printJobs[$status->id]->whereHas('owner', function($query) use ($request){
+                    $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%');
+                });
+            }
+            $printJobs[$status->id] = $printJobs[$status->id]->paginate(20, ['*'], str_slug($status->name));
         }
         return view('admin.index', compact('printJobs', 'statuses'));
     }
@@ -41,7 +47,7 @@ class AdminController extends Controller
         $newStatus = $request->get('status');
         $status = Status::findOrFail($newStatus);
         if($status->systemNotification){
-            return view('admin.edit', compact('printJob', 'newStatus'));
+            return view('admin.edit', compact('printJob', 'status', 'newStatus'));
         }else{
             $originalStatus = $printJob->status;
             $printJob->status = $newStatus;
@@ -64,7 +70,7 @@ class AdminController extends Controller
         $printJob->save();
 
         if($printJob->currentStatus->systemNotification){
-            $printJob->owner->notify(new $printJob->currentStatus->systemNotification->name($printJob, $request->get('subject'), $request->get('message')));
+            $printJob->owner->notify(new GenericNotification($printJob, $request->get('subject'), $request->get('message')));
         }
 
         if($status->subtract_inventory){

@@ -46,7 +46,8 @@ class GenericNotification extends Notification
     {
         return (new MailMessage)
                     ->subject($this->subject)
-                    ->line($this->message);
+                    ->line($this->message)
+                    ->action('View', url('/history/'. $this->printJob->id));
     }
 
     /**

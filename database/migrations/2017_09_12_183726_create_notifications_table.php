@@ -15,36 +15,33 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('display_name');
-            $table->string('name');
+            $table->integer('department')->unsigned();
+            $table->string('display_name')->nullable();
+            $table->string('subject')->nullable();
+            $table->longText('message')->nullable();
+            $table->integer('order_column');
             $table->timestamps();
         });
 
         $notification                   = new \App\Models\Notification();
+        $notification->department       = 1;
         $notification->display_name     = 'Print Job Approved';
-        $notification->name             = 'PrintJobApprovedNotification';
+        $notification->subject          = 'Print Job Approved';
+        $notification->message          = 'Your print job has been approved and will be added to the queue.';
         $notification->save();
 
         $notification                   = new \App\Models\Notification();
+        $notification->department       = 1;
         $notification->display_name     = 'Ready for Pickup';
-        $notification->name             = 'PickUpNotification';
+        $notification->subject          = 'Ready for Pickup';
+        $notification->message          = 'Your print job has been completed and is ready for pickup.';
         $notification->save();
 
         $notification                   = new \App\Models\Notification();
-        $notification->display_name     = 'Reject Print Job';
-        $notification->name             = 'PrintJobRejectionNotification';
-        $notification->save();
-
-        /*
-        $notification                   = new \App\Models\Notification();
-        $notification->display_name     = 'Payment Received';
-        $notification->name             = 'PaymentReceivedNotification';
-        $notification->save();
-        */
-
-        $notification                   = new \App\Models\Notification();
-        $notification->display_name     = 'Generic Notification';
-        $notification->name             = 'GenericNotification';
+        $notification->department       = 1;
+        $notification->display_name     = 'Print Job Rejected';
+        $notification->subject          = 'Print Job Rejected';
+        $notification->message          = 'Unfortunately there was a problem with you model and it cannot be printed.';
         $notification->save();
 
     }

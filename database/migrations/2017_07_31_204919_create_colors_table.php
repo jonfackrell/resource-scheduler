@@ -17,6 +17,8 @@ class CreateColorsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('hex_code')->nullable();
+            $table->integer('order_column');
+            $table->softDeletes();
         });
 
         Schema::create('filaments_colors', function (Blueprint $table) {

@@ -9,6 +9,8 @@ use App\Models\Printer;
 use App\Models\PrintJob;
 use App\Models\Setting;
 use App\Models\Status;
+use App\Notifications\GenericNotification;
+use App\Notifications\QuestionNotification;
 use Illuminate\Http\Request;
 use App\Models\Patron;
 use App\Models\Department;
@@ -35,7 +37,12 @@ class PatronController extends Controller
      */
     public function show($id)
     {
-        //
+        $public = Setting::where('group', 'PUBLIC')->get();
+        $printJob = PrintJob::findOrFail($id);
+        $filament = $printJob->getFilament;
+        $printer = $printJob->selectedPrinter;
+        $printer->patronCostToPrint(['weight' => $printJob->weight, 'time' => $printJob->time], $filament);
+        return view('patron.show-print-job', compact('printJob', 'printer', 'filament', 'public'));
     }
 
     /**
@@ -166,6 +173,7 @@ class PatronController extends Controller
         $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
         $printjob->cost = $printer->costToPrint;
+        $printjob->options = $request->get('options');
 
         $department = Department::findOrFail($printer->departmentOwner->id);
         $printjob->status = $department->initial_status;
@@ -196,4 +204,5 @@ class PatronController extends Controller
         $printJobs = PrintJob::wherePatron(auth()->guard('patrons')->user()->id)->orderBy('updated_at', 'DESC')->paginate(20);
         return view('patron.history', compact('printJobs', 'public'));
     }
+
 }

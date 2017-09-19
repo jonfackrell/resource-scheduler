@@ -32,6 +32,7 @@ $factory->define(App\Models\Patron::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
+        'inumber' => $faker->unique()->safeEmail,
         'netid' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10)
@@ -85,7 +86,7 @@ $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
         'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,
         'time' => $faker->numberBetween(60, 3600),
-        'weight' => $faker->randomDigit(100, 2000),
+        'weight' => $faker->numberBetween(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
         'status' => $faker->numberBetween(1, 4)
     ];

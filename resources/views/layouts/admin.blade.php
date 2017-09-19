@@ -67,10 +67,10 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>@yield('title')</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-
-                            </ul>
+                            <h2 class="pull-left">@yield('title')</h2>
+                            <div class="nav pull-right panel_toolbox col-md-5 col-sm-5 col-xs-12">
+                                @yield('toolbox')
+                            </div>
 
                             <div class="clearfix"></div>
 

@@ -97,6 +97,21 @@
                         <tfoot></tfoot>
                     </table>
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        {!! BootForm::select('Quality', "options[quality]")->options(['low' => 'High Speed', 'medium' => 'Standard', 'high' => 'High Detail'])->select('medium') !!}
+                    </div>
+                    <div class="col-md-4">
+                        {!! BootForm::select('Print Support?', "options[support]")->options([false => 'No', true => 'Yes'])->select(false) !!}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback">
+                            <label class="control-label" for="options[infill]">Infill</label>
+                            <input type="text" class="form-control" name="options[infill]" id="options[infill]" value="20">
+                            <span class="fa fa-percent form-control-feedback right" aria-hidden="true" style="top: 23px;right:13px;"></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex">
                     {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> file (.amf)') !!}
                     @if(strlen($department->terms) > 0)

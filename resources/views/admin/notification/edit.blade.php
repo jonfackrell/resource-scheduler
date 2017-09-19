@@ -1,16 +1,20 @@
 @extends('layouts.admin')
 
 @section('title')
-    Updating Status & Sending Email
+    Statuses
 @endsection
 
 @section('content')
-
-    {!! BootForm::open()->action(route('admin.update', $printJob->id))->put() !!}
-    {!! BootForm::text('Subject', 'subject')->value($status->systemNotification->subject) !!}
-    {!! BootForm::textarea('Message', 'message')->addClass('summernote')->value($status->systemNotification->message) !!}
-    {!! BootForm::hidden('new_status')->value($newStatus) !!}
-    {!! BootForm::submit('Save & Send')->class('btn btn-primary') !!}
+    {!! BootForm::open()->action(route('notification.update', $notification))->put() !!}
+    {!! BootForm::bind($notification) !!}
+        <div class="row">
+            <div class="col-md-6">
+                {!! BootForm::text('Display Name', 'display_name')->required() !!}
+                {!! BootForm::text('Subject', 'subject')->required() !!}
+                {!! BootForm::textarea('Message', 'message')->addClass('summernote')->required() !!}
+            </div>
+        </div>
+    {!! BootForm::submit('Submit')->class('btn btn-success') !!}
     {!! BootForm::close() !!}
 
 @endsection
@@ -36,7 +40,6 @@
             $('.summernote').summernote({
                 height: 200
             });
-
         });
     </script>
 @endpush

@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     public function isSuperUser(){
-        return true;
+        return in_array($this->attributes['email'], explode(',', env('SUPER')));
     }
 
     /**

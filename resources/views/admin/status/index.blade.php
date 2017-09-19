@@ -6,23 +6,25 @@
 
 @section('content')
 
-	{!! BootForm::open()->action(route('status.index'))->post() !!}
-        <div class="row">
-            <div class="col-md-2">
-                {!! BootForm::text('Name', 'name')->required() !!}
+    @if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('create-statuses'))
+        {!! BootForm::open()->action(route('status.index'))->post() !!}
+            <div class="row">
+                <div class="col-md-2">
+                    {!! BootForm::text('Name', 'name')->required() !!}
+                </div>
+                <div class="col-md-4">
+                    {!! BootForm::checkbox('Accept Payment', 'accept_payment')->helpBlock('Statuses with this option checked will allow users to pay for their prints.') !!}
+                    {!! BootForm::checkbox('Display in Dashboard', 'dashboard_display')->helpBlock('Statuses with this option checked will be added as a new tab to the admin dashboard.') !!}
+                </div>
+                <div class="col-md-4">
+                    {!! BootForm::checkbox('In Queue', 'in_queue')->helpBlock('Statuses with this option checked will be calculated in wait times.') !!}
+                    {!! BootForm::checkbox('Patrons Can Delete', 'can_delete')->helpBlock('Statuses with this option checked will let patrons delete their print jobs.') !!}
+                </div>
             </div>
-            <div class="col-md-4">
-                {!! BootForm::checkbox('Accept Payment', 'accept_payment')->helpBlock('Statuses with this option checked will allow users to pay for their prints.') !!}
-                {!! BootForm::checkbox('Display in Dashboard', 'dashboard_display')->helpBlock('Statuses with this option checked will be added as a new tab to the admin dashboard.') !!}
-            </div>
-            <div class="col-md-4">
-                {!! BootForm::checkbox('In Queue', 'in_queue')->helpBlock('Statuses with this option checked will be calculated in wait times.') !!}
-                {!! BootForm::checkbox('Patrons Can Delete', 'can_delete')->helpBlock('Statuses with this option checked will let patrons delete their print jobs.') !!}
-            </div>
-        </div>
 
-	    {!! BootForm::submit('Submit') !!}
-	{!! BootForm::close() !!} 
+            {!! BootForm::submit('Submit') !!}
+        {!! BootForm::close() !!}
+    @endif
 
     @if($statuses->count() > 0)
         <table class="table table-striped sorted_table">
@@ -119,7 +121,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
+        @if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('edit-statuses'))
             $('input.flat').on('ifChecked', function(event){
                 var $checkbox = $(this);
                 var statusid = $checkbox.closest('tr').data('id');
@@ -205,6 +207,7 @@
                     });
                 }
             });
+        @endif
 		});
 
 	</script>

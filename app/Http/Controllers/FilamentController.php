@@ -149,7 +149,7 @@ class FilamentController extends Controller
      */
     public function showColorManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('view-colors');
         $printer = Printer::findOrFail($printerid);
         $filament = Filament::findOrFail($filamentid);
         $colors = Color::select('*', 'filaments_colors.id AS colorid')
@@ -169,7 +169,7 @@ class FilamentController extends Controller
      */
     public function updateColorManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('edit-colors');
 
         $inputs = $request->all();
 
@@ -214,7 +214,7 @@ class FilamentController extends Controller
      */
     public function updatePricingManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('edit-filaments');
 
         $printerFilament = PrinterFilament::findOrFail($request->get('pricing_options_id'));
         $printerFilament->cost_per_gram = $request->get('cost_per_gram');

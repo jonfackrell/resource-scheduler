@@ -7,20 +7,23 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PaymentReceivedNotification extends Notification
+class QuestionNotification extends Notification
 {
     use Queueable;
 
-    public $id;
-
+    public $name;
+    public $email;
+    public $message;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($printJob)
+    public function __construct($name = '', $email = '', $message = '')
     {
-        $this->printJob = $printJob;
+        $this->name = $name;
+        $this->email = $email;
+        $this->message = $message;
     }
 
     /**
@@ -43,10 +46,9 @@ class PaymentReceivedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Payment Received for 3D printing')
-                    ->line('Thank you! We have received your payment.')
-                    ->line('You should have or will receive an email when your model is done printing.')
-                    ->action('Check status', url('/history/'. $this->printJob->id));
+                    ->replyTo($this->email)
+                    ->greeting('Question from ' . $this->name)
+                    ->line($this->message);
     }
 
     /**

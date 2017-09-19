@@ -23,17 +23,39 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane active" id="home">
-                <h2>3D Printing Home</h2>
+                <h2>Getting Started</h2>
                 <hr />
+                <h3><small>Overview</small></h3>
                 <p>
-
+                    <ul>
+                        <li>Print solid objects with a variety of materials on the Library's 3D Printer</li>
+                        <li>Files can be created using <a href="https://www.tinkercad.com/" targget="_blank">Tinkercad</a>, <a href="https://www.blender.org/" targget="_blank">Blender</a>, <a href="https://www.autodesk.com/education/free-software/maya" targget="_blank">Maya</a>, AutoCAD (<a href="https://www.autodesk.com/education/free-software/autocad" targget="_blank">Windows</a> | <a href="https://www.autodesk.com/education/free-software/autocad-for-mac" targget="_blank">OSX</a>), <a href="https://www.sketchup.com/3Dfor/education-students" targget="_blank">SketchUp</a> or any program that can export .stl or .obj file types</li>
+                        <li>Objects can be printer as large as 11.02 in x 11.02 in x 9.8 in with a layer height resolution 0.2mm</li>
+                        <li>Cost varies based on material and length of time to print</li>
+                    </ul>
                 </p>
                 <div class="row">
                     <div class="col-md-12">
-                        <h3><small>Getting Started</small></h3>
                         <hr />
-                        <p>If you would like to get involved with 3D pringing, but don't have a 3D model of your own, there are several web sites online where you can download ready-to-print models for free. A few of our favorites are listed below.</p>
+                        <p style="text-align: center;">
+                            <img src="https://www.lulzbot.com/sites/default/files/styles/product_large/public/TAZ_6_Angle_Main_Product_Page.png?itok=2RZ0e4CF" alt="" style="width: 480px; height: auto;"/>
+                        </p>
                     </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="how-it-works">
+                <h2>How 3D Printing Works</h2>
+                <hr />
+                <p style="text-align: center;">
+                    <iframe width="700" height="450" src="https://www.youtube.com/embed/e0rYO5YI7kA" frameborder="0" allowfullscreen></iframe>
+                </p>
+                <p>
+                    A 3D printer takes a 3D drawing rendered on a computer and extrudes a plastic filament to "print" the object. The David O. McKay Library has a 3D printer available so that you can turn your creations into reality. Trained students in the Mac Lab can help guide you through the process and print your 3D models for you.
+                </p>
+                <p>
+                    <b>First</b>, you will need a 3D drawing to print. You can create your own using <a href="https://www.tinkercad.com/" targget="_blank">Tinkercad</a>, <a href="https://www.blender.org/" targget="_blank">Blender</a>, <a href="https://www.autodesk.com/education/free-software/maya" targget="_blank">Maya</a>, AutoCAD (<a href="https://www.autodesk.com/education/free-software/autocad" targget="_blank">Windows</a> | <a href="https://www.autodesk.com/education/free-software/autocad-for-mac" targget="_blank">OSX</a>), <a href="https://www.sketchup.com/3Dfor/education-students" targget="_blank">SketchUp</a>, or find free designs available online. After designing or obtaining a 3D model, you will need to import it into a print preparation program to configure the print settings. For printing in the Library, you should use <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a>. You will be able to tell Cura how thick eac layer should be, whether or not to print support material, and how much infill to print.
+                </p>
+                <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <h3><small>Thingiverse</small></h3>
                         <p>MakerBot's Thingiverse is a thriving design community for discovering, making, and sharing 3D printable things. As the world's largest 3D printing community, we believe that everyone should be encouraged to create and remix 3D things, no matter their technical expertise or previous experience. In the spirit of maintaining an open platform, all designs are encouraged to be licensed under a Creative Commons license, meaning that anyone can use or alter any design.</p>
@@ -49,15 +71,33 @@
                         </p>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane" id="how-it-works">
-                <h2>How 3D Printing Works</h2>
-                <hr />
+                <p>
+                    <b>Second</b>, <a href="http://3dprint.byui.edu/options">upload</a> your Cura file (.aml) through this application. You will be notified as your design is approved, when it started printing, and when it's ready to pick up. Once your file has been approved, you can pay for it at the Circulation Desk. Once printing has been completed, you will have 2 weeks to pay for it and pick it up.
+                </p>
+                <p>
+                    <b>Third</b>, after the object is finished printing, you will want to give it some finishing touches.  You might remove support material, use sandpaper to smooth it out, or add some paint to give it the final appearance you want.
+                </p>
+                <p>
 
+                </p>
             </div>
             <div class="tab-pane" id="tutorials">
                 <h2>Tutorials</h2>
                 <hr />
+                <h3 style="font-size: 1.3em">
+                    Download and install Cura Lulzbot Edition
+                </h3>
+                <p>
+                    <a href="https://www.lulzbot.com/learn/tutorials/cura-lulzbot-edition-installation-windows">Windows</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.lulzbot.com/learn/tutorials/cura-lulzbot-edition-installation-osx">OSX</a>
+                </p>
+                <hr />
+                <h3 style="font-size: 1.3em">
+                    Introduction to Cura (print preparation program)
+                </h3>
+                <p style="text-align: center;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/fGwBMFuMbos?rel=0" frameborder="0" allowfullscreen></iframe>
+                </p>
             </div>
             <div class="tab-pane" id="faq">
                 <h2>Frequently Asked Questions</h2>

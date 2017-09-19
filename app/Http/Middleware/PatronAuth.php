@@ -33,6 +33,10 @@ class PatronAuth
             if(\Route::currentRouteName() != 'register' && strlen(auth()->guard('patrons')->user()->email) < 3){
                return redirect()->to( route('register') );
             }
+        }else{
+            if(\Route::currentRouteName() != 'register' && strlen(auth()->guard('patrons')->user()->email) < 3){
+                return redirect()->to( route('register') );
+            }
         }
 
         return $next($request);

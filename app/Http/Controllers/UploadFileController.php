@@ -79,6 +79,8 @@ class UploadFileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit-print-jobs');
+
         $printjob = PrintJob::find($id);
         $printjob->fill($request->all());
 
@@ -109,6 +111,8 @@ class UploadFileController extends Controller
      */
     public function destroy($id)
     {
+
+        $this->authorize('delete-print-jobs');
 
         $filament = PrintJob::findorFail($id);
         $filament->delete();

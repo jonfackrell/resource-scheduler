@@ -82,7 +82,7 @@
                                     $printer_filament = $printer->filaments->where('id', $filament->id)->first();
                                     //dd($printer_filament->colors($printer->departmentOwner));
                                 @endphp
-                                @foreach($printer_filament->colors($printer->departmentOwner->id) as $color)
+                                @foreach($printer_filament->colors($printer->departmentOwner->id, session('weight', request()->get('weight'))) as $color)
                                     {!! BootForm::radio('<div style="height: 20px; width: 20px; display: inline-block;  background-color: #' . $color->hex_code . '" title="' . $color->name . '"></div>', 'color')->addClass('hidden-radio')->inline()->value($color->id) !!}
                                 @endforeach
                             </div>

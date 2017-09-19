@@ -8,26 +8,17 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="images/img.jpg" alt="">
-                        @if(!auth()->guard('web')->guest())
-                            {{ auth()->guard('web')->user()->first_name }} {{ auth()->guard('web')->user()->last_name }}
-                        @endif
-                        <span class=" fa fa-angle-down"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> Profile</a></li>
-                        <li>
-                            <a href="javascript:;">
-                                <span class="badge bg-red pull-right">50%</span>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li><a href="javascript:;">Help</a></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                    </ul>
+                    {!! BootForm::open()->action(route('logout'))->post() !!}
+                    {!! BootForm::submit('Logout')->class('btn btn-danger')->style('margin-top: 12px;') !!}
+                    {!! BootForm::close() !!}
                 </li>
-
+                <li class="">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        @if(!auth()->guard('web')->guest())
+                            Hi {{ auth()->guard('web')->user()->first_name }} {{ auth()->guard('web')->user()->last_name }}!
+                        @endif
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

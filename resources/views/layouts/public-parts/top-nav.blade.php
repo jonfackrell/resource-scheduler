@@ -19,11 +19,16 @@
             <li>
                 <a href="{{ route('policy') }}" class="navbar-link">Policy</a>
             </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ route('register') }}" class="navbar-link">Hi {{ auth()->guard('patrons')->user()->first_name }}!</a>
+                <a href="{{ route('contact') }}" class="navbar-link">Contact Us</a>
             </li>
         </ul>
+        @if(strlen(auth()->guard('patrons')->user()->email) > 3)
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ route('register') }}" class="navbar-link">Hi {{ auth()->guard('patrons')->user()->first_name }}!</a>
+                </li>
+            </ul>
+        @endif
     </div>
 </nav>

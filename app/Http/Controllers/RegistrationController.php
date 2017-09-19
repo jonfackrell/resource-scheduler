@@ -29,6 +29,13 @@ class RegistrationController extends Controller
      */
     public function update(Request $request)
     {
+        \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|regex:/@byui.edu+\Z/',
+            'inumber' => 'required',
+        ], ['email.regex' => 'You must use a valid @byui.edu email adress.'])->validate();
+
         $user = \App\Models\Patron::whereNetid($request->get('netid'))->first();
         $user->fill($request->all());
         $user->save();

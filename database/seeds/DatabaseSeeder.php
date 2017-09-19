@@ -12,16 +12,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete', 'Denied'];
-        $systemPermissions = [
-            'view-departments' => 'View Departments', 'create-departments' => 'Create Departments', 'edit-departments' => 'Edit Departments', 'delete-departments' => 'Delete Departments',
-            'view-filaments' => 'View Filaments', 'create-filaments' => 'Create Filaments','edit-filaments' => 'Edit Filaments', 'delete-filaments' => 'Delete Filaments',
-            'view-printers' => 'View Printers', 'create-printers' => 'Create Printers','edit-printers' => 'Edit Printers', 'delete-printers' => 'Delete Printers',
-            'view-colors' => 'View Colors', 'create-colors' => 'Create Colors', 'edit-colors' => 'Edit Colors', 'delete-colors' => 'Delete Colors',
-            'view-patrons' => 'View Patrons', 'create-patrons' => 'Create Patrons', 'edit-patrons' => 'Edit Patrons', 'delete-patrons' => 'Delete Patrons',
-            'view-statuses' => 'View Statuses', 'create-statuses' => 'Create Statuses', 'edit-statuses' => 'Edit Statuses', 'delete-statuses' => 'Delete Statuses',
-            'view-print-jobs' => 'View Print Jobs', 'create-print-jobs' => 'Create Print Jobs', 'edit-print-jobs' => 'Edit Print Jobs', 'delete-print-jobs' => 'Delete Print Jobs',
-            'accept-payments' => 'Accept Payments'
-        ];
+
+        $administrator = \App\Models\Role::whereName('administrator')->first();
+
+        $supervisor = \App\Models\Role::whereName('supervisor')->first();
+
+        $employee = \App\Models\Role::whereName('employee')->first();
+
+        $paymentProcessor = \App\Models\Role::whereName('payment-processor')->first();
 
 
         //$departments = factory(App\Models\Department::class, 5)->create();
@@ -32,6 +30,19 @@ class DatabaseSeeder extends Seeder
         $patrons = factory(App\Models\Patron::class, 100)->create();
         $printJobs = factory(App\Models\PrintJob::class, 100)->create();
 
+        $adminUser = \App\Models\User::findOrFail(1);
+        $adminUser->assignRole($administrator->name);
+
+        $supervisorUser = \App\Models\User::findOrFail(2);
+        $supervisorUser->assignRole($supervisor->name);
+
+        $employeeUser = \App\Models\User::findOrFail(3);
+        $employeeUser->assignRole($employee->name);
+
+        $paymentUser = \App\Models\User::findOrFail(4);
+        $paymentUser->assignRole($paymentProcessor->name);
+
+        // Can be removed
         $settings                   = new \App\Models\Setting();
         $settings->name             = 'HEADER_HTML';
         $settings->value            = '';
@@ -57,7 +68,7 @@ class DatabaseSeeder extends Seeder
         $settings->name             = 'FOOTER_JS';
         $settings->value            = '';
         $settings->group            = 'PUBLIC';
-        $settings->order            = 5;
+        $settings->order            = 4;
         $settings->save();
         // TODO: Add logo url
         $settings                   = new \App\Models\Setting();
@@ -212,13 +223,13 @@ class DatabaseSeeder extends Seeder
                 'dashboard_display' => 1
             ]);
         }
-
+        /*
         foreach ($systemPermissions as $name => $label){
             App\Models\SystemPermission::create([
                 'name' => $name,
                 'label' => $label
             ]);
-        }
+        }*/
 
         $filaments = \App\Models\Filament::all();
         $colors = \App\Models\Color::all();

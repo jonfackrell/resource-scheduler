@@ -16,37 +16,6 @@ class ChartsController extends Controller
 {
     public function index()
     {
-        // $chart = Charts::multi('bar', 'material')
-        //     // Setup the chart settings
-        //     ->title("My Cool Chart")
-        //     // A dimension of 0 means it will take 100% of the space
-        //     ->dimensions(0, 400) // Width x Height
-        //     // This defines a preset of colors already done:)
-        //     ->template("material")
-        //     // You could always set them manually
-        //     // ->colors(['#2196F3', '#F44336', '#FFC107'])
-        //     // Setup the diferent datasets (this is a multi chart)
-        //     ->dataset('Element 1', [5,20,100])
-        //     ->dataset('Element 2', [15,30,80])
-        //     ->dataset('Element 3', [25,10,40])
-        //     // Setup what the values mean
-        //     ->labels(['One', 'Two', 'Three']);
-
-        // $chart3 = Charts::database(FilamentColor::whereDepartment(auth()->user()->department)->get(), 'bar', 'google')
-            
-            // ->title('Filaments')
-
-            // ->groupBy('filament')
-            // ->labels(Filament::all()->pluck('name'));
-
-    //         $chart3 = Charts::multi('bar', 'highcharts')
-    //         ->title('Filament Colors')
-    // ->colors(['#ff0000', '#00ff00', '#0000ff'])
-    // ->labels(Color::all()->pluck('name'))
-    // ->dataset('PolyLite PLA', FilamentColor::where('department',auth()->user()->department)->where('filament', 1)->pluck('quantity'))
-    // ->dataset('nGEN', FilamentColor::where('department',auth()->user()->department)->where('filament', 2)->pluck('quantity'))
-    // ->dataset('NinjaFlex', FilamentColor::where('department',auth()->user()->department)->where('filament', 3)->pluck('quantity'));
-
 
            $chart2 = Charts::database(PrintJob::where('status', 4)->where('department', auth()->guard('web')->user()->department)->get(), 'line', 'highcharts')
             ->title('Prints Per Month')
@@ -121,4 +90,6 @@ class ChartsController extends Controller
 
         return view('admin.charts.index', ['chart3' => $chart3, 'chart' => $chart, 'chart2' => $chart2, 'filamentChart1' => $filamentChart1, 'filamentChart2' => $filamentChart2, 'filamentChart3' => $filamentChart3]);
     }
+
+
 }

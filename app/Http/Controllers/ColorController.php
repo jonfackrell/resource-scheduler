@@ -14,7 +14,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = Color::all();
+        $colors = Color::orderBy('order_column')->get();
         return view('admin.color.index', compact('colors'));
         // $colors = Color::all()->pluck('name','id')->all();
         // return view('admin.color.index', compact('colors'));
@@ -94,5 +94,25 @@ class ColorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sort(Request $request)
+    {
+        $this->authorize('edit-colors');
+
+        $order = json_decode($request->get('order'))[0];
+        foreach($order as $key => $row){
+            $color = Color::find($row->id);
+            $color->order_column = $key;
+            $color->save();
+        }
+        return response()->json(['status' => true]);
     }
 }
