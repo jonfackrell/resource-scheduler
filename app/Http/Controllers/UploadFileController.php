@@ -97,8 +97,7 @@ class UploadFileController extends Controller
 
         $printjob->save();
 
-        // return redirect()->route('uploadfile.index');
-        return "done";
+        return redirect()->route('admin');
 
 
     }

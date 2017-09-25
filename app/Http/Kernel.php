@@ -59,5 +59,7 @@ class Kernel extends HttpKernel
         'cas.auth'  => \Subfission\Cas\Middleware\CASAuth::class,
         'cas.guest' => \Subfission\Cas\Middleware\RedirectCASAuthenticated::class,
         'patron.auth' => \App\Http\Middleware\PatronAuth::class,
+        'database' => \App\Http\Middleware\Database::class,
+        'mail' => \App\Http\Middleware\MailOverride::class,
     ];
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\FilamentUsed;
+use App\Models\EmailSetting;
 use App\Models\PrintJob;
 use App\Models\Status;
 use App\Notifications\GenericNotification;
@@ -105,11 +106,12 @@ class AdminController extends Controller
      */
     public function sendEmail(Request $request, $id)
     {
+
         $printJob = PrintJob::findOrFail($id);
 
         $printJob->owner->notify(new GenericNotification($printJob, $request->get('subject'), $request->get('message')));
 
-        return redirect()->route('admin.index', ["#$printJob->status"]);
+        return redirect()->route('admin', ["#$printJob->status"]);
 
     }
 }

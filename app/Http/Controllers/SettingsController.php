@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailSetting;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class SettingsController extends Controller
     public function index()
     {
         $settings = Setting::all();
-        return view('admin.settings.index', compact('settings'));
+        $email = EmailSetting::first();
+        return view('admin.settings.index', compact('settings', 'email'));
     }
 
     /**
@@ -105,6 +107,18 @@ class SettingsController extends Controller
         $settings->group            = 'PUBLIC';
         $settings->order            = 5;
         $settings->save();
+
+        $email                      = EmailSetting::firstOrNew(['from_address' => $request->get('from_address')]);
+        $email->outgoing_host       = $request->get('outgoing_host');
+        $email->outgoing_port       = $request->get('outgoing_port');
+        $email->from_address        = $request->get('from_address');
+        $email->from_name           = $request->get('from_name');
+        $email->encryption          = $request->get('encryption');
+        $email->username            = $request->get('username');
+        $email->password            = $request->get('password');
+        $email->default             = true;
+        $email->enabled             = true;
+        $email->save();
 
         return redirect()->back();
     }

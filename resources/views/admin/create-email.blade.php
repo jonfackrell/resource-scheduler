@@ -7,8 +7,8 @@
 @section('content')
 
     {!! BootForm::open()->action(route('admin.send-email', $printJob->id))->post() !!}
-    {!! BootForm::text('Subject', 'subject') !!}
-    {!! BootForm::textarea('Message', 'message')->addClass('summernote') !!}
+    {!! BootForm::text('Subject', 'subject')->required() !!}
+    {!! BootForm::textarea('Message', 'message')->addClass('summernote')->required() !!}
     {!! BootForm::submit('Send')->class('btn btn-primary') !!}
     {!! BootForm::close() !!}
 
@@ -34,6 +34,10 @@
 
             $('.summernote').summernote({
                 height: 200
+            });
+
+            $(document).on('submit', 'form', function(){
+                $(this).find('.btn[type="submit"]').button('loading');
             });
 
         });

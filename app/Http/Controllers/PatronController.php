@@ -205,4 +205,17 @@ class PatronController extends Controller
         return view('patron.history', compact('printJobs', 'public'));
     }
 
+
+    /**
+     * Download file
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function download($filename)
+    {
+        $printJob = PrintJob::whereFilename($filename)->first();
+        return response()->download(storage_path('app') . '/' . $filename, $printJob->original_filename);
+    }
+
 }

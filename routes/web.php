@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'mail']], function() {
 
 
 	Route::get('/admin', 'AdminController@index')->name('admin');
@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('/admin/status', 'StatusController');
     Route::resource('/admin/payment', 'PaymentController');
 
+    Route::get('/admin/charts', 'ChartsController@index')->name('charts');
+
     Route::get('/admin/email/{id}', 'AdminController@createEmail')->name('admin.create-email');
     Route::post('/admin/email/{id}', 'AdminController@sendEmail')->name('admin.send-email');
 
@@ -60,28 +62,16 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::post('/update-payment-status', 'PaymentController@updatePaymentStatus');
 
-
-	Route::get('/test', function(){
-
-
-
-	});
-
-	Route::get('download/{filename}', function ($filename) {
-	    $printJob = \App\Models\PrintJob::whereFilename($filename)->first();
-    	return response()->download(storage_path('app') . '/' . $filename, $printJob->original_filename);
-	})->where('filename', '(.*)')->name('download');
-
-
+	Route::get('download/{filename}', 'PatronController@download')->where('filename', '(.*)')->name('download');
 
 	Route::put('/admin/{id}','AdminController@update')->name('admin.update');
 
-	Route::get('/admin/charts', 'ChartsController@index')->name('charts');;
+
  
 
 });
 
-Route::group(['middleware' => ['cas.auth', 'patron.auth']], function() {
+Route::group(['middleware' => ['cas.auth', 'patron.auth', 'mail']], function() {
 
     Route::get('/', 'PublicController@index')->name('home');
     Route::get('/printers', 'PublicController@printers')->name('printers');
