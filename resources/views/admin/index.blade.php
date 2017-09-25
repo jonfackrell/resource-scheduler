@@ -4,6 +4,21 @@
     Print Jobs
 @endsection
 
+@section('toolbox')
+
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search" style="margin-bottom: 0px;">
+        {!! BootForm::open()->action(route('admin'))->get() !!}
+        <div class="input-group" style="margin-bottom: 0px;">
+            <input type="text" name="q" class="form-control" placeholder="Search Last or First Name" value="{{ request()->get('q', '') }}">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+            </span>
+        </div>
+        {!! BootForm::close() !!}
+    </div>
+
+@endsection
+
 @section('content')
 
     @if($statuses->count() > 0)
@@ -25,10 +40,11 @@
                     <table class="table table-striped projects">
                         <thead>
                             <tr>
-                                <th style="width: 20%">Project Name</th>
-                                <th>Filament</th>
+                                <th style="width: 20%">Patron Name</th>
+                                <th>Printer</th>
+                                <th>Options</th>
                                 <th>Status</th>
-                                <th style="width: 20%">Actions</th>
+                                <th style="max-width: 100px; ">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,20 +53,66 @@
                                     <td>
                                         {{ $row->owner->first_name or ''}}
                                         {{ $row->owner->last_name  or '' }}
-                                        <br>
+                                        <br />
+                                        <span style="font-weight: bold;margin-right: 6px;">I#: </span>{{ $row->owner->inumber  or '' }}
+                                        <br />
                                         <small>{{ $row->created_at->toDayDateTimeString() }}</small>
                                     </td>
                                     <td>
-                                        {{ $row->getFilament->name or '' }}
+                                        {{ $row->selectedPrinter->name }}
+                                        <br />
+                                        {{ $row->time }} min
                                     </td>
                                     <td>
-                                        {!! BootForm::open()->action(route('admin.update', $row->id ))->put() !!}
-                                        {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update') !!}
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <span style="font-weight: bold;margin-right: 6px;">Name: </span>{{ $row->getFilament->name or '' }}
+                                                <br />
+                                                <span style="font-weight: bold;margin-right: 6px;">Color: </span>
+                                                <div style="height: 20px; width: 20px; margin-right: 6px; margin-bottom: -5px; display: inline-block;  background-color: #{{ $row->getcolor->hex_code }}" ></div>
+                                                {{ $row->getcolor->name or '' }}
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span style="font-weight: bold;margin-right: 6px;">Amount: </span>{{ $row->weight }} grams
+                                                <br />
+                                                <span style="font-weight: bold;margin-right: 6px;">Infill: </span>
+                                                @if(isset($row->options->infill) && $row->options->infill == true)
+                                                    {{ $row->options->infill }}%
+                                                @else
+                                                    N/A
+                                                @endif
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span style="font-weight: bold;margin-right: 6px;">Quality: </span>
+                                                @if(isset($row->options->quality) && $row->options->quality == 'low')
+                                                    High Speed
+                                                @elseif(isset($row->options->quality) && $row->options->quality == 'medium')
+                                                    Standard
+                                                @elseif(isset($row->options->quality) && $row->options->quality == 'high')
+                                                    High Detail
+                                                @endif
+                                                <br />
+                                                <span style="font-weight: bold;margin-right: 6px;">Support: </span>
+                                                @if(isset($row->options->support) && $row->options->support == true)
+                                                    Yes
+                                                @else
+                                                    No
+                                                @endif
+
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        {!! BootForm::open()->action(route('admin.edit', $row->id ))->get() !!}
+                                        {!! BootForm::select('Status', 'status')->options($statuses->pluck('name', 'id'))->select($row->status)->hideLabel()->addClass('status-update input-sm') !!}
                                         {!! BootForm::close() !!}
                                     </td>
                                     <td>
-                                        <a href="/uploadfile/{{ $row->id }}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>
-                                        <a href="/download/{{ $row->filename }}" class="btn btn-success btn-xs"></i>Download</a>
+                                        <a href="{{ route('uploadfile.edit', $row->id) }}" class="btn btn-info btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('download', $row->filename) }}" class="btn btn-success btn-sm" title="Download {{ $row->original_filename }}"></i><i class="fa fa-download"></i></a>
+                                        <a href="{{ route('admin.create-email', $row->id) }}" class="btn btn-warning btn-sm" title="Email"></i><i class="fa fa-envelope"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -89,7 +151,7 @@
     
     <script type="text/javascript">
         $(function(){
-            
+
             window.statuses = [];
             @foreach($printJobs as $key => $printJob)
                 window.statuses.push({

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    @if(auth()->user()->isSuperUser())
+    @if(auth()->guard('web')->user()->isSuperUser())
         {!! BootForm::open()->action(route('department.index'))->post() !!}
           {!! BootForm::text('Name', 'name')->required() !!}
           {!! BootForm::textarea('Description', 'description')->required()->addClass('summernote') !!}
@@ -37,7 +37,7 @@
                         {{ $department->updated_at->toDayDateTimeString() }}
                     </td>
                     <td>
-                        @if(auth()->user()->isSuperUser())
+                        @if(auth()->guard('web')->user()->isSuperUser())
                             {!! BootForm::open()->action(route('department.destroy', $department->id))->delete() !!}
                             {!! BootForm::submit('Delete', 'delete')->class('btn btn-danger btn-xs delete') !!}
                             {!! BootForm::close() !!}

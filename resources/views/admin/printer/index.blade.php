@@ -6,13 +6,14 @@
 
 @section('content')
 
-	{!! BootForm::open()->action(route('printer.index'))->post() !!}
-	  {!! BootForm::text('Name', 'name') !!}
-	  {!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
-	  
-	  {!! BootForm::submit('Submit') !!}
-	{!! BootForm::close() !!}
+	@if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('create-printers'))
+		{!! BootForm::open()->action(route('printer.index'))->post() !!}
+		  {!! BootForm::text('Name', 'name') !!}
+		  {!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
 
+		  {!! BootForm::submit('Submit') !!}
+		{!! BootForm::close() !!}
+	@endif
 
 	@if($printers->count() > 0)
 		<table class="table table-striped sorted_table">

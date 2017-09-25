@@ -17,27 +17,72 @@ class ChartsController extends Controller
 {
     public function index()
     {
-        
+
+        $statuses = Status::whereDepartment(auth()->guard('web')->user()->department)->get();
+
+        $printJobsByMonth = Charts::database(
+                                    PrintJob::whereIn('status', $statuses->where('completed', 1)->pluck('id'))
+                                        ->where('department', auth()->guard('web')->user()->department)->get()
+                                    , 'line', 'highcharts')
+                                ->title('Prints by Month')
+                                ->lastByMonth(12, true)
+
+                                ->elementLabel("Printed 3D Objects")
+                                ->dimensions(0,500);
 
 
-            $printJobLineGraph = Charts::database(PrintJob::where('status', 4)->where('department', auth()->user()->department)->get(), 'line', 'highcharts')
-            ->title('Prints Per Month')
-            ->groupByMonth()
-            ->labels(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])
-            ->elementLabel("Prints")
-            ->dimensions(0,500);
+        $currentStatuses = Charts::database(
+                                    PrintJob::whereDepartment(auth()->guard('web')->user()->department)
+                                        ->whereIn('status', $statuses->where('completed', 0)
+                                        ->pluck('id'))->get()
+                                    , 'pie', 'highcharts')
+                                ->title('Current Print Status')
+                                ->groupBy('status','currentStatus.name');
 
-            $statusPieChart = Charts::database(PrintJob::whereDepartment(auth()->user()->department)->get()->sortBy->status, 'pie', 'highcharts')
-            ->title('Printjobs by status')
-            ->groupBy('status')
-            ->colors(['#2196F3', '#FFC107', '#F44336', '#32CD32', '#24ddf0'])
-            ->labels(Status::all()->pluck('name'));
 
-        
+        $colors = Color::all();
+        $filaments = Filament::all();
+        $filamentQuantityByColor = Charts::multi('bar', 'highcharts')
+                                        ->title('Filament Inventory')
+                                        ->colors($colors->pluck('hex_code')->transform(function($item, $key){ return '#'.$item; })->all())
+                                        ->labels($filaments->pluck('name'))
+                                        ->elementLabel("Total (grams)");
+
+        foreach ($colors as $color) {
+            $filamentQuantityByColor = $filamentQuantityByColor->dataset($color->name,
+                FilamentColor::where('department', auth()->guard('web')->user()->department)
+                    ->where('color', $color->id)
+                    ->pluck('quantity')
+            );
+        }
+
+        $filamentUsage = [];
+
+        foreach($filaments as $key => $filament){
+
+            $filamentUsage[$filament->id] = Charts::multiDatabase('line', 'highcharts')
+                                                ->title($filament->name)
+                                                ->colors($colors->pluck('hex_code')->transform(function($item, $key){ return '#'.$item; })->all());
+
+            foreach ($colors as $color) {
+
+                $printJobs = PrintJob::select('created_at', \DB::raw('SUM(weight) as aggregate'))
+                                ->whereColor($color->id)
+                                ->whereDepartment(auth()->guard('web')->user()->department)
+                                ->whereFilament($filament->id)
+                                ->groupBy('created_at')
+                                ->get();
+
+                $filamentUsage[$filament->id]->dataset($color->name, $printJobs)->preaggregated(true);
+                $filamentUsage[$filament->id] = $filamentUsage[$filament->id]->lastByMonth(12, true);
+            }
+
+        }
 
         /*
         Function that adds up all the weight of the used up filaments per month
         */
+        /*
         function calculateFilamentGramsPerMonth($color, $filament) {
             
             $myArray = array();
@@ -47,6 +92,7 @@ class ChartsController extends Controller
             }
             return $myArray;
         }
+
 
             $filamentChart1 = Charts::multi('line', 'highcharts')
                         ->title('PolyLite PLA')
@@ -75,22 +121,9 @@ class ChartsController extends Controller
                     $filamentChart3 = $filamentChart3->dataset($color->name, calculateFilamentGramsPerMonth($color->id,3));
                 } 
 
-
-    
-            
-
-            
-
-    $filamentQuantityByColor = Charts::multi('bar', 'highcharts')
-            ->title('Filament Colors')
-    ->colors(Color::all()->pluck('hex_code')->all())
-    ->labels(Filament::all()->pluck('name'));
-
-    foreach (Color::all() as $color) {
-        $filamentQuantityByColor = $filamentQuantityByColor->dataset($color->name, FilamentColor::where('department',auth()->user()->department)->where('color', $color->id)->pluck('quantity'));
-    } 
+        */
     
 
-        return view('admin.charts.index', ['chart3' => $filamentQuantityByColor, 'chart2' => $printJobLineGraph, 'chart' => $statusPieChart, 'filamentChart1' => $filamentChart1, 'filamentChart2' => $filamentChart2, 'filamentChart3' => $filamentChart3]);
+        return view('admin.charts.index', compact('printJobsByMonth', 'currentStatuses', 'filamentQuantityByColor', 'filamentUsage'));
     }
 }

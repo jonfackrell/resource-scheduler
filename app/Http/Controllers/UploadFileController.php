@@ -28,83 +28,8 @@ class UploadFileController extends Controller
 
         $patron = Patron::find(request()->get('id'));
 
-        
-
-        // $desired_object;
-
-        // foreach ($patrons as $patron) {
-        //     if ($patron->remember_token == 'HUe6sr39L8') {
-        //         $desired_object = $patron;
-        //         break;
-        //     }
-        // }
-
-        // $patrons = $desired_object;
-
-
-        // $patrons = Patron::get()->where('remember_token', 'HUe6sr39L8');
-        //$options = Printjob::all()->pluck('options')->all();
-
-
         return view('uploadfile.index', compact('printjobs', 'departments', 'filaments', 'patron'));
 
-    }
-
-
-    /**
-     * Display a options form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function options()
-    {
-
-        $public = Setting::where('group', 'PUBLIC')->get();
-        return view('uploadfile.model-options', compact('public'));
-
-    }
-
-    /**
-     * Display a listing of printers.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function printers(Request $request)
-    {
-        $public = Setting::where('group', 'PUBLIC')->get();
-        $filaments = Filament::all();
-        if($request->has('filament')){
-            $filament = $filaments->where('id', $request->get('filament'))->first();
-        }else{
-            $filament = $filaments->sortBy('order_column')->first();
-        }
-        session([
-            'weight' => $request->get('weight'),
-            'time' => $request->get('time'),
-            'filament' => $filament->id
-        ]);
-        $calulator = new CostCalculator(['weight' => session('weight'), 'time' => session('time')]);
-        $printers = $calulator->bestPrinterPrice($filament);
-        return view('uploadfile.choose-printer', compact('printers', 'filaments', 'filament', 'public'));
-    }
-
-    /**
-     * Display upload form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function upload(Request $request)
-    {
-        session([
-            'printer' => $request->get('printer'),
-            'color' => $request->get('color')
-        ]);
-        $public = Setting::where('group', 'PUBLIC')->get();
-        $color = Color::findOrFail(session('color'));
-        $printer = Printer::findOrFail(session('printer'));
-        $filament = Filament::findOrFail(session('filament'));
-        $printer->patronCostToPrint(['weight' => session('weight'), 'time' => session('time')], $filament);
-        return view('uploadfile.upload', compact('printer', 'filament', 'color', 'public'));
     }
 
     /**
@@ -115,38 +40,6 @@ class UploadFileController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        
-        $printjob = new PrintJob;
-        $printjob->fill($request->all());
-        $printjob->patron = auth()->user()->id;
-
-
-        if($request->hasFile('filename')) {
-
-            $filename = $request->filename->store('public/upload');
-            // return 'yes';
-            $printjob->filename = $filename;
-            $printjob->original_filename = $request->filename->getClientOriginalName();
-
-        }
-
-        $department = Department::findOrFail($request->get('department'));
-        $printjob->status = $department->initial_status;
-
-        $printjob->save();
-
-        return 'done';
-
     }
 
     /**
@@ -186,26 +79,25 @@ class UploadFileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit-print-jobs');
+
         $printjob = PrintJob::find($id);
         $printjob->fill($request->all());
 
+        //save the stuff.
+        $printjob->save();
+
         if($request->hasFile('filename')) {
 
-            //$filename = $request->filename->getClientOriginalName();
-
-            $filename = $request->filename->store('public/upload');
-
-            // return 'yes';
+            $filename = $request->filename->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
             
             $printjob->filename = $filename;
             $printjob->original_filename = $request->filename->getClientOriginalName();
         }
 
-        //save the stuff.
         $printjob->save();
 
-        // return redirect()->route('uploadfile.index');
-        return "done";
+        return redirect()->route('admin');
 
 
     }
@@ -218,6 +110,13 @@ class UploadFileController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $this->authorize('delete-print-jobs');
+
+        $filament = PrintJob::findorFail($id);
+        $filament->delete();
+
+        return redirect()->back();
     }
+
 }

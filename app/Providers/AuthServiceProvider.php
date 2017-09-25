@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Models\Department;
 use App\Models\Permission;
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -29,9 +29,8 @@ class AuthServiceProvider extends ServiceProvider
     {
 
         if(Schema::hasTable('users')) {
-            auth()->login(User::find(1));
 
-            Gate::before(function($user) {
+            $gate->before(function($user) {
                 if($user->isSuperUser()) {
                     return true;
                 }

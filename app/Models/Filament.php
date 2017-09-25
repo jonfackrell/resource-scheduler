@@ -16,13 +16,13 @@ class Filament extends Model implements Sortable
     /**
      * The colors that are in stock for the filament.
      */
-    public function colors($department = 0)
+    public function colors($department = 0, $weight = 0)
     {
         if($department == 0){
             return $this->belongsToMany('App\Models\Color', 'filaments_colors', 'filament', 'color');
         }
         else{
-            return $this->belongsToMany('App\Models\Color', 'filaments_colors', 'filament', 'color')->where('department', $department)->where('quantity', '>', 0)->get();
+            return $this->belongsToMany('App\Models\Color', 'filaments_colors', 'filament', 'color')->where('department', $department)->where('quantity', '>', $weight)->get();
         }
     }
 

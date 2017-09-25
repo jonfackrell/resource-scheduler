@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
@@ -17,9 +18,9 @@ class UserController extends Controller
     {
         $this->authorize('view-users');
 
-        $users = User::where('department', auth()->user()->department)->get();
-        //$departments = Department::all()->pluck('name','id')->all();
-        return view('admin.user.index', compact('users'));
+        $users = User::where('department', auth()->guard('web')->user()->department)->orderBy('first_name', 'ASC')->orderBy('last_name', 'ASC')->get();
+        $roles = Role::all()->pluck('label', 'name');
+        return view('admin.user.index', compact('users', 'roles'));
     }
 
     /**
@@ -46,9 +47,11 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->password = str_random(64);
         if(!$request->has('department')){
-            $user->department = auth()->user()->department;
+            $user->department = auth()->guard('web')->user()->department;
         }
         $user->save();
+
+        $user->assignRole($request->get('role'));
 
         $token = app('auth.password.broker')->createToken($user);
         $user->sendPasswordResetNotification($token);
@@ -79,9 +82,9 @@ class UserController extends Controller
         $this->authorize('edit-users');
 
         $user = User::find($id);
-
+        $roles = Role::all()->pluck('label', 'name');
         $departments = Department::all()->pluck('name','id')->all();
-        return view('admin.user.edit', compact('user', 'departments'));
+        return view('admin.user.edit', compact('user', 'departments', 'roles'));
     }
 
     /**
@@ -98,6 +101,8 @@ class UserController extends Controller
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
+
+        $user->assignRole($request->get('role'));
 
         return redirect()->route('user.index');
     }

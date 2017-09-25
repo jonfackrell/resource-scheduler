@@ -55,6 +55,8 @@ class Printer extends Model implements Sortable
         if( $this->attributes['overtime_start'] > 0 ){
             $cost += ( $this->attributes['overtime_fee'] * ( (int)$params['time']/$this->attributes['overtime_start'] ) );
         }
+        $this->attributes['netCostToPrint'] = ( $cost );
+        $this->attributes['tax'] = ( $cost * ( $this->departmentOwner->tax_rate - 1 ) );
         // Add tax tax to total cost
         $this->attributes['costToPrint'] = ( $cost * $this->departmentOwner->tax_rate );
         $this->attributes['timeToPrint'] = $this->timeToPrint();
@@ -63,7 +65,17 @@ class Printer extends Model implements Sortable
 
     public function timeToPrint()
     {
-        return 24;
+        $date = \Carbon\Carbon::now();
+
+        $statuses = Status::whereInQueue(1)
+            ->whereDepartment($this->attributes['department'])
+            ->pluck('id')
+            ->all();
+
+        $time = PrintJob::select(\DB::raw('SUM(time) as total'))
+                    ->whereIn('status', $statuses)->first()->total + 30;
+
+        return $date->addMinutes($time);
     }
 
 

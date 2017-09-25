@@ -23,7 +23,7 @@ class FilamentController extends Controller
         $this->authorize('view-filaments');
 
         $filaments = Filament::orderBy('order_column')->get();
-        $printers = Printer::whereDepartment(auth()->user()->department)->get();
+        $printers = Printer::whereDepartment(auth()->guard('web')->user()->department)->get();
 
         return view('admin.filament.index', compact('filaments', 'printers'));
     }
@@ -149,13 +149,13 @@ class FilamentController extends Controller
      */
     public function showColorManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('view-colors');
         $printer = Printer::findOrFail($printerid);
         $filament = Filament::findOrFail($filamentid);
         $colors = Color::select('*', 'filaments_colors.id AS colorid')
                     ->join('filaments_colors', 'colors.id', '=', 'filaments_colors.color')
                     ->where('filaments_colors.filament', $filament->id)
-                    ->where('filaments_colors.department', auth()->user()->department)
+                    ->where('filaments_colors.department', auth()->guard('web')->user()->department)
                     ->get();
         return view('admin.filament.color-manager', compact('printer', 'filament', 'colors'));
     }
@@ -169,7 +169,7 @@ class FilamentController extends Controller
      */
     public function updateColorManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('edit-colors');
 
         $inputs = $request->all();
 
@@ -214,7 +214,7 @@ class FilamentController extends Controller
      */
     public function updatePricingManager(Request $request, $filamentid, $printerid)
     {
-        $this->authorize('edit-printers');
+        $this->authorize('edit-filaments');
 
         $printerFilament = PrinterFilament::findOrFail($request->get('pricing_options_id'));
         $printerFilament->cost_per_gram = $request->get('cost_per_gram');

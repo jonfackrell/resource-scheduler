@@ -6,16 +6,14 @@
 
 @section('content')
 
-    {!! $chart->html() !!}
+    {!! $printJobsByMonth->html() !!}
+    {!! $currentStatuses->html() !!}
+    {!! $filamentQuantityByColor->html() !!}
 
-    {!! $chart2->html() !!}
-    {!! $chart3->html() !!}
-    {!! $filamentChart1->html() !!}
-    {!! $filamentChart2->html() !!}
-    {!! $filamentChart3->html() !!}
+    @foreach($filamentUsage as $chart)
+        {!! $chart->html() !!}
+    @endforeach
 
-
-    
 @endsection
 
 @push('styles')
@@ -25,12 +23,13 @@
 
 @push('custom-scripts')
     {!! Charts::scripts() !!}
-    {!! $chart->script() !!}
 
-    {!! $chart2->script() !!}
-    {!! $chart3->script() !!}
-    {!! $filamentChart1->script() !!}
-    {!! $filamentChart2->script() !!}
-    {!! $filamentChart3->script() !!}
- 
+    {!! $printJobsByMonth->script() !!}
+    {!! $currentStatuses->script() !!}
+    {!! $filamentQuantityByColor->script() !!}
+
+    @foreach($filamentUsage as $chart)
+        {!! $chart->script() !!}
+    @endforeach
+
 @endpush

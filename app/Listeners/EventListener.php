@@ -40,7 +40,7 @@ class EventListener
                 break;
             case 3:
                 
-                $patron->notify(new \App\Notifications\SendPrintJobPrintingNotification($event->id));
+                $patron->notify(new \App\Notifications\PrintJobPrintingNotification($event->id));
                 break;    
             case 4:
                 

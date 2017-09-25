@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,9 @@ class StatusController extends Controller
         $this->authorize('view-statuses');
 
         $statuses = Status::orderBy('order_column')->get();
-        return view('admin.status.index', compact('statuses'));
+        $notifications = Notification::all();
+
+        return view('admin.status.index', compact('statuses', 'notifications'));
     }
 
     /**
@@ -32,7 +35,7 @@ class StatusController extends Controller
 
         $status = new Status();
         $status->fill($request->all());
-        $status->department = auth()->user()->department;
+        $status->department = auth()->guard('web')->user()->department;
         $status->save();
 
         return redirect()->route('status.index');

@@ -18,7 +18,7 @@ class PrinterController extends Controller
     {
         $this->authorize('view-printers');
 
-        $printers = Printer::whereDepartment(auth()->user()->department)->get();
+        $printers = Printer::whereDepartment(auth()->guard('web')->user()->department)->get();
         $departments = Department::all()->pluck('name','id')->all();
         return view('admin.printer.index', compact('printers','departments'));
     }
@@ -44,7 +44,7 @@ class PrinterController extends Controller
         $this->authorize('create-printers');
         $printer = new printer();
         $printer->fill($request->all());
-        $printer->department = auth()->user()->department;
+        $printer->department = auth()->guard('web')->user()->department;
         $printer->save();
 
         return redirect()->route('printer.index');

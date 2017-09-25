@@ -16,7 +16,12 @@ class DepartmentController extends Controller
     public function index()
     {
         $this->authorize('view-departments');
-        $departments = Department::all();
+        if(auth()->guard('web')->user()->isSuperUser()){
+            $departments = Department::all();
+        }else{
+            $departments = Department::whereId(auth()->guard('web')->user()->department)->get();
+        }
+
         return view('admin.department.index', compact('departments'));
     }
 

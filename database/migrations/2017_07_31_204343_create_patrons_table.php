@@ -15,11 +15,12 @@ class CreatePatronsTable extends Migration
     {
         Schema::create('patrons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
-            
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('netid')->unique();
+            $table->string('password')->nullable();
+            $table->string('inumber')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

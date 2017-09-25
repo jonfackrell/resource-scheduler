@@ -30,6 +30,16 @@
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
 
+    <style>
+        .navbar{
+            border-radius: 0px;
+            margin: 0px 0px 30px 0px;
+        }
+        .navbar-header{
+            background: #f8f8f8;
+        }
+    </style>
+
     {!! $public->where('name', 'HEADER_CSS')->first()->value or '' !!}
 
 
@@ -38,8 +48,11 @@
 </head>
 
 <body class="nav-md">
+@include('layouts.public-parts.top-nav')
 <div class="container body">
     <div class="main_container">
+
+
 
         <!-- page content -->
         <div class="container" role="main">
