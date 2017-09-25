@@ -13,7 +13,7 @@ class Printer extends Model implements Sortable
 
     protected $appends = ['costToPrint', 'timeToPrint'];
 
-    protected $fillable = ['name', 'description', 'department', 'flat_fee', 'per_hour', 'overtime_fee', 'overtime_start'];
+    protected $fillable = ['name', 'description', 'department', 'image', 'flat_fee', 'per_hour', 'overtime_fee', 'overtime_start'];
 
     /**
      * The department that owns the printer.
