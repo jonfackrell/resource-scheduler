@@ -8,10 +8,14 @@
 
 	@if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('create-printers'))
 		{!! BootForm::open()->action(route('printer.index'))->post() !!}
-		  {!! BootForm::text('Name', 'name') !!}
-		  {!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
-
-		  {!! BootForm::submit('Submit') !!}
+			{!! BootForm::text('Name', 'name') !!}
+			{!! BootForm::textarea('Description', 'description')->addClass('summernote') !!}
+			{!! BootForm::text('Image URL', 'image') !!}
+			{!! BootForm::text('Flat Printing Fee', 'flat_fee') !!}
+			{!! BootForm::text('Per Hour Fee', 'per_hour') !!}
+			{!! BootForm::text('Overtime Fee', 'overtime_fee') !!}
+			{!! BootForm::text('Start Charging Overtime At', 'overtime_start') !!}
+		  	{!! BootForm::submit('Submit') !!}
 		{!! BootForm::close() !!}
 	@endif
 
