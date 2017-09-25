@@ -51,7 +51,7 @@
     @else
         <div class="alert alert-danger" style="margin-top: 10px;">
             <p>
-                You currently do not have any Users setup in your system.
+                You currently do not have any Departments setup in your system.
             </p>
         </div>
     @endif

@@ -11,10 +11,6 @@
 |
 */
 
-if (env('APP_ENV') === 'production') {
-    URL::forceScheme('https');
-}
-
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'mail']], function() {
