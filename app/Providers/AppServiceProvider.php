@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
             // Aliases
             $this->app->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
 
+        }else{
+            $this->app['request']->server->set('HTTPS', true);
         }
     }
 }
