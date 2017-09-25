@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Models\Department;
 
@@ -15,7 +16,12 @@ class DepartmentController extends Controller
     public function index()
     {
         $this->authorize('view-departments');
-        $departments = Department::all();
+        if(auth()->guard('web')->user()->isSuperUser()){
+            $departments = Department::all();
+        }else{
+            $departments = Department::whereId(auth()->guard('web')->user()->department)->get();
+        }
+
         return view('admin.department.index', compact('departments'));
     }
 
@@ -48,7 +54,8 @@ class DepartmentController extends Controller
         $this->authorize('edit-departments');
 
         $department = Department::find($id);
-        return view('admin.department.edit', compact('department'));
+        $statuses = Status::whereDepartment($id)->pluck('name', 'id');
+        return view('admin.department.edit', compact('department', 'statuses'));
     }
 
     /**
@@ -62,7 +69,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('edit-departments');
 
-        $department = Department::find($id);
+        $department = Department::findorFail($id);
         $department->fill($request->all());
         $department->save();
 
@@ -78,5 +85,10 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-departments');
+
+        $department = Department::findorFail($id);
+        $department->delete();
+
+        return redirect()->back();
     }
 }

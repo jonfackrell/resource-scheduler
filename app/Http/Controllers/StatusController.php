@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,10 @@ class StatusController extends Controller
     {
         $this->authorize('view-statuses');
 
-        $statuses = Status::all();
-        return view('admin.status.index', compact('statuses'));
+        $statuses = Status::orderBy('order_column')->get();
+        $notifications = Notification::all();
+
+        return view('admin.status.index', compact('statuses', 'notifications'));
     }
 
     /**
@@ -32,6 +35,7 @@ class StatusController extends Controller
 
         $status = new Status();
         $status->fill($request->all());
+        $status->department = auth()->guard('web')->user()->department;
         $status->save();
 
         return redirect()->route('status.index');
@@ -47,7 +51,7 @@ class StatusController extends Controller
     {
         $this->authorize('edit-statuses');
 
-        $status = Status::find($id);
+        $status = Status::findOrFail($id);
         return view('admin.status.edit', compact('status'));
     }
 
@@ -66,7 +70,31 @@ class StatusController extends Controller
         $status->fill($request->all());
         $status->save();
 
+        if($request->ajax()){
+            return response()->json(['status' => true]);
+        }
+
         return redirect()->route('status.index');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sort(Request $request)
+    {
+        $this->authorize('edit-statuses');
+
+        $order = json_decode($request->get('order'))[0];
+        foreach($order as $key => $row){
+            $status = Status::find($row->id);
+            $status->order_column = $key;
+            $status->save();
+        }
+        return response()->json(['status' => true]);
     }
 
     /**
@@ -78,5 +106,10 @@ class StatusController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-statuses');
+
+        $status = Status::findorFail($id);
+        $status->delete();
+
+        return redirect()->back();
     }
 }

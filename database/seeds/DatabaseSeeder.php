@@ -11,16 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete'];
-        $systemPermissions = [
-            'view-departments' => 'View Departments', 'create-departments' => 'Create Departments', 'edit-departments' => 'Edit Departments', 'delete-departments' => 'Delete Departments',
-            'view-filaments' => 'View Filaments', 'create-filaments' => 'Create Filaments','edit-filaments' => 'Edit Filaments', 'delete-filaments' => 'Delete Filaments',
-            'view-colors' => 'View Colors', 'create-colors' => 'Create Colors', 'edit-colors' => 'Edit Colors', 'delete-colors' => 'Delete Colors',
-            'view-patrons' => 'View Patrons', 'create-patrons' => 'Create Patrons', 'edit-patrons' => 'Edit Patrons', 'delete-patrons' => 'Delete Patrons',
-            'view-statuses' => 'View Statuses', 'create-statuses' => 'Create Statuses', 'edit-statuses' => 'Edit Statuses', 'delete-statuses' => 'Delete Statuses',
-            'view-print-jobs' => 'View Print Jobs', 'create-print-jobs' => 'Create Print Jobs', 'edit-print-jobs' => 'Edit Print Jobs', 'delete-print-jobs' => 'Delete Print Jobs',
-            'accept-payments' => 'Accept Payments'
-        ];
+        $statuses = ['Pending Approval', 'Pending Print', 'Printing', 'Printing Complete', 'Denied'];
+
+        $administrator = \App\Models\Role::whereName('administrator')->first();
+
+        $supervisor = \App\Models\Role::whereName('supervisor')->first();
+
+        $employee = \App\Models\Role::whereName('employee')->first();
+
+        $paymentProcessor = \App\Models\Role::whereName('payment-processor')->first();
 
 
         //$departments = factory(App\Models\Department::class, 5)->create();
@@ -29,8 +28,21 @@ class DatabaseSeeder extends Seeder
         //$filaments = factory(App\Models\Filament::class, 20)->create();
         //$colors = factory(App\Models\Color::class, 10)->create();
         $patrons = factory(App\Models\Patron::class, 100)->create();
-        $printJobs = factory(App\Models\PrintJob::class, 60)->create();
+        $printJobs = factory(App\Models\PrintJob::class, 100)->create();
 
+        $adminUser = \App\Models\User::findOrFail(1);
+        $adminUser->assignRole($administrator->name);
+
+        $supervisorUser = \App\Models\User::findOrFail(2);
+        $supervisorUser->assignRole($supervisor->name);
+
+        $employeeUser = \App\Models\User::findOrFail(3);
+        $employeeUser->assignRole($employee->name);
+
+        $paymentUser = \App\Models\User::findOrFail(4);
+        $paymentUser->assignRole($paymentProcessor->name);
+
+        // Can be removed
         $settings                   = new \App\Models\Setting();
         $settings->name             = 'HEADER_HTML';
         $settings->value            = '';
@@ -56,13 +68,22 @@ class DatabaseSeeder extends Seeder
         $settings->name             = 'FOOTER_JS';
         $settings->value            = '';
         $settings->group            = 'PUBLIC';
+        $settings->order            = 4;
+        $settings->save();
+        // TODO: Add logo url
+        $settings                   = new \App\Models\Setting();
+        $settings->name             = 'LOGO';
+        $settings->value            = '//library.byui.edu/images/byu-idaho-logo.png';
+        $settings->group            = 'PUBLIC';
         $settings->order            = 5;
         $settings->save();
 
 
         App\Models\Department::create([
             'name' => 'McKay Library',
-            'description' => 'MCK 140'
+            'description' => 'MCK 140',
+            'initial_status' => 1,
+            'terms' => 'By clicking \'Submit\' you agree to paying the total cost listed within 2 weeks of printing.'
         ]);
 
         App\Models\Department::create([
@@ -112,28 +133,19 @@ class DatabaseSeeder extends Seeder
         App\Models\Filament::create([
             'name' => 'PolyLite PLA',
             'description' => 'This premium filament 3D prints reliably and has minimal warping and shrinking compared to other materials, perfect for applications featuring flat surfaces and hard angles, or requiring tight tolerances for fit.',
-            'department' => 1,
-            'cost_per_gram' => 2.5,
-            'add_cost_per_gram' => 5,
-            'multiplier' => 1
+            'department' => 1
         ]);
 
         App\Models\Filament::create([
             'name' => 'nGen',
             'description' => 'nGen is engineered for prototyping and production. This co-polyester filament by colorFabb brings together strength and precision optimized for desktop 3D printing. nGen handles complex models well, including bridging gaps, holes, and overhangs. It also exhibits minimal warping and responds well to post-processing techniques like sanding.',
-            'department' => 1,
-            'cost_per_gram' => 5.2,
-            'add_cost_per_gram' => 5,
-            'multiplier' => 1
+            'department' => 1
         ]);
 
         App\Models\Filament::create([
             'name' => 'NinjaFlex',
             'description' => 'NinjaFlex performs with an exciting combination of elongation, elasticity, and strength. NinjaFlex comes in many colors that have a beautiful, strong sheen after being 3D printed. NinjaFlex is a premium and high quality filament material capable of opening the door to a wide range of new applications for your LulzBot desktop 3D printer',
-            'department' => 1,
-            'cost_per_gram' => 8.7,
-            'add_cost_per_gram' => 5,
-            'multiplier' => 1
+            'department' => 1
         ]);
 
 
@@ -206,16 +218,18 @@ class DatabaseSeeder extends Seeder
         foreach ($statuses as $status){
             App\Models\Status::create([
                 'name' => $status,
-                'accept_payment' => rand(0, 1)
+                'department' => \App\Models\User::first()->department,
+                'accept_payment' => rand(0, 1),
+                'dashboard_display' => 1
             ]);
         }
-
+        /*
         foreach ($systemPermissions as $name => $label){
             App\Models\SystemPermission::create([
                 'name' => $name,
                 'label' => $label
             ]);
-        }
+        }*/
 
         $filaments = \App\Models\Filament::all();
         $colors = \App\Models\Color::all();
@@ -223,7 +237,10 @@ class DatabaseSeeder extends Seeder
         foreach($departments as $department){
             foreach ($filaments as $filament){
                 foreach ($colors as $color){
-                    $filament->colors()->attach($color->id, ['quantity' => rand(0, 10), 'department' => $department->id]);
+                    $filament->colors()->attach($color->id, [
+                        'quantity' => rand(250, 3000),
+                        'department' => $department->id
+                    ]);
                 }
             }
         }
@@ -231,7 +248,11 @@ class DatabaseSeeder extends Seeder
         $printers = \App\Models\Printer::all();
         foreach ($printers as $printer){
             foreach ($filaments as $filament){
-                $printer->filaments()->attach($filament->id);
+                $printer->filaments()->attach($filament->id, [
+                    'cost_per_gram' => 2.5,
+                    'add_cost_per_gram' => 5,
+                    'multiplier' => 1
+                ]);
             }
         }
     }

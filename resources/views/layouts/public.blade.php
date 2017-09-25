@@ -30,6 +30,16 @@
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
 
+    <style>
+        .navbar{
+            border-radius: 0px;
+            margin: 0px 0px 30px 0px;
+        }
+        .navbar-header{
+            background: #f8f8f8;
+        }
+    </style>
+
     {!! $public->where('name', 'HEADER_CSS')->first()->value or '' !!}
 
 
@@ -38,8 +48,11 @@
 </head>
 
 <body class="nav-md">
+@include('layouts.public-parts.top-nav')
 <div class="container body">
     <div class="main_container">
+
+
 
         <!-- page content -->
         <div class="container" role="main">
@@ -53,21 +66,7 @@
                             <h2>@yield('title')</h2>
 
                             <ul class="nav navbar-right panel_toolbox">
-                                <!--
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a>
-                                        </li>
-                                        <li><a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                                -->
+
                             </ul>
 
                             <div class="clearfix"></div>

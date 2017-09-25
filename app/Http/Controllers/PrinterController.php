@@ -17,7 +17,8 @@ class PrinterController extends Controller
     public function index()
     {
         $this->authorize('view-printers');
-        $printers = Printer::all();
+
+        $printers = Printer::whereDepartment(auth()->guard('web')->user()->department)->get();
         $departments = Department::all()->pluck('name','id')->all();
         return view('admin.printer.index', compact('printers','departments'));
     }
@@ -43,8 +44,7 @@ class PrinterController extends Controller
         $this->authorize('create-printers');
         $printer = new printer();
         $printer->fill($request->all());
-        $user = Auth::user();
-        $printer->department = $user->department;
+        $printer->department = auth()->guard('web')->user()->department;
         $printer->save();
 
         return redirect()->route('printer.index');
@@ -95,6 +95,26 @@ class PrinterController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sort(Request $request)
+    {
+        $this->authorize('edit-printers');
+
+        $order = json_decode($request->get('order'))[0];
+        foreach($order as $key => $row){
+            $printer = Printer::find($row->id);
+            $printer->order_column = $key;
+            $printer->save();
+        }
+        return response()->json(['status' => true]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -102,6 +122,11 @@ class PrinterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete-printers');
+
+        $printer = Printer::findorFail($id);
+        $printer->delete();
+
+        return redirect()->back();
     }
 }

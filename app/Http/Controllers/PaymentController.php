@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PrintJob;
 use App\Models\Status;
+use App\Notifications\PaymentReceivedNotification;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -13,13 +14,21 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $statuses = Status::where('accept_payment', 1)->pluck('id')->all();
-        $printJobs = PrintJob::with('currentStatus')
+        $statuses = Status::whereAcceptPayment(1)
+                            ->whereDepartment(auth()->guard('web')->user()->department)
+                            ->pluck('id')
+                            ->all();
+        $printJobs = PrintJob::with('currentStatus', 'owner')
                         ->whereIn('status', $statuses)
-                        ->where('paid', '<>', 1)
-                        ->paginate(20);
+                        ->where('paid', '<>', 1);
+        if($request->has('q')){
+            $printJobs = $printJobs->whereHas('owner', function($query) use ($request){
+                $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%');
+            });
+        }
+        $printJobs = $printJobs->paginate(20);
         return view('admin.payment.index', compact('printJobs'));
     }
 
@@ -95,6 +104,11 @@ class PaymentController extends Controller
         $printJob = PrintJob::findOrFail($request->get('id'));
         $printJob->paid = $request->get('paid');
         $printJob->save();
+
+        if($printJob->paid == 1){
+            $printJob->owner->notify(new PaymentReceivedNotification($printJob));
+        }
+
         return response()->json(['status' => $request->get('paid')]);
     }
 }

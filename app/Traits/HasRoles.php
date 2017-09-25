@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\Role;
+
 trait HasRoles{
 
     public function roles()
@@ -25,6 +27,14 @@ trait HasRoles{
 
         return !!$role->intersect($this->roles)->count();
 
+    }
+
+    /**
+     * Get the user role.
+     */
+    public function getRoleAttribute()
+    {
+        return \DB::table('role_user')->join('roles', 'roles.id' , '=', 'role_user.role_id')->whereUserId($this->getKey())->first();
     }
 
 }

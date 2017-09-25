@@ -17,6 +17,7 @@ class CreatePrintJobsTable extends Migration
             $table->increments('id');
             $table->integer('patron')->unsigned();
             $table->integer('department')->unsigned();
+            $table->integer('printer')->unsigned();
             $table->integer('filament')->unsigned();
             $table->integer('color')->unsigned();
             $table->string('original_filename')->nullable();
@@ -27,6 +28,7 @@ class CreatePrintJobsTable extends Migration
             $table->integer('status')->unsigned()->nullable();
             $table->integer('cost')->default(0);
             $table->boolean('paid')->default(0);
+            $table->boolean('completed')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Printer extends Model
+class Printer extends Model implements Sortable
 {
 
+    use SortableTrait;
 
     protected $appends = ['costToPrint', 'timeToPrint'];
 
-    protected $fillable = ['name', 'description', 'department'];
+    protected $fillable = ['name', 'description', 'department', 'flat_fee', 'per_hour', 'overtime_fee', 'overtime_start'];
 
     /**
      * The department that owns the printer.
@@ -40,22 +43,40 @@ class Printer extends Model
 
     public function patronCostToPrint($params, $filament)
     {
+        // Get the options from the printer's filament
+        $options = $filament->options($this->getKey());
         // Add flat printing fee
         $cost = ( $this->attributes['flat_fee'] );
         // Calculate cost per hour to print
-        $cost += ( $params['time'] * $this->attributes['per_hour']);
+        $cost += ( ( $params['time'] / 60 ) * $this->attributes['per_hour'] );
         // Calculate cost of material using both the additional cost per gram and cost multiplier
-        $cost += ( $params['weight'] * ( $filament->cost_per_gram + $filament->add_cost_per_gram ) * $filament->multiplier  );
+        $cost += ( $params['weight'] * ( ( $options->cost_per_gram ) + ( $options->add_cost_per_gram ) ) * $options->multiplier  );
         // Add additional fees for printing over a certain amount of time
-        if($this->attributes['overtime_start'] > 0){
+        if( $this->attributes['overtime_start'] > 0 ){
             $cost += ( $this->attributes['overtime_fee'] * ( (int)$params['time']/$this->attributes['overtime_start'] ) );
         }
+        $this->attributes['netCostToPrint'] = ( $cost );
+        $this->attributes['tax'] = ( $cost * ( $this->departmentOwner->tax_rate - 1 ) );
         // Add tax tax to total cost
         $this->attributes['costToPrint'] = ( $cost * $this->departmentOwner->tax_rate );
-        $this->attributes['timeToPrint'] = 24;
+        $this->attributes['timeToPrint'] = $this->timeToPrint();
     }
 
 
+    public function timeToPrint()
+    {
+        $date = \Carbon\Carbon::now();
+
+        $statuses = Status::whereInQueue(1)
+            ->whereDepartment($this->attributes['department'])
+            ->pluck('id')
+            ->all();
+
+        $time = PrintJob::select(\DB::raw('SUM(time) as total'))
+                    ->whereIn('status', $statuses)->first()->total + 30;
+
+        return $date->addMinutes($time);
+    }
 
 
 }

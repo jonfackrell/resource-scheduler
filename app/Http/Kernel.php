@@ -56,7 +56,10 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'cas.auth'  => 'Subfission\Cas\Middleware\CASAuth',
-        'cas.guest' => 'Subfission\Cas\Middleware\RedirectCASAuthenticated',
+        'cas.auth'  => \Subfission\Cas\Middleware\CASAuth::class,
+        'cas.guest' => \Subfission\Cas\Middleware\RedirectCASAuthenticated::class,
+        'patron.auth' => \App\Http\Middleware\PatronAuth::class,
+        'database' => \App\Http\Middleware\Database::class,
+        'mail' => \App\Http\Middleware\MailOverride::class,
     ];
 }

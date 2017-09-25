@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -151,7 +151,7 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
+        //Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
@@ -181,10 +181,17 @@ return [
         // https://github.com/adamwathan/bootforms
         AdamWathan\BootForms\BootFormsServiceProvider::class,
         // https://github.com/subfission/cas/wiki/Installation
-        //Subfission\Cas\CasServiceProvider::class,
+        Subfission\Cas\CasServiceProvider::class,
+
+        // https://github.com/Flynsarmy/laravel-db-blade-compiler
+        //Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
+
 
         // https://github.com/barryvdh/laravel-debugbar/tree/2.4
-        Barryvdh\Debugbar\ServiceProvider::class,
+        //Barryvdh\Debugbar\ServiceProvider::class,
+
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+
 
     ],
 
@@ -239,7 +246,11 @@ return [
     
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        //'DbView' => Flynsarmy\DbBladeCompiler\Facades\DbView::class,
+
+
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+
 
     ],
 

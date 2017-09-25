@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Notifications\SendNewPasswordNotification;
+use App\Notifications\SetNewPasswordNotification;
 use App\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     public function isSuperUser(){
-        return true;
+        return in_array($this->attributes['email'], explode(',', env('SUPER')));
     }
 
     /**
@@ -41,7 +41,7 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new SendNewPasswordNotification($token));
+        $this->notify(new SetNewPasswordNotification($token));
     }
 
 }

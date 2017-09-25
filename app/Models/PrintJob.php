@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\Event;
 
 class PrintJob extends Model
 {
@@ -39,9 +40,25 @@ class PrintJob extends Model
         return $this->belongsTo(Patron::class, 'patron', 'id');
     }
 
+    /**
+     * Get the printer.
+     */
+    public function selectedPrinter()
+    {
+        return $this->belongsTo(Printer::class, 'printer', 'id');
+    }
+
+    /**
+     * Get the department.
+     */
+    public function departmentOwner()
+    {
+        return $this->belongsTo(Department::class, 'department', 'id');
+    }
+
 
     protected $fillable = [
-        'patron', 'color', 'filament', 'department', 'original_filename', 'filename'
+        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed', 'weight', 'time', 'options'
     ];
 
     /**
@@ -55,6 +72,40 @@ class PrintJob extends Model
     public function getFilament()
     {
         return $this->belongsTo(Filament::class, 'filament', 'id');
+    }
+
+    public function getColor()
+    {
+        return $this->belongsTo(Color::class, 'color', 'id');
+    }
+
+    /*attempt at sending an email to patron incomplete
+    public function setStatusAttribute($value)
+    {
+        // $patron = Patron::find($this->patron);
+        // switch($value){
+        //     case 1:
+        //         break;
+        //     case 2:
+        //         $patron->notify(new \App\Notifications\SendDifferentFileNotification($this->attributes['id']));
+        //         break;      
+        // }
+
+
+         
+         $printJob = PrintJob::findOrFail($this->id);
+        
+        event(new Event($printJob, $value));
+
+        $this->attributes['status'] = $value;
+
+
+        
+    }
+    */
+    public function sendDifferentFileNotification($token)
+    {
+        $this->notify(new sendDifferentFileNotification($token));
     }
 
 

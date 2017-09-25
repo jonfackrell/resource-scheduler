@@ -17,6 +17,8 @@ class CreateColorsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('hex_code')->nullable();
+            $table->integer('order_column');
+            $table->softDeletes();
         });
 
         Schema::create('filaments_colors', function (Blueprint $table) {
@@ -24,7 +26,7 @@ class CreateColorsTable extends Migration
             $table->integer('filament')->unsigned();
             $table->integer('color')->unsigned();
             $table->integer('department')->unsigned();
-            $table->integer('quantity')->nullable();
+            $table->float('quantity')->nullable();
         });
 
     }

@@ -19,9 +19,9 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => Hash::make('secret'),
         'remember_token' => str_random(10),
-        'department' => $faker->randomDigit(1, 5)
+        'department' => 1
     ];
 });
 
@@ -32,6 +32,8 @@ $factory->define(App\Models\Patron::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
+        'inumber' => $faker->unique()->safeEmail,
+        'netid' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10)
     ];
@@ -78,13 +80,14 @@ $factory->define(App\Models\Color::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\PrintJob::class, function (Faker\Generator $faker) {
     return [
         'patron' => $faker->numberBetween(1, 20),
-        'department' => $faker->numberBetween(1, 5),
-        'filament' => $faker->numberBetween(1, 20),
+        'department' => 1,
+        'printer' => 1,
+        'filament' => $faker->numberBetween(1, 3),
         'color' => $faker->numberBetween(1, 10),
         'filename' => $faker->domainName,
         'time' => $faker->numberBetween(60, 3600),
-        'weight' => $faker->randomDigit(100, 2000),
+        'weight' => $faker->numberBetween(100, 2000),
         'options' => ['infill' => 20, 'quality', 'support' => true],
-        'status' => $faker->randomDigit(1, 4)
+        'status' => $faker->numberBetween(1, 4)
     ];
 });
