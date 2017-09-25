@@ -50,6 +50,7 @@ class FilamentController extends Controller
 
         $filament = new Filament();
         $filament->fill($request->all());
+        $filament->department = auth()->guard('web')->user()->department;
         $filament->save();
 
         return redirect()->route('filament.index');
