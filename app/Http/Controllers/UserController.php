@@ -6,9 +6,13 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class UserController extends Controller
 {
+
+    use SendsPasswordResetEmails;
+
     /**
      * Display a listing of the resource.
      *
@@ -53,8 +57,9 @@ class UserController extends Controller
 
         $user->assignRole($request->get('role'));
 
-        $token = app('auth.password.broker')->createToken($user);
-        $user->sendPasswordResetNotification($token);
+        //$token = app('auth.password.broker')->createToken($user);
+        //$user->sendPasswordResetNotification($token);
+        $this->sendResetLinkEmail($request);
 
         return redirect()->back()->with('success', "A new user account has been created for $user->first_name $user->last_name");
     }
