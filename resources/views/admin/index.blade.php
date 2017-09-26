@@ -25,7 +25,7 @@
 
         <div class="" role="tabpanel" data-example-id="togglable-tabs">
             <ul id="status-tabs" class="nav nav-tabs bar_tabs" role="tablist">
-                @foreach($statuses as $status)
+                @foreach($dashboardStatuses as $status)
                     <li role="presentation" class="@if($loop->first) active @endif">
                         <a href="#tab_{{ $status->id }}" id="tab-{{ $status->id }}" role="tab" data-toggle="tab" aria-expanded="true">{{ $status->name }}</a>
                         <span id="status-count-{{ $status->id }}" class="badge bg-green" style="position: absolute; top: -10px; right: -5px; display: none;"></span>

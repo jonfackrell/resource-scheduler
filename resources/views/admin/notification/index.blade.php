@@ -22,7 +22,6 @@
         <table class="table table-striped sorted_table">
             <thead>
                 <tr>
-                    <th></th>
                     <th>Display Name</th>
                     <th>Subject</th>
                     <th></th>
