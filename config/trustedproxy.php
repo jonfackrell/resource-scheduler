@@ -25,8 +25,7 @@ return [
      * subsequently passed through.
      */
     'proxies' => [
-        '10.132.48.236',
-        '104.131.88.118',
+        '*',
     ],
 
     /*
@@ -63,7 +62,7 @@ return [
      * as they are currently unsupported there.
      */
     'headers' => [
-        //(defined('Illuminate\Http\Request::HEADER_FORWARDED') ? Illuminate\Http\Request::HEADER_FORWARDED : 'forwarded') => 'FORWARDED',
+        (defined('Illuminate\Http\Request::HEADER_FORWARDED') ? Illuminate\Http\Request::HEADER_FORWARDED : 'forwarded') => 'FORWARDED',
         \Illuminate\Http\Request::HEADER_CLIENT_IP    => 'X_FORWARDED_FOR',
         \Illuminate\Http\Request::HEADER_CLIENT_HOST  => 'X_FORWARDED_HOST',
         \Illuminate\Http\Request::HEADER_CLIENT_PROTO => 'X_FORWARDED_PROTO',
