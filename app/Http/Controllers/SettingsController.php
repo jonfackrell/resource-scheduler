@@ -111,6 +111,8 @@ class SettingsController extends Controller
         $email                      = EmailSetting::firstOrNew(['from_address' => $request->get('from_address')]);
         $email->outgoing_host       = $request->get('outgoing_host');
         $email->outgoing_port       = $request->get('outgoing_port');
+        $email->incoming_host       = $request->get('outgoing_host');
+        $email->incoming_port       = $request->get('outgoing_port');
         $email->from_address        = $request->get('from_address');
         $email->from_name           = $request->get('from_name');
         $email->encryption          = $request->get('encryption');

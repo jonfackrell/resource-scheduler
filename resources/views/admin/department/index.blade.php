@@ -8,9 +8,12 @@
 
     @if(auth()->guard('web')->user()->isSuperUser())
         {!! BootForm::open()->action(route('department.index'))->post() !!}
-          {!! BootForm::text('Name', 'name')->required() !!}
-          {!! BootForm::textarea('Description', 'description')->required()->addClass('summernote') !!}
-          {!! BootForm::submit('Submit') !!}
+            {!! BootForm::text('Name', 'name')->required() !!}
+            {!! BootForm::textarea('Description', 'description')->required()->addClass('summernote') !!}
+            {!! BootForm::textarea('Terms', 'terms')->addClass('summernote') !!}
+            {!! BootForm::textarea('Payment Instructions', 'payment_instructions')->addClass('summernote') !!}
+            {!! BootForm::text('Tax Rate', 'tax_rate')->required()->hint('For a 6% tax input 1.06. The cost to print will be multipled by the value entered here.') !!}
+            {!! BootForm::submit('Submit') !!}
         {!! BootForm::close() !!}
     @endif
 
