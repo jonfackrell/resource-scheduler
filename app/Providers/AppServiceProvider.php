@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
 
         }else{
-            $this->app['request']->server->set('HTTPS', true);
+            //$this->app['request']->server->set('HTTPS', true);
         }
     }
 }
