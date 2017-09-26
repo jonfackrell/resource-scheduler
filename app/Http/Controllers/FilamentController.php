@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Color;
+use App\Models\Department;
 use App\Models\FilamentColor;
 use App\Models\Patron;
 use App\Models\Printer;
@@ -114,7 +115,7 @@ class FilamentController extends Controller
                 ]);
             }
         }
-        
+
         return redirect()->route('filament.index');
         
     }
