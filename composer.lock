@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f92f94b8fc5ac60beba0e2f5861f3343",
+    "content-hash": "279db88ee8affe43b56b9d37bf03614a",
     "packages": [
         {
             "name": "adamwathan/bootforms",
@@ -94,16 +94,16 @@
         },
         {
             "name": "consoletvs/charts",
-            "version": "5.1.2",
+            "version": "5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConsoleTVs/Charts.git",
-                "reference": "18dc7881b74ec1d01e65390563a992e6fc76c2b8"
+                "reference": "e166ff32984fc807a99ad2496f50adc92e2bcbdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/18dc7881b74ec1d01e65390563a992e6fc76c2b8",
-                "reference": "18dc7881b74ec1d01e65390563a992e6fc76c2b8",
+                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/e166ff32984fc807a99ad2496f50adc92e2bcbdb",
+                "reference": "e166ff32984fc807a99ad2496f50adc92e2bcbdb",
                 "shasum": ""
             },
             "require": {
@@ -140,20 +140,20 @@
                 }
             ],
             "description": "Create charts for laravel using different charts libraries",
-            "time": "2017-08-18T23:42:27+00:00"
+            "time": "2017-09-26T16:52:24+00:00"
         },
         {
             "name": "consoletvs/support",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConsoleTVs/Support.git",
-                "reference": "1e417abf24dab6b0eafefda2c85ba3f0a494c22f"
+                "reference": "bfd6f506abcf50d1394ecb85d8e97f759ddaf9f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Support/zipball/1e417abf24dab6b0eafefda2c85ba3f0a494c22f",
-                "reference": "1e417abf24dab6b0eafefda2c85ba3f0a494c22f",
+                "url": "https://api.github.com/repos/ConsoleTVs/Support/zipball/bfd6f506abcf50d1394ecb85d8e97f759ddaf9f0",
+                "reference": "bfd6f506abcf50d1394ecb85d8e97f759ddaf9f0",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +186,7 @@
                 }
             ],
             "description": "ConsoleTVs support library",
-            "time": "2017-09-09T19:30:18+00:00"
+            "time": "2017-09-21T16:02:31+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -570,16 +570,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3"
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/322a4ade249467179c50a3e50eda8760ff3af2a3",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/3603dbcc9a17d307533473246a6c58c31cf17919",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
                 "shasum": ""
             },
             "require": {
@@ -636,7 +636,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2017-07-03T15:50:40+00:00"
+            "time": "2017-09-21T16:29:17+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1652,16 +1652,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/45cffe822057a09e05f7bd09ec5fb88eeecd2334",
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
                 "shasum": ""
             },
             "require": {
@@ -1730,7 +1730,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-08-04T13:39:04+00:00"
+            "time": "2017-09-22T20:46:04+00:00"
         },
         {
             "name": "spatie/eloquent-sortable",
@@ -3611,16 +3611,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.21",
+            "version": "5.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db"
+                "reference": "10df877596c9906d4110b5b905313829043f2ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b91adfb64264ddec5a2dee9851f354aa66327db",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
+                "reference": "10df877596c9906d4110b5b905313829043f2ada",
                 "shasum": ""
             },
             "require": {
@@ -3689,7 +3689,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-21T08:11:54+00:00"
+            "time": "2017-09-24T07:23:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
