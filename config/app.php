@@ -192,6 +192,9 @@ return [
 
         ConsoleTVs\Charts\ChartsServiceProvider::class,
 
+        // https://github.com/fideloper/TrustedProxy
+        Fideloper\Proxy\TrustedProxyServiceProvider::class,
+
 
     ],
 
