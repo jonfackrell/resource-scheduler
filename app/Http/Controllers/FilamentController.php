@@ -107,15 +107,6 @@ class FilamentController extends Controller
         $filament->fill($request->all());
         $filament->save();
 
-        foreach (Color::all() as $color){
-            foreach(Department::all() as $department){
-                $filament->colors()->attach($color->id, [
-                    'quantity' => 0,
-                    'department' => $department->id
-                ]);
-            }
-        }
-
         return redirect()->route('filament.index');
         
     }
