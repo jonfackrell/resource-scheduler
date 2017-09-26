@@ -25,8 +25,6 @@
             {!! BootForm::password('Password', 'password')->required(true) !!}
             {!! BootForm::text('Outgoing Mail', 'outgoing_host')->required(true) !!}
             {!! BootForm::text('Outgoing Port', 'outgoing_port')->defaultValue('587')->required(true) !!}
-            {!! BootForm::text('Incoming Mail', 'incoming_host')->required(true) !!}
-            {!! BootForm::text('Incoming Port', 'incoming_port')->defaultValue('587')->required(true) !!}
             {!! BootForm::text('Encryption', 'encryption')->defaultValue('tls')->required(true) !!}
 
             {!! BootForm::submit('Save')->class('btn btn-success') !!}
