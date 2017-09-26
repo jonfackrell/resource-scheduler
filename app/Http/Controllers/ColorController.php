@@ -94,15 +94,6 @@ class ColorController extends Controller
         $color->fill($request->all());
         $color->save();
 
-        foreach (Filament::all() as $filament){
-            foreach(Department::all() as $department){
-                $filament->colors()->attach($color->id, [
-                    'quantity' => 0,
-                    'department' => $department->id
-                ]);
-            }
-        }
-
         return redirect()->route('color.index');
     }
 
