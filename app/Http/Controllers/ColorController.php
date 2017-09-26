@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Filament;
+use App\Models\Printer;
 use Illuminate\Http\Request;
 use App\Models\Color;
 
@@ -42,6 +45,15 @@ class ColorController extends Controller
         $color->fill($request->all());
         $color->save();
 
+        foreach (Filament::all() as $filament){
+            foreach(Department::all() as $department){
+                $filament->colors()->attach($color->id, [
+                    'quantity' => 0,
+                    'department' => $department->id
+                ]);
+            }
+        }
+
         return redirect()->route('color.index');
     }
 
@@ -81,6 +93,15 @@ class ColorController extends Controller
         $color = Color::find($id);
         $color->fill($request->all());
         $color->save();
+
+        foreach (Filament::all() as $filament){
+            foreach(Department::all() as $department){
+                $filament->colors()->attach($color->id, [
+                    'quantity' => 0,
+                    'department' => $department->id
+                ]);
+            }
+        }
 
         return redirect()->route('color.index');
     }

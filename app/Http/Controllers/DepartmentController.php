@@ -39,6 +39,15 @@ class DepartmentController extends Controller
         $department->fill($request->all());
         $department->save();
 
+        foreach (Filament::all() as $filament){
+            foreach(Colors::all() as $color){
+                $filament->colors()->attach($color->id, [
+                    'quantity' => 0,
+                    'department' => $department->id
+                ]);
+            }
+        }
+
         return redirect()->route('department.index');
     }
 

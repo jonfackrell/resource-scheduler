@@ -17,9 +17,7 @@ class PatronAuth
     {
 
         if(!\Auth::guard('patrons')->check()){
-            config()->set('cas.cas_redirect_path', \Request::url().'/');
             cas()->authenticate();
-
 
             $user = \App\Models\Patron::whereNetid(cas()->getCurrentUser())->first();
 
