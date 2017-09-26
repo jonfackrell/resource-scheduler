@@ -10,8 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Auth::routes();
+Route::group(['middleware' => ['mail']], function() {
+    Auth::routes();
+});
 
 Route::group(['middleware' => ['auth', 'mail']], function() {
 
