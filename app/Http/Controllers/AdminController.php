@@ -18,12 +18,12 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $statuses = Status::whereDashboardDisplay(1)
-                        ->whereDepartment(auth()->guard('web')->user()->department)
-                        ->orderBy('order_column', 'ASC')
-                        ->get();
+        $statuses = Status::whereDepartment(auth()->guard('web')->user()->department)
+                                ->orderBy('order_column', 'ASC')
+                                ->get();
+        $dashboardStatuses = $statuses->where('dashboard_display', 1)->all();
         $printJobs = [];
-        foreach($statuses as $status){
+        foreach($dashboardStatuses as $status){
             $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id);
             if($request->has('q')){
                 $printJobs[$status->id] = $printJobs[$status->id]->whereHas('owner', function($query) use ($request){
@@ -32,7 +32,8 @@ class AdminController extends Controller
             }
             $printJobs[$status->id] = $printJobs[$status->id]->paginate(20, ['*'], str_slug($status->name));
         }
-        return view('admin.index', compact('printJobs', 'statuses'));
+
+        return view('admin.index', compact('printJobs', 'dashboardStatuses', 'statuses'));
     }
 
     /**
