@@ -86,6 +86,7 @@
         $(function(){
 
             $(document).on('click', '.toggle-print-job-payment-status', function(event){
+                event.preventDefault();
                 var $button = $(this);
                 $button.button('loading');
                 var id = $button.parents('tr').data('id');

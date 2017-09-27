@@ -40,6 +40,7 @@
                     <table class="table table-striped projects">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th style="width: 20%">Patron Name</th>
                                 <th>Printer</th>
                                 <th>Options</th>
@@ -50,6 +51,11 @@
                         <tbody>
                             @foreach($printJob as $row)
                                 <tr data-id="{{ $row->id }}">
+                                    <td style="vertical-align: middle;">
+                                        @if($row->paid == 1)
+                                            <i class="fa fa-usd" aria-hidden="true" style="color: green; font-size: 2em;" title="Paid"></i>
+                                        @endif
+                                    </td>
                                     <td>
                                         {{ $row->owner->first_name or ''}}
                                         {{ $row->owner->last_name  or '' }}
