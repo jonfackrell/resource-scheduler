@@ -81,8 +81,32 @@ class UploadFileController extends Controller
     {
         $this->authorize('edit-print-jobs');
 
+        \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'hours' => 'numeric|max:120',
+            'minutes' => 'numeric|max:59',
+            'weight' => 'numeric|max:3000',
+        ])->validate();
+
         $printjob = PrintJob::find($id);
         $printjob->fill($request->all());
+        $time = $request->get('hours') * 60 + $request->get('minutes');
+        $printjob->time = $time;
+        $printjob->options = $request->get('options');
+
+        if($request->has('pricing_options')) {
+            if ($request->get('pricing_options') == 'cost') {
+                $filament = Filament::findOrFail($printjob->filament);
+                $options = $filament->options($printjob->printer);
+                $printjob->cost = ($printjob->weight * $options->cost_per_gram);
+            } else if ($request->get('pricing_options') == 'free') {
+                $printjob->cost = 0;
+            } else {
+                $filament = Filament::findOrFail($printjob->filament);
+                $printer = Printer::findOrFail($printjob->printer);
+                $printer->patronCostToPrint(['weight' => $printjob->weight, 'time' => $printjob->time], $filament);
+                $printjob->cost = $printer->costToPrint;
+            }
+        }
 
         //save the stuff.
         $printjob->save();
@@ -97,7 +121,7 @@ class UploadFileController extends Controller
 
         $printjob->save();
 
-        return redirect()->route('admin');
+        return redirect()->route('admin', ["#$printjob->status"]);
 
 
     }

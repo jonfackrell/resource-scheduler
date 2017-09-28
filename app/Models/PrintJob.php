@@ -8,6 +8,10 @@ use App\Events\Event;
 class PrintJob extends Model
 {
 
+    protected $fillable = [
+        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed', 'weight', 'time', 'options'
+    ];
+
     public function getOptionsAttribute()
     {
         return json_decode( $this->attributes['options'] );
@@ -56,10 +60,6 @@ class PrintJob extends Model
         return $this->belongsTo(Department::class, 'department', 'id');
     }
 
-
-    protected $fillable = [
-        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed', 'weight', 'time', 'options'
-    ];
 
     /**
      * Calculate Cost to Charge.
