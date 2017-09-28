@@ -173,7 +173,7 @@ class PatronController extends Controller
         $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
         $printjob->cost = $printer->costToPrint;
-        $printjob->cost_per_gram = $filament->cost_per_gram;
+        $printjob->cost_per_gram = $filament->options->cost_per_gram;
         $printjob->options = $request->get('options');
 
         $department = Department::findOrFail($printer->departmentOwner->id);
