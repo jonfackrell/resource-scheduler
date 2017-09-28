@@ -103,7 +103,7 @@ class PatronController extends Controller
 
         \Illuminate\Support\Facades\Validator::make($request->all(), [
             'hours' => 'numeric|max:120',
-            'minutes' => 'numeric|max:60',
+            'minutes' => 'numeric|max:59',
             'weight' => 'numeric|max:3000',
         ])->validate();
 
@@ -173,6 +173,7 @@ class PatronController extends Controller
         $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
         $printjob->cost = $printer->costToPrint;
+        $printjob->cost_per_gram = $filament->cost_per_gram;
         $printjob->options = $request->get('options');
 
         $department = Department::findOrFail($printer->departmentOwner->id);

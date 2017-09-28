@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="flex">
-                    {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> file (.amf)') !!}
+                    {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> file (.amf, .3mf)') !!}
                     @if(strlen($department->terms) > 0)
                         <div>
                             {!! $department->terms !!}
