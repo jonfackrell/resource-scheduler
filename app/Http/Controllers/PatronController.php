@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CostCalculator;
+use App\Events\PrintJobCreated;
 use App\Models\Color;
 use App\Models\Filament;
 use App\Models\Printer;
@@ -193,6 +194,8 @@ class PatronController extends Controller
         }
 
         $printjob->save();
+
+        event(new PrintJobCreated($printjob));
 
         return redirect()->route('history');
 
