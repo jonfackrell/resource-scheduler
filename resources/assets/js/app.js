@@ -18,11 +18,10 @@ $(function(){
 
     window.Echo.channel('private-app')
         .listen('PrintJobCreated', function(e){
-            $.notify("New 3D Print Job");
-                $.notify("Please approve the 3D Model before printing.", {
-                    title: "New Print Job Submitted!",
-                    icon: "https://library.byui.edu/images/byu-idaho-logo.png"
-                });
+            $.notify("Please approve the 3D Model before printing.", {
+                title: "New Print Job Submitted!",
+                icon: "https://library.byui.edu/images/byu-idaho-logo.png"
+            });
         });
 
 });
