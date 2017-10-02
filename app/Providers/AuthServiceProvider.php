@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\Department;
 use App\Models\Permission;
+use App\Models\PrintJob;
 use App\Models\User;
+use App\Policies\PrintJobPolicy;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Department::class => DepartmentPolicy::class,
+        PrintJob::class => PrintJobPolicy::class,
     ];
 
     /**
