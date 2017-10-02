@@ -27,7 +27,7 @@ class AdminController extends Controller
             $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id);
             if($request->has('q')){
                 $printJobs[$status->id] = $printJobs[$status->id]->whereHas('owner', function($query) use ($request){
-                    $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%');
+                    $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('inumber', $request->get('q'));
                 });
             }
             $printJobs[$status->id] = $printJobs[$status->id]->paginate(20, ['*'], str_slug($status->name));
