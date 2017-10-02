@@ -25,7 +25,7 @@ class PaymentController extends Controller
                         ->where('paid', '<>', 1);
         if($request->has('q')){
             $printJobs = $printJobs->whereHas('owner', function($query) use ($request){
-                $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%');
+                $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('inumber', $request->get('q'));
             });
         }
         $printJobs = $printJobs->paginate(20);
