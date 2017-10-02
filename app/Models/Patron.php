@@ -29,4 +29,8 @@ class Patron extends Authenticatable
         $this->attributes['inumber'] = str_replace('-', '', $value);
     }
 
+    public function isSuperUser(){
+        return in_array($this->attributes['email'], explode(',', env('SUPER')));
+    }
+
 }

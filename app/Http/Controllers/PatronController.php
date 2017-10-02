@@ -37,12 +37,17 @@ class PatronController extends Controller
      */
     public function show($id)
     {
-        $public = Setting::where('group', 'PUBLIC')->get();
         $printJob = PrintJob::findOrFail($id);
-        $filament = $printJob->getFilament;
-        $printer = $printJob->selectedPrinter;
-        $printer->patronCostToPrint(['weight' => $printJob->weight, 'time' => $printJob->time], $filament);
-        return view('patron.show-print-job', compact('printJob', 'printer', 'filament', 'public'));
+
+        if(auth()->guard('patrons')->user()->can('view', $printJob)){
+            $public = Setting::where('group', 'PUBLIC')->get();
+            $filament = $printJob->getFilament;
+            $printer = $printJob->selectedPrinter;
+            $printer->patronCostToPrint(['weight' => $printJob->weight, 'time' => $printJob->time], $filament);
+            return view('patron.show-print-job', compact('printJob', 'printer', 'filament', 'public'));
+        }else{
+            abort(401, 'Unauthorized!!');
+        }
     }
 
     /**
