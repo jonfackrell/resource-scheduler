@@ -17,6 +17,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\EventListener',
         ],'App\Events\FilamentUsed' => [
             'App\Listeners\UpdateFilament',
+        ],'App\Events\PrintJobCreated' => [
+            'App\Listeners\PrintJob@created',
         ],
         
     ];

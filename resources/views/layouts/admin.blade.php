@@ -146,14 +146,26 @@
 <!-- bootstrap-daterangepicker -->
 <script src="/js/moment.min.js"></script>
 <script src="/js/daterangepicker.js"></script>
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script src="/js/push_notification.min.js"></script>
 
 @stack('custom-scripts')
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
 
+<!-- App scripts including Echo -->
+<script src="/js/app.min.js"></script>
+
 
 @stack('scripts')
+
+<script>
+
+    $(function(){
+
+    });
+</script>
 
 
 </body>
