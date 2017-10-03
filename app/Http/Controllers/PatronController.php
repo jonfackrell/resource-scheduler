@@ -82,7 +82,10 @@ class PatronController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $printjob = PrintJob::findorFail($id);
+        $printjob->delete();
+
+        return redirect()->back();
     }
 
 
