@@ -22,9 +22,14 @@ class PrintJob extends Model
         $this->attributes['options'] = json_encode( $val );
     }
 
-    public function getCostAttribute()
+    public function getNetCostAttribute()
     {
         return $this->attributes['cost'] / 100;
+    }
+
+    public function getTotalCostAttribute()
+    {
+        return ($this->attributes['cost'] + $this->attributes['tax']) / 100;
     }
 
     /**

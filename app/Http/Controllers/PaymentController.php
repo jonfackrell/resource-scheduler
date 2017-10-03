@@ -105,8 +105,12 @@ class PaymentController extends Controller
         $printJob->paid = $request->get('paid');
         $printJob->save();
 
-        if($printJob->paid == 1){
-            $printJob->owner->notify(new PaymentReceivedNotification($printJob));
+        try{
+            if($printJob->paid == 1){
+                $printJob->owner->notify(new PaymentReceivedNotification($printJob));
+            }
+        }catch(\Exception $e){
+
         }
 
         return response()->json(['status' => $request->get('paid')]);
