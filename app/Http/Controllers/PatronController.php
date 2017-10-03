@@ -80,6 +80,21 @@ class PatronController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function delete($id)
+    {
+        $patron = Patron::findorFail($id);
+        $patron->delete();
+
+        return redirect()->back();
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $printjob = PrintJob::findorFail($id);
