@@ -30,6 +30,9 @@ Route::group(['middleware' => ['auth', 'mail']], function() {
     Route::post('/admin/filament/{filamentid}/printer/{printerid}/pricing', 'FilamentController@updatePricingManager')->name('filament.pricing-manager');
 	Route::resource('/admin/filament', 'FilamentController');
 
+    Route::get('/admin/patron', 'PatronAdminController@index')->name('admin.patron.index');
+    Route::delete('/admin/patron/{id}', 'PatronAdminController@destroy')->name('admin.patron.destroy');
+
     Route::get('/admin/settings', 'SettingsController@index')->name('settings.index');
     Route::post('/admin/settings', 'SettingsController@update')->name('settings.update');
 

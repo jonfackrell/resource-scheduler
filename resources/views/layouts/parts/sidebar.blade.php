@@ -26,6 +26,9 @@
                     @can('view-notifications')
                         <li><a href="{{ route('notification.index') }}">Notifications</a></li>
                     @endcan
+                    @if(auth()->guard('web')->user()->isSuperUser())
+                        <li><a href="{{ route('admin.patron.index') }}">Patrons</a></li>
+                    @endcan
                     @can('view-printers')
                         <li><a href="{{ route('printer.index') }}">Printers</a></li>
                     @endcan
