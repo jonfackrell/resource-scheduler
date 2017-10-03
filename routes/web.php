@@ -87,6 +87,7 @@ Route::group(['middleware' => ['cas.auth', 'patron.auth', 'mail']], function() {
     Route::post('/submit', 'PatronController@submit')->name('submit');
     Route::get('/history', 'PatronController@history')->name('history');
     Route::get('/history/{id}', 'PatronController@show')->name('show');
+    Route::delete('/history/{id}', 'PatronController@destroy')->name('job.delete');
 
     Route::get('/register', 'RegistrationController@edit')->name('register');
     Route::put('/register', 'RegistrationController@update')->name('register');
