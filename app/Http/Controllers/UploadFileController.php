@@ -93,19 +93,21 @@ class UploadFileController extends Controller
         $printjob->time = $time;
         $printjob->options = $request->get('options');
 
-        if($request->has('pricing_options')) {
-            if ($request->get('pricing_options') == 'cost') {
+        if($request->has('pricing_option')) {
+            if ($request->get('pricing_option') == 'cost') {
                 $filament = Filament::findOrFail($printjob->filament);
                 $options = $filament->options($printjob->printer);
                 $printjob->cost = ($printjob->weight * $options->cost_per_gram);
-            } else if ($request->get('pricing_options') == 'free') {
+            } else if ($request->get('pricing_option') == 'free') {
                 $printjob->cost = 0;
             } else {
                 $filament = Filament::findOrFail($printjob->filament);
                 $printer = Printer::findOrFail($printjob->printer);
                 $printer->patronCostToPrint(['weight' => $printjob->weight, 'time' => $printjob->time], $filament);
-                $printjob->cost = $printer->costToPrint;
+                $printjob->cost = $printer->netCostToPrint;
+                $printjob->tax = $printer->tax;
             }
+            $printjob->pricing_option = $request->get('pricing_option');
         }
 
         //save the stuff.

@@ -178,7 +178,8 @@ class PatronController extends Controller
         $printjob->fill($request->all());
         $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
-        $printjob->cost = $printer->costToPrint;
+        $printjob->cost = $printer->netCostToPrint;
+        $printjob->tax = $printer->tax;
         $printjob->cost_per_gram = $filament->options($printer->id)->cost_per_gram;
         $printjob->options = $request->get('options');
 

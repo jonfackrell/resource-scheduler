@@ -51,7 +51,7 @@
                             {{ str_limit($printJob->original_filename, 25) }}
                         </td>
                         <td>
-                            $ {{ money_format('%i', $printJob->cost) }}
+                            $ {{ money_format('%i', $printJob->net_cost) }}
                         </td>
                         <td>
                             <a href="#" class="btn @if($printJob->paid == true) btn-success @else btn-primary @endif btn-sm toggle-print-job-payment-status @if($printJob->paid == true) paid @endif"><i class="fa fa-usd"></i>&nbsp; Mark Paid </a>

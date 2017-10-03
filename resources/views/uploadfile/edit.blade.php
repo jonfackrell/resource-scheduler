@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-6">
                 @if(auth()->guard('web')->user()->isSuperUser() || auth()->guard('web')->user()->can('update-pricing'))
-                    {!! BootForm::select('Pricing options', "pricing_options")->options(['full' => 'Full Price', 'cost' => 'Cost Only', 'free' => 'Free']) !!}
+                    {!! BootForm::select('Pricing options', "pricing_option")->options(['full' => 'Full Price', 'cost' => 'Cost Only', 'free' => 'Free'])->select($printjob->pricing_option) !!}
                 @endif
             </div>
         </div>

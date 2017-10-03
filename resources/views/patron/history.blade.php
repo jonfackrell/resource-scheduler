@@ -37,7 +37,7 @@
                         <button type="button" class="btn @if($printJob->completed <> 1) btn-success @else btn-info @endif  btn-sm">{{ $printJob->currentStatus->name or '' }}</button>
                     </td>
                     <td>
-                        $ {{ money_format('%i', $printJob->cost) }}
+                        $ {{ money_format('%i', $printJob->total_cost) }}
                     </td>
                     <td>
                         <button type="button" class="btn @if($printJob->completed == true) btn-success @else btn-warning @endif btn-sm">@if($printJob->paid == true) Payment Received @else Payment Pending @endif</button>
