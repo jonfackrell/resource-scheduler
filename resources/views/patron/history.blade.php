@@ -45,7 +45,7 @@
                             $status = \App\Models\Status::whereDepartment($printJob->department)->whereCanDelete(true)->pluck('id')->toArray();
                         @endphp
                         @if(in_array($printJob->status, $status))
-                            {!! BootForm::open()->action(route('uploadfile.destroy', $printJob))->style('display: inline-block; float: right;')->delete() !!}
+                            {!! BootForm::open()->action(route('job.delete', $printJob))->style('display: inline-block; float: right;')->delete() !!}
                             {!! BootForm::submit('<i class="fa fa-trash-o"></i>')->class('btn btn-danger btn-sm')->title('Cancel') !!}
                             {!! BootForm::close() !!}
                         @endif
