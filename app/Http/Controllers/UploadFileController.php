@@ -65,9 +65,10 @@ class UploadFileController extends Controller
         $printjob = PrintJob::find($id);
         $patron = Patron::find($printjob->patron);
         $filaments = Filament::all()->pluck('name', 'id')->all();
+        $colors = Color::all()->pluck('name', 'id')->all();
         $departments = Department::all()->pluck('name','id')->all();
 
-        return view('uploadfile.edit', compact('printjob', 'departments','filaments', 'patron'));
+        return view('uploadfile.edit', compact('printjob', 'departments','filaments', 'colors', 'patron'));
     }
 
     /**
@@ -139,10 +140,11 @@ class UploadFileController extends Controller
 
         $this->authorize('delete-print-jobs');
 
-        $filament = PrintJob::findorFail($id);
-        $filament->delete();
+        $printjob = PrintJob::findorFail($id);
+        $status = $printjob->status;
+        $printjob->delete();
 
-        return redirect()->back();
+        return redirect()->route('admin', ["#$status"]);
     }
 
 }

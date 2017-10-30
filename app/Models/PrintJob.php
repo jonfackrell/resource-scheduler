@@ -50,6 +50,14 @@ class PrintJob extends Model
     }
 
     /**
+     * Get the messages.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Messages::class, 'printjob', 'id');
+    }
+
+    /**
      * Get the printer.
      */
     public function selectedPrinter()

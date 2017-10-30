@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\FilamentUsed;
 use App\Models\EmailSetting;
+use App\Models\Messages;
 use App\Models\PrintJob;
 use App\Models\Status;
 use App\Notifications\GenericNotification;
@@ -45,7 +46,7 @@ class AdminController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $printJob = PrintJob::findOrFail($id);
+        $printJob = PrintJob::with('messages')->findOrFail($id);
         $newStatus = $request->get('status');
         $status = Status::findOrFail($newStatus);
         if($status->systemNotification){
@@ -71,8 +72,15 @@ class AdminController extends Controller
         $printJob->status = $newStatus;
         $printJob->save();
 
-        if($printJob->currentStatus->systemNotification){
+        if(($request->get('action') == 'send') && $printJob->currentStatus->systemNotification){
             $printJob->owner->notify(new GenericNotification($printJob, $request->get('subject'), $request->get('message')));
+            $message = Messages::create([
+                'user' => auth()->guard('web')->user()->id,
+                'printjob' => $id,
+                'subject' => $request->get('subject'),
+                'message' => $request->get('message'),
+                'source' => 'EMPLOYEE',
+            ]);
         }
 
         if($status->subtract_inventory){
@@ -111,6 +119,14 @@ class AdminController extends Controller
         $printJob = PrintJob::findOrFail($id);
 
         $printJob->owner->notify(new GenericNotification($printJob, $request->get('subject'), $request->get('message')));
+
+        $message = Messages::create([
+            'user' => auth()->guard('web')->user()->id,
+            'printjob' => $id,
+            'subject' => $request->get('subject'),
+            'message' => $request->get('message'),
+            'source' => 'EMPLOYEE',
+        ]);
 
         return redirect()->route('admin', ["#$printJob->status"]);
 
