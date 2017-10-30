@@ -122,6 +122,7 @@
                             {!! BootForm::checkbox('<b>I agree</b>', 'accept_terms')->required()->inline() !!}
                         </div>
                     @endif
+                    {!! BootForm::textarea('Note', "note")->style('height: 100px;') !!}
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
                     {!! BootForm::hidden('filament')->value(session('filament', request()->get('filament'))) !!}
                     {!! BootForm::hidden('color')->value(session('color', request()->get('color'))) !!}

@@ -125,7 +125,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 {!! $printJob->fragment(str_slug($key))->links() !!}
                             </td>
                         </tr>

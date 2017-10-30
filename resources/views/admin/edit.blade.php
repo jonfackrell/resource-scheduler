@@ -10,7 +10,8 @@
     {!! BootForm::text('Subject', 'subject')->value($status->systemNotification->subject) !!}
     {!! BootForm::textarea('Message', 'message')->addClass('summernote')->value($status->systemNotification->message) !!}
     {!! BootForm::hidden('new_status')->value($newStatus) !!}
-    {!! BootForm::submit('Save & Send')->class('btn btn-primary') !!}
+    <button type="submit" name="action" value="send" class="btn btn-primary">Save & Send</button>
+    <button type="submit" name="action" value="save" class="btn btn-default">Save Only</button>
     {!! BootForm::close() !!}
 
 @endsection

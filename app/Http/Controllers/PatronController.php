@@ -6,6 +6,7 @@ use App\CostCalculator;
 use App\Events\PrintJobCreated;
 use App\Models\Color;
 use App\Models\Filament;
+use App\Models\Messages;
 use App\Models\Printer;
 use App\Models\PrintJob;
 use App\Models\Setting;
@@ -205,6 +206,16 @@ class PatronController extends Controller
         $printjob->status = $department->initial_status;
 
         $printjob->save();
+
+        if($request->get('note')){
+            $message = Messages::create([
+                'user' => auth()->guard('patrons')->user()->id,
+                'printjob' => $printjob->id,
+                'subject' => 'Note',
+                'message' => $request->get('note'),
+                'source' => 'PATRON',
+            ]);
+        }
 
         if($request->hasFile('filename')) {
             $filename = $request->file('filename')->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
