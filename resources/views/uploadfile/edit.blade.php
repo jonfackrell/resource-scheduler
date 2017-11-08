@@ -29,10 +29,13 @@
         {!! BootForm::bind($printjob) !!}
         {!! BootForm::select('Department', 'department')->options($departments) !!}
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                {!! BootForm::text('Weight (grams)', 'weight')->placeHolder('Weight in grams')->required()->value($printjob->weight) !!}
+            </div>
+            <div class="col-md-4">
                 {!! BootForm::text('Estimated Time', 'hours')->placeHolder('Hours')->required()->value(floor($printjob->time / 60)) !!}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 {!! BootForm::text('&nbsp;', 'minutes')->placeHolder('Minutes')->required()->value($printjob->time % 60) !!}
             </div>
         </div>
