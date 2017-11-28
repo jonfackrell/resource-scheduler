@@ -78,7 +78,7 @@ class Printer extends Model implements Sortable
             $printJobs = $printJobs->where('created_at', '<', $submitted_at);
         }
 
-        $time = $printJobs->whereIn('status', $statuses)->first()->total + 30;
+        $time = $printJobs->where('completed', 0)->whereIn('status', $statuses)->first()->total + 30;
 
         return $date->addMinutes($time);
     }
