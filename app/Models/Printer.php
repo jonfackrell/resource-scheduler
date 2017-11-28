@@ -63,17 +63,22 @@ class Printer extends Model implements Sortable
     }
 
 
-    public function timeToPrint()
+    public function timeToPrint($submitted_at = null)
     {
         $date = \Carbon\Carbon::now();
 
         $statuses = Status::whereInQueue(1)
-            ->whereDepartment($this->attributes['department'])
-            ->pluck('id')
-            ->all();
+                        ->whereDepartment($this->attributes['department'])
+                        ->pluck('id')
+                        ->all();
 
-        $time = PrintJob::select(\DB::raw('SUM(time) as total'))
-                    ->whereIn('status', $statuses)->first()->total + 30;
+        $printJobs = PrintJob::select(\DB::raw('SUM(time) as total'));
+
+        if(!is_null($submitted_at)){
+            $printJobs = $printJobs->where('created_at', '<', $submitted_at);
+        }
+
+        $time = $printJobs->whereIn('status', $statuses)->first()->total + 30;
 
         return $date->addMinutes($time);
     }
