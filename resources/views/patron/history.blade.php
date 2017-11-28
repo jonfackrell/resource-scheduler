@@ -30,7 +30,7 @@
                     </td>
                     <td>
                         @if($printJob->completed <> 1)
-                            {!! $printJob->selectedPrinter->timeToPrint($printJob->created_at)->diffForHumans() !!}
+                            {!! $printJob->selectedPrinter->timeToPrint()->diffForHumans() !!}
                         @endif
                     </td>
                     <td>
