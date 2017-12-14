@@ -41,7 +41,7 @@
                 </p>
                 <p>You can find this information in the upper left-hand corner of the Cura workspace:</p>
                 <p>
-                    <img src="https://content.byui.edu/file/d6a05741-b7ed-43f2-a33a-42c227995b72/1/cura-pre-print-info.png" alt="" style="width: 100%; height: auto;"/>
+                    <img src="/img/cura-pre-print-info.png" alt="" style="width: 100%; height: auto;"/>
                 </p>
             </div>
         </div>
