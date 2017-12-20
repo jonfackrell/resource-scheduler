@@ -144,6 +144,6 @@
 @stack('scripts')
 
 {!! $public->where('name', 'FOOTER_JS')->first()->value or '' !!}
-
+<!-- IP: {{ Request::ip() }}-->
 </body>
 </html>
