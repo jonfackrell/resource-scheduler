@@ -109,9 +109,11 @@
                         if(data.status == 1){
                             $button.addClass('paid');
                             $button.removeClass('btn-primary').addClass('btn-success');
-                        }else{
+                        }else if(data.status == 0){
                             $button.removeClass('paid');
                             $button.removeClass('btn-success').addClass('btn-primary');
+                        }else{
+                            alert('Oops! Something has gone terribly wrong. Please refresh this page and try again.');
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown){
