@@ -17,6 +17,7 @@
         <table class="table table-striped sorted_table">
             <thead>
             <tr>
+                <th></th>
                 <th>Color</th>
                 <th></th>
             </tr>
@@ -24,6 +25,9 @@
             <tbody>
             @foreach($colors as $color)
                 <tr data-id="{{ $color->id }}">
+                    <td style="width: 25px;">
+                        <img src="/storage/{{ asset($color->thumbnail) }}" style="width: 20px; height: auto;"/>
+                    </td>
                     <th>
                         <a href="/admin/color/{{ $color->id }}/edit">{{ $color->name }}</a>
                     </th>

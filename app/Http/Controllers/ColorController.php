@@ -77,8 +77,12 @@ class ColorController extends Controller
     public function edit($id)
     {
         $color = Color::find($id);
-
-            return view('admin.color.edit', compact('color'));
+        $files = \Storage::files('/public/filament');
+        $colors = [];
+        foreach($files as $file){
+            $colors[str_replace('public', 'storage', $file)] = basename($file);
+        }
+        return view('admin.color.edit', compact('color', 'colors'));
     }
 
     /**
