@@ -1,0 +1,169 @@
+!function(e){Drupal.FieldGroup=Drupal.FieldGroup||{},Drupal.FieldGroup.Effects=Drupal.FieldGroup.Effects||{},Drupal.FieldGroup.groupWithfocus=null,Drupal.FieldGroup.setGroupWithfocus=function(e){e.css({display:"block"}),Drupal.FieldGroup.groupWithfocus=e},Drupal.FieldGroup.Effects.processFieldset={execute:function(i,r,t){"form"==t&&e("fieldset.fieldset",i).once("fieldgroup-effects",function(i){e(this).is(".required-fields")&&e(this).find(".form-required").length>0&&e("legend span.fieldset-legend",e(this)).eq(0).append(" ").append(e(".form-required").eq(0).clone()),e(".error",e(this)).length&&(e("legend span.fieldset-legend",e(this)).eq(0).addClass("error"),Drupal.FieldGroup.setGroupWithfocus(e(this)))})}},Drupal.FieldGroup.Effects.processAccordion={execute:function(i,r,t){e("div.field-group-accordion-wrapper",i).once("fieldgroup-effects",function(){var i=e(this);if(i.accordion({autoHeight:!1,active:".field-group-accordion-active",collapsible:!0,changestart:function(i,r){e(this).hasClass("effect-none")?r.options.animated=!1:r.options.animated="slide"}}),"form"==t){var r=!1;i.find("div.field-group-accordion-item").each(function(i){e(this).is(".required-fields")&&e(this).find(".form-required").length>0&&e("h3.ui-accordion-header a").eq(i).append(" ").append(e(".form-required").eq(0).clone()),e(".error",e(this)).length&&(r||(r=e(this).parent().accordion("activate",i)),e("h3.ui-accordion-header").eq(i).addClass("error"))}),r||e(".ui-accordion-content-active",r).css({height:"auto",width:"auto",display:"block"})}})}},Drupal.FieldGroup.Effects.processHtabs={execute:function(i,r,t){"form"==t&&e("fieldset.horizontal-tabs-pane",i).once("fieldgroup-effects",function(i){e(this).is(".required-fields")&&e(this).find(".form-required").length>0&&e(this).data("horizontalTab").link.find("strong:first").after(e(".form-required").eq(0).clone()).after(" "),e(".error",e(this)).length&&(e(this).data("horizontalTab").link.parent().addClass("error"),Drupal.FieldGroup.setGroupWithfocus(e(this)),e(this).data("horizontalTab").focus())})}},Drupal.FieldGroup.Effects.processTabs={execute:function(i,r,t){"form"==t&&e("fieldset.vertical-tabs-pane",i).once("fieldgroup-effects",function(i){e(this).is(".required-fields")&&e(this).find(".form-required").length>0&&e(this).data("verticalTab").link.find("strong:first").after(e(".form-required").eq(0).clone()).after(" "),e(".error",e(this)).length&&(e(this).data("verticalTab").link.parent().addClass("error"),Drupal.FieldGroup.setGroupWithfocus(e(this)),e(this).data("verticalTab").focus())})}},Drupal.FieldGroup.Effects.processDiv={execute:function(i,r,t){e("div.collapsible",i).once("fieldgroup-effects",function(){var i=e(this),r=e("span.field-group-format-toggler:first",i),t=e('<a class="field-group-format-title" href="#"></a>');t.prepend(r.contents()),e(this).is(".required-fields")&&e(this).find(".form-required").length>0&&t.append(" ").append(e(".form-required").eq(0).clone()),t.appendTo(r),t.click(function(){var r=i.get(0);if(!r.animating){r.animating=!0;var t=i.hasClass("speed-fast")?300:1e3;i.hasClass("effect-none")&&i.hasClass("speed-none")?e("> .field-group-format-wrapper",r).toggle():i.hasClass("effect-blind")?e("> .field-group-format-wrapper",r).toggle("blind",{},t):e("> .field-group-format-wrapper",r).toggle(t),r.animating=!1}return i.toggleClass("collapsed"),!1})})}},Drupal.behaviors.fieldGroup={attach:function(i,r){r.field_group=r.field_group||Drupal.settings.field_group,void 0!=r.field_group&&(e.each(Drupal.FieldGroup.Effects,function(t){var o=t.toLowerCase().replace("process","");void 0!=r.field_group[o]&&e.isFunction(this.execute)&&this.execute(i,r,r.field_group[o])}),e(".fieldset-wrapper .fieldset > legend").css({display:"block"}),e(".vertical-tabs fieldset.fieldset").addClass("default-fallback"),e(".group-wrapper fieldset").each(function(){var i="field_group-"+e(this).attr("id")+" "+e(this).attr("id");e(this).attr("id",i)}),e(".group-wrapper ul li").each(function(){var i=e(this).index();e(this).children("a").click(function(){var r=e(".group-wrapper fieldset").get(i),t=e(r).attr("id").replace(/^field_group-/,"").split(" ")[0];window.location.hash=t})}))}}}(jQuery);;
+!function(t){Drupal.progressBar=function(r,e,i,s){this.id=r,this.method=i||"GET",this.updateCallback=e,this.errorCallback=s,this.element=t('<div class="progress" aria-live="polite"></div>').attr("id",r),this.element.html('<div class="bar"><div class="filled"></div></div><div class="percentage"></div><div class="message">&nbsp;</div>')},Drupal.progressBar.prototype.setProgress=function(r,e){r>=0&&100>=r&&(t("div.filled",this.element).css("width",r+"%"),t("div.percentage",this.element).html(r+"%")),t("div.message",this.element).html(e),this.updateCallback&&this.updateCallback(r,e,this)},Drupal.progressBar.prototype.startMonitoring=function(t,r){this.delay=r,this.uri=t,this.sendPing()},Drupal.progressBar.prototype.stopMonitoring=function(){clearTimeout(this.timer),this.uri=null},Drupal.progressBar.prototype.sendPing=function(){if(this.timer&&clearTimeout(this.timer),this.uri){var r=this;t.ajax({type:this.method,url:this.uri,data:"",dataType:"json",success:function(t){return 0==t.status?void r.displayError(t.data):(r.setProgress(t.percentage,t.message),void(r.timer=setTimeout(function(){r.sendPing()},r.delay)))},error:function(t){r.displayError(Drupal.ajaxError(t,r.uri))}})}},Drupal.progressBar.prototype.displayError=function(r){var e=t('<div class="messages error"></div>').html(r);t(this.element).before(e).hide(),this.errorCallback&&this.errorCallback(this)}}(jQuery);;
+var userLocation = {
+    selectors: {},
+    availability: {},
+    initialized: !1,
+    setLocation: !1,
+    state: null,
+    log: function() {
+        "undefined" != typeof console && "undefined" != typeof console.log && "undefined" != typeof console.log.apply && console.log.apply(console, arguments)
+    },
+    changeLocation: function(t) {
+        t.preventDefault();
+        var e = userLocation;
+        return e.setStateNeedLocation(), e.setLocation = !1, !1
+    },
+    updateAllSelects: function(t) {
+        //Change product based on country changes in printers page
+        var selected = jQuery(this).val();
+        jQuery("#edit-product-id option").each(function()
+        {
+          var val_p  = jQuery(this).val();
+          jQuery.ajax({
+            url: '/ajax/store/location',
+            data: {
+              location: selected,
+              product_id: val_p
+            },
+            type: 'GET',
+          })
+          .always(function(data) {
+            if (data.is_available == 1) {
+              jQuery('#edit-product-id').val(val_p);
+              return false;
+            }
+          });
+        });
+        
+        var e = jQuery(this).val(),
+            o = !1;
+        userLocation.isValidCountrySelected(e) || (o = !0), userLocation.selectors.checkAvailabilityButton.attr("disabled", o), userLocation.selectors.countrySelection.val(e)
+    },
+    isValidCountrySelected: function(t) {
+        return t || (t = userLocation.selectors.countrySelection.val()), /^[A-Z]+/.test(t)
+    },
+    checkAvailability: function(t) {
+        t.preventDefault();
+        var e = userLocation;
+        if (!e.isValidCountrySelected()) return void e.selectors.countrySelection.addClass("error");
+        e.selectors.countrySelection.removeClass("error");
+        var o = e.selectors.countrySelection.val();
+        e.selectors.userLocation.find("span").data("country", o).text(Drupal.t("Viewing availability for ") + e.selectors.countrySelection.first().find("option:selected").text()), jQuery("#add-to-cart-user-location").val(o), e.selectors.checkAvailabilityButton.text(Drupal.t("Checking availability"));
+        var a = jQuery(t.target).closest("form").find('input[name="product_id"],select[name="product_id"]').val();
+        jQuery.ajax({
+            url: "/ajax/store/location",
+            data: {
+                location: o,
+                product_id: a
+            },
+            type: "GET"
+        }).always(function(t) {
+            userLocation.selectors.checkAvailabilityButton.text(Drupal.t("Check availability"));
+            var a = "disabled",
+                i = "Unavailable";
+            if (t.is_available && (a = !1, i = "Add to Cart"), jQuery("form.commerce-add-to-cart").removeClass("disabled").removeClass("in-stock").addClass("unavailable"), jQuery('form.commerce-add-to-cart input[type="submit"]').removeClass("form-button-disabled").attr("disabled", a).val(Drupal.t(i)).show(), e.setStateHaveLocation(), Drupal.settings.hasOwnProperty("filamentSkuColorMap") && t.hasOwnProperty("related_availability")) {
+                var n = [];
+                for (var l in t.related_availability) t.related_availability.hasOwnProperty(l) && t.related_availability[l] && t.related_availability[l].hasOwnProperty(o) && t.related_availability[l][o] > 0 && n.push(l);
+                var r = [];
+                for (var s in Drupal.settings.filamentSkuColorMap)
+                    if (Drupal.settings.filamentSkuColorMap.hasOwnProperty(s))
+                        for (var c = 0; c < Drupal.settings.filamentSkuColorMap[s].length; c++) - 1 != n.indexOf(Drupal.settings.filamentSkuColorMap[s][c]) && r.push(parseInt(s, 10));
+                jQuery(".link--filament-color").each(function() {
+                    var t = jQuery(this),
+                        e = t.closest("li"); - 1 != r.indexOf(parseInt(t.data("color"), 10)) ? e.removeClass("unavailable") : e.addClass("unavailable")
+                })
+            }
+        }), Drupal.settings.lulzbot_store.location = o, e.setLocation = !0
+    },
+    hideAddToCartButton: function() {
+        var t = "form.commerce-add-to-cart input[type=submit]";
+        jQuery(t).show(), 0 !== arguments.length && arguments[0] || (t = "form.commerce-add-to-cart.disabled input[type=submit]"), jQuery(t).hide()
+    },
+    init: function() {
+        var t = userLocation;
+        t.initSelectors(), t.setStateHaveLocation();
+        var e = Drupal.settings.hasOwnProperty("lulzbot_store"),
+            o = e && Drupal.settings.lulzbot_store.hasOwnProperty("location") && Drupal.settings.lulzbot_store.location;
+        e && !o && (t.setStateNeedLocation(), userLocation.selectors.checkAvailabilityButton), t.hideAddToCartButton(), jQuery("body").on("change", ".form-item-countries select", t.updateAllSelects).off("click", "#lulzbot-store-check-availability").on("click", "#lulzbot-store-check-availability", t.checkAvailability).off("click", "a.link--change-location").on("click", "a.link--change-location", t.changeLocation).off("click", ".notify-btn").on("click", ".notify-btn", t.showModal).off("click", "#lulzbot-store-notify-me").on("click", "#lulzbot-store-notify-me", t.notify), t.initialized = !0
+    },
+    initSelectors: function() {
+        userLocation.selectors = {
+            userLocation: jQuery(".location"),
+            checkAvailabilityButton: jQuery(".button--check-availability"),
+            changeLocationLink: jQuery("a.link--change-location"),
+            countrySelect: jQuery(".country-selection"),
+            countrySelection: jQuery(".form-item-countries select"),
+            notify: jQuery(".form-item-notify-me :input"),
+            notifyButton: jQuery("#lulzbot-store-notify-me"),
+            notifyDescription: jQuery(".notify-me .form-item-description")
+        }
+    },
+    showModal: function() {
+        swal.setDefaults({
+            confirmButtonColor: "#c1d640"
+        });
+        var t = {
+            title: "E-mail Notification",
+            text: Drupal.t("Enter your email address to receive an email when this product becomes available."),
+            allowOutsideClick: !0,
+            type: "input",
+            inputType: "email",
+            inputPlaceholder: "email@example.com",
+            confirmButtonText: "Notify Me",
+            showCancelButton: !0,
+            closeOnConfirm: !1,
+            showLoaderOnConfirm: !0,
+            animation: "slide-from-top"
+        };
+        userLocation.selectors.notify.val() && (t.inputValue = userLocation.selectors.notify.val()), swal(t, function(t) {
+            return t === !1 ? !1 : "" === t ? (sweetAlert.showInputError("Please enter your email."), !1) : (userLocation.selectors.notify.val(t), void userLocation.notify(t, function(t) {
+                sweetAlert(Drupal.t("Thank You"), t)
+            }))
+        })
+    },
+    notify: function(t, e) {
+        if (userLocation.selectors.notify.val()) {
+            var o = t,
+                a = userLocation.selectors.notify.closest("form"),
+                i = a.find('input[name="notify_token"]').val(),
+                n = {
+                    notify_me: o,
+                    form_token: i,
+                    product_id: parseInt(a.find('input[name="product_id"],select[name="product_id"]').val(), 10)
+                };
+            jQuery.ajax({
+                type: "POST",
+                url: "/ajax/store/notify",
+                data: n
+            }).done(function(t) {
+                userLocation.log("done"), jQuery('<div class="message">' + Drupal.t("You will be notified when this product becomes available.") + "</div>").insertAfter("fieldset.notify-me"), e(Drupal.t("You will be notified when this product becomes available.")), jQuery("fieldset.notify-me").hide(), jQuery(".notify-btn").hide()
+            }).fail(function() {
+                userLocation.log("fail"), jQuery("fieldset.notify-me").prepend('<div class="message error">Could not add notification right now. Please try again later.</div>'), e(Drupal.t("Could not add notification right now. Please try again later."))
+            })
+        }
+    },
+    setStateHaveLocation: function() {
+        var t = userLocation;
+        t.log("setStateHaveLocation"), t.selectors.countrySelect.hide(), t.selectors.checkAvailabilityButton.hide(), t.selectors.userLocation.show(), t.hideAddToCartButton(), t.selectors.checkAvailabilityButton.attr("disabled", "disabled"), t.state = "have_location"
+    },
+    setStateNeedLocation: function() {
+        var t = userLocation;
+        t.log("setStateNeedLocation"), t.selectors.userLocation.hide(), t.hideAddToCartButton(!0), t.selectors.countrySelect.show(), t.selectors.checkAvailabilityButton.show(), t.selectors.checkAvailabilityButton.attr("disabled", !1), t.state = "need_location"
+    }
+};
+Drupal.behaviors.userLocation = {
+    attach: function() {
+        userLocation.init()
+    }
+};
+
+jQuery(document).ready(function(){
+jQuery('button[name="check_availability"]').prop("disabled", false); 
+/*if(jQuery( ".button--add-to-cart" ).hasClass( "form-submit" )) {
+    jQuery('a.notify-btn.link--go').show();
+    jQuery("a.notify-btn.link--go").css("display", "block"); 
+ 
+}*/
+});
+;

@@ -11,7 +11,7 @@ class Color extends Model implements Sortable
     use SortableTrait;
 
     public $timestamps = false;
-    protected $fillable = ['name', 'hex_code', 'order_column'];
+    protected $fillable = ['name', 'hex_code', 'order_column', 'thumbnail',];
 
     public function filaments()
     {
