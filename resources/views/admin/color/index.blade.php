@@ -26,7 +26,7 @@
             @foreach($colors as $color)
                 <tr data-id="{{ $color->id }}">
                     <td style="width: 25px;">
-                        <img src="/storage/{{ asset($color->thumbnail) }}" style="width: 20px; height: auto;"/>
+                        <img src="{{ asset($color->thumbnail) }}" style="width: 20px; height: auto;"/>
                     </td>
                     <th>
                         <a href="/admin/color/{{ $color->id }}/edit">{{ $color->name }}</a>
