@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <p>
-                    <b>Second</b>, <a href="http://3dprint.byui.edu/options">upload</a> your Cura file (.aml) through this application. You will be notified as your design is approved, when it started printing, and when it's ready to pick up. Once your file has been approved, you can pay for it at the Circulation Desk. Once printing has been completed, you will have 2 weeks to pay for it and pick it up.
+                    <b>Second</b>, <a href="/options">upload</a> your Cura project file (.curaproject.3mf) through this application. You will be notified as your design is approved, when it started printing, and when it's ready to pick up. Once your file has been approved, you can pay for it at the Circulation Desk. Once printing has been completed, you will have 2 weeks to pay for it and pick it up.
                 </p>
                 <p>
                     <b>Third</b>, after the object is finished printing, you will want to give it some finishing touches.  You might remove support material, use sandpaper to smooth it out, or add some paint to give it the final appearance you want.
