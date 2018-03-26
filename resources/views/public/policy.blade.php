@@ -50,7 +50,7 @@
                                 <ul>
                                     <li>
                                     </li>
-                                    In regards to printing firearms or other weapons, see <a href="http://www.byui.edu/housing/policies/firearms-and-weapons" target="_blank" style="text-decoration: underline;">Housing & Student Living</a> and <a href="http://www.byui.edu/student-honor-office/ces-honor-code/student-life" target="_blank" style="text-decoration: underline;">Student Life (Firearms)</a>. In summary the Mac Lab will not print working firearms, facsimiles, or any related parts/accessoriess.
+                                    In regards to printing firearms or other weapons, see <a href="http://www.byui.edu/housing/policies/firearms-and-weapons" target="_blank" style="text-decoration: underline;">Housing & Student Living</a> and <a href="http://www.byui.edu/student-honor-office/ces-honor-code/student-life" target="_blank" style="text-decoration: underline;">Student Life (Firearms)</a>. In summary, the Mac Lab will not print working firearms, facsimiles, or any related parts/accessories.
                                 </ul>
                             </li>
                             <li>
