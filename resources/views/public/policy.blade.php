@@ -46,7 +46,7 @@
                                 Is not in compliance with <a href="http://www.byui.edu/" target="_blank">BYU-Idaho’s Acceptable Use of Information Technology</a>;
                             </li>
                             <li>
-                                Violates the CES Honor Code;
+                                Violates the CES or BYU-I Honor Code;
                                 <ul>
                                     <li>
                                     </li>
