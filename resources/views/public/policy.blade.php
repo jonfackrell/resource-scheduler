@@ -35,7 +35,7 @@
                 After telling us a little bit about your model and selecting a filament, we can tell you how much it will cost to print.
             </p>
             <br />
-            <h2>McKay Library 3D Printer Policy</h2>
+            <h2>McKay Library 3D Printing Policy</h2>
             <hr />
             <p>
                 <ol>
@@ -46,11 +46,11 @@
                                 Is not in compliance with <a href="http://www.byui.edu/" target="_blank">BYU-Idaho’s Acceptable Use of Information Technology</a>;
                             </li>
                             <li>
-                                Violates the <a href="http://www.byui.edu/student-honor-office/ces-honor-code/student-life" target="_blank">CES Honor Code</a>;
+                                Violates the CES Honor Code;
                                 <ul>
                                     <li>
-                                        In regards to printing firearms or other weapons, see <a href="http://www.byui.edu/housing/policies/firearms-and-weapons" target="_blank">Housing & Student Living</a> and <a href="http://www.byui.edu/student-honor-office/ces-honor-code/student-life" target="_blank">Student Life (Firearms)</a>. In summary the Mac Lab will not print working firearms, facsimiles, or any related parts/accessoriess.
                                     </li>
+                                    In regards to printing firearms or other weapons, see <a href="http://www.byui.edu/housing/policies/firearms-and-weapons" target="_blank" style="text-decoration: underline;">Housing & Student Living</a> and <a href="http://www.byui.edu/student-honor-office/ces-honor-code/student-life" target="_blank" style="text-decoration: underline;">Student Life (Firearms)</a>. In summary the Mac Lab will not print working firearms, facsimiles, or any related parts/accessoriess.
                                 </ul>
                             </li>
                             <li>
