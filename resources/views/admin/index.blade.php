@@ -57,6 +57,9 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if($row->owner->banned == 1)
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: red;" title="{{ strip_tags($row->owner->banned_reason) }}"></i>
+                                        @endif
                                         {{ $row->owner->first_name or ''}}
                                         {{ $row->owner->last_name  or '' }}
                                         <br />
