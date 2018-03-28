@@ -31,9 +31,6 @@
             @foreach($users as $user)
                 <tr data-id="{{ $user->id }}">
                     <th>
-                        @if($user->banned == 1)
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: red;" title="{{ strip_tags($user->banned_reason) }}"></i>
-                        @endif
                         <a href="/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
                     </th>
                     <td>

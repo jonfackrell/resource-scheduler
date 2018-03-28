@@ -21,6 +21,9 @@
             @foreach($patrons as $patron)
                 <tr data-id="{{ $patron->id }}">
                     <th>
+                        @if($patron->banned == 1)
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: red;" title="{{ strip_tags($patron->banned_reason) }}"></i>
+                        @endif
                         <a href="/admin/patron/{{ $patron->id }}/edit">{{ $patron->first_name }} {{ $patron->last_name }}</a>
                     </th>
                     <td>
