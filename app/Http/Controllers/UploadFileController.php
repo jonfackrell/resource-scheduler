@@ -109,6 +109,12 @@ class UploadFileController extends Controller
                 $printjob->tax = $printer->tax;
             }
             $printjob->pricing_option = $request->get('pricing_option');
+        }else{
+            $filament = Filament::findOrFail($printjob->filament);
+            $printer = Printer::findOrFail($printjob->printer);
+            $printer->patronCostToPrint(['weight' => $printjob->weight, 'time' => $printjob->time], $filament);
+            $printjob->cost = $printer->netCostToPrint;
+            $printjob->tax = $printer->tax;
         }
 
         //save the stuff.
