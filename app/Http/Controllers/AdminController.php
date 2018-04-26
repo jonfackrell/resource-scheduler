@@ -22,6 +22,7 @@ class AdminController extends Controller
         $statuses = Status::whereDepartment(auth()->guard('web')->user()->department)
                                 ->orderBy('order_column', 'ASC')
                                 ->get();
+
         $dashboardStatuses = $statuses->where('dashboard_display', 1)->all();
         $printJobs = [];
         foreach($dashboardStatuses as $status){
