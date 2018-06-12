@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 col-xs-12">
+    <div class="col-md-9 col-xs-12">
 
         <div class="x_panel">
             <div class="x_content">
@@ -123,6 +123,7 @@
                         </div>
                     @endif
                     {!! BootForm::textarea('Note', "note")->style('height: 100px;') !!}
+                    {!! BootForm::text('Coupon Code', "coupon_code") !!}
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
                     {!! BootForm::hidden('filament')->value(session('filament', request()->get('filament'))) !!}
                     {!! BootForm::hidden('color')->value(session('color', request()->get('color'))) !!}
