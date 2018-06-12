@@ -14,22 +14,27 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        {!! BootForm::open()->action(route('choose-printer'))->get() !!}
-        {!! BootForm::select('Filament', 'filament')
-                        ->options($filaments->pluck('name', 'id'))
-                        ->select($filament->id)
-                        ->helpBlock('This page will automatically reload if you select a new filament.')
-         !!}
-        {!! BootForm::hidden('weight')->value(session('weight', request()->get('weight'))) !!}
-        {!! BootForm::hidden('time')->value(session('time', request()->get('time'))) !!}
-        {!! BootForm::close() !!}
-        <p class="alert alert-info">
-            {!! $filament->description !!}
-        </p>
+    <div class="row">
+        <div class="col-md-12">
+            {!! BootForm::open()->action(route('choose-printer'))->get() !!}
+            {!! BootForm::select('Filament', 'filament')
+                            ->options($filaments->pluck('name', 'id'))
+                            ->select($filament->id)
+                            ->helpBlock('This page will automatically reload if you select a new filament.')
+             !!}
+            {!! BootForm::hidden('weight')->value(session('weight', request()->get('weight'))) !!}
+            {!! BootForm::hidden('time')->value(session('time', request()->get('time'))) !!}
+            {!! BootForm::close() !!}
+
+            <div class="alert alert-info">
+                {!! $filament->description !!}
+            </div>
+        </div>
     </div>
 
-    @foreach($printers as $key => $printer)
+    @if($printers->count() > 0)
+
+        @foreach($printers as $key => $printer)
         <div class="col-md-3 col-xs-12 widget widget_tally_box">
             {!! BootForm::open()->action(route('upload'))->get()->id('printer-selection-form') !!}
                 <div class="x_panel ">
@@ -103,6 +108,19 @@
         </div>
 
     @endforeach
+
+    @else
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <p>
+                        Sorry! We aren't currently printing this material.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    @endif
 
 @endsection
 
