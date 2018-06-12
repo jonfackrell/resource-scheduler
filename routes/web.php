@@ -54,7 +54,15 @@ Route::group(['middleware' => ['auth', 'mail']], function() {
     Route::post('/admin/email/{id}', 'AdminController@sendEmail')->name('admin.send-email');
 
 
+    Route::get('/admin/coupons', 'CouponController@index')->name('coupons.index');
+    Route::post('/admin/coupons', 'CouponController@store')->name('coupons.store');
+    Route::delete('/admin/coupons/{id}', 'CouponController@destroy')->name('coupons.destroy');
+
+
+
     Route::get('/admin/{id}', 'AdminController@edit')->name('admin.edit');
+
+
 
 
 
