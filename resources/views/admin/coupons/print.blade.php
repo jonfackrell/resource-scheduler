@@ -41,7 +41,7 @@
             <div class="code">
                 Code: {{ $coupon->code }}
             </div>
-            <img class="background" src="{{ Storage::disk('public')->url('coupons/3D-printing-coupon.png') }}"/>
+            <img class="background" src="{{ Storage::disk('public')->url('app/coupons/3D-printing-coupon.png') }}"/>
             <div class="value">
                 {{ $coupon->expiration_at->toFormattedDateString() }} ${{ $coupon->value / 100 }} maximum
             </div>
