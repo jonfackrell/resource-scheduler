@@ -48,7 +48,7 @@ class CouponController extends Controller
             $coupon->code = (new \App\Models\RandomWord())->generate(10, true, false, false);
             $coupon->value = $request->get('value');
             $coupon->expiration_at = $request->get('expiration_at');
-            //$coupon->save();
+            $coupon->save();
             $coupons->push($coupon);
         }
 
