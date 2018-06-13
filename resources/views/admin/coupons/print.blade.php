@@ -45,12 +45,12 @@
     @endif
 
         <div class="coupon">
-            <div class="code">
+            <div class="code" style="color: rgb(35, 31, 32);">
                 Code: {{ $coupon->code }}
             </div>
             <img class="background" src="{!! asset('storage/coupon/3D-printing-coupon.png') !!}"/>
-            <div class="value">
-                {{ $coupon->expiration_at->toFormattedDateString() }} ${{ $coupon->value / 100 }} maximum
+            <div class="value" style="color: rgb(35, 31, 32);">
+                {{ $coupon->expiration_at->toFormattedDateString() }}&nbsp;&nbsp;&nbsp;&nbsp;${{ $coupon->value / 100 }} maximum
             </div>
         </div>
 
