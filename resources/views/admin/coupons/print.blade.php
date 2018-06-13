@@ -17,18 +17,22 @@
             width: 600px;
         }
         .code{
+            color: rgb(35, 31, 32);
             font-family: 'Oswald', sans-serif;
             font-size: 16px;
             top: 30px;
             position: absolute;
             right: 90px;
+            white-space: nowrap
         }
         .value{
             bottom: 30px;
+            color: rgb(35, 31, 32);
             font-family: 'Oswald', sans-serif;
             font-size: 20px;
             position: absolute;
-            right: 115px;
+            right: 100px;
+            white-space: nowrap
         }
     </style>
 </head>
