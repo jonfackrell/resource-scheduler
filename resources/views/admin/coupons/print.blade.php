@@ -17,15 +17,18 @@
             width: 600px;
         }
         .code{
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
             top: 30px;
             position: absolute;
-            right: 60px;
+            right: 90px;
         }
         .value{
             bottom: 30px;
+            font-family: 'Oswald', sans-serif;
             font-size: 20px;
             position: absolute;
-            right: 130px;
+            right: 115px;
         }
     </style>
 </head>
