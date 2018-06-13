@@ -182,6 +182,8 @@ return [
         AdamWathan\BootForms\BootFormsServiceProvider::class,
         // https://github.com/subfission/cas/wiki/Installation
         Subfission\Cas\CasServiceProvider::class,
+        // https://github.com/barryvdh/laravel-snappy
+        Barryvdh\Snappy\ServiceProvider::class,
 
         // https://github.com/Flynsarmy/laravel-db-blade-compiler
         //Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
@@ -250,6 +252,8 @@ return [
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'Cas' => Subfission\Cas\Facades\Cas::class,
         //'DbView' => Flynsarmy\DbBladeCompiler\Facades\DbView::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
 
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
