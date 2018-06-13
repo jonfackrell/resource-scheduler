@@ -52,8 +52,8 @@ class CouponController extends Controller
             $coupons->push($coupon);
         }
 
-        //$pdf = \PDF::loadView('admin.coupons.print', compact('coupons'))->setOrientation('landscape');
-        //return $pdf->download('coupons.pdf');
+        $pdf = \PDF::loadView('admin.coupons.print', compact('coupons'))->setOrientation('landscape');
+        return $pdf->download('coupons.pdf');
 
         return view('admin.coupons.print', compact('coupons'));
 
