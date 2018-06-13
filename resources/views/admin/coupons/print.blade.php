@@ -19,7 +19,7 @@
         .code{
             color: rgb(35, 31, 32);
             font-family: 'Oswald', sans-serif;
-            font-size: 16px;
+            font-size: 18px;
             top: 30px;
             position: absolute;
             right: 90px;
@@ -31,7 +31,7 @@
             font-family: 'Oswald', sans-serif;
             font-size: 20px;
             position: absolute;
-            right: 100px;
+            right: 90px;
             white-space: nowrap
         }
     </style>
