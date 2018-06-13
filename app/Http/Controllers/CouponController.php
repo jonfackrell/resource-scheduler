@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CouponController extends Controller
 {
@@ -40,17 +41,21 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-
+        $coupons = new Collection();
         for($i=0; $i < $request->get('count'); $i++){
             $coupon = new Coupon();
             $coupon->department = auth()->guard('web')->user()->department;
             $coupon->code = (new \App\Models\RandomWord())->generate(10, true, false, false);
             $coupon->value = $request->get('value');
             $coupon->expiration_at = $request->get('expiration_at');
-            $coupon->save();
+            //$coupon->save();
+            $coupons->push($coupon);
         }
 
-        return back();
+        $pdf = \PDF::loadView('admin.coupons.print', compact('coupons'))->setOrientation('landscape');
+        return $pdf->download('coupons.pdf');
+
+        return view('admin.coupons.print', compact('coupons'));
 
     }
 
