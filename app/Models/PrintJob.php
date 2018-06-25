@@ -24,12 +24,20 @@ class PrintJob extends Model
 
     public function getNetCostAttribute()
     {
-        return $this->attributes['cost'] / 100;
+        $totalCost = $this->attributes['cost'] / 100;
+        if($totalCost < 0){
+            $totalCost = 0;
+        }
+        return $totalCost;
     }
 
     public function getTotalCostAttribute()
     {
-        return ($this->attributes['cost'] + $this->attributes['tax']) / 100;
+        $totalCost = ($this->attributes['cost'] + $this->attributes['tax']) / 100;
+        if($totalCost < 0){
+            $totalCost = 0;
+        }
+        return $totalCost;
     }
 
     /**

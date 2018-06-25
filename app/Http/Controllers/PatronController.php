@@ -172,7 +172,7 @@ class PatronController extends Controller
         $printer = Printer::findOrFail(session('printer'));
         $department = Department::findOrFail($printer->departmentOwner->id);
         $filament = Filament::findOrFail(session('filament'));
-        $printer->patronCostToPrint(['weight' => session('weight'), 'time' => session('time')], $filament);
+        $printer->patronCostToPrint(['weight' => session('weight'), 'time' => session('time')], $filament, $request->get('coupon'));
         return view('patron.submit', compact('printer', 'filament', 'color', 'public', 'department'));
     }
 
@@ -189,15 +189,24 @@ class PatronController extends Controller
             'filename' => 'file'
         ])->validate();
 
+        if($request->has('coupon_code')){
+            $previousUrl = app('url')->previous();
+            $previousUrl  = $previousUrl . '&' . http_build_query(['coupon' => $request->get('coupon_code')]);
+            return redirect()->to($previousUrl);
+        }
+
         $printer = Printer::findOrFail(session('printer', $request->get('printer')));
         $filament = Filament::findOrFail(session('filament', $request->get('filament')));
-        $printer->patronCostToPrint(['weight' => session('weight', $request->get('weight')), 'time' => session('time', $request->get('time'))], $filament);
+        $printer->patronCostToPrint(['weight' => session('weight', $request->get('weight')), 'time' => session('time', $request->get('time'))], $filament, $request->get('coupon'));
 
         $printjob = new PrintJob;
         $printjob->fill($request->all());
         $printjob->department = $printer->department;
         $printjob->patron = auth()->guard('patrons')->user()->id;
-        $printjob->cost = $printer->netCostToPrint;
+        $printjob->cost = ($printer->netCostToPrint - $printer->coupon);
+        if($printjob->cost < 0){
+            $printjob->cost = 0;
+        }
         $printjob->tax = $printer->tax;
         $printjob->cost_per_gram = $filament->options($printer->id)->cost_per_gram;
         $printjob->options = $request->get('options');

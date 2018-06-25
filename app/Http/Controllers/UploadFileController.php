@@ -101,6 +101,7 @@ class UploadFileController extends Controller
                 $printjob->cost = ($printjob->weight * $options->cost_per_gram);
             } else if ($request->get('pricing_option') == 'free') {
                 $printjob->cost = 0;
+                $printjob->tax = 0;
             } else {
                 $filament = Filament::findOrFail($printjob->filament);
                 $printer = Printer::findOrFail($printjob->printer);
