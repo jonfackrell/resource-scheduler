@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    {!! BootForm::open()->action(route('submit'))->post()->enctype('multipart/form-data') !!}
+
 
     <div class="col-md-3 col-xs-12 widget widget_tally_box">
 
@@ -47,9 +47,15 @@
                         <th>Cost</th>
                         <td style="text-align: right;">{{ money_format('%(#2n', $printer->netCostToPrint/100 ) }}</td>
                     </tr>
+                    @if($printer->coupon > 0)
+                        <tr>
+                            <th>Coupon</th>
+                            <td style="text-align: right;">- {{ money_format('%(#2n', $printer->coupon/100 ) }}</td>
+                        </tr>
+                    @endif
                     <tr>
-                        <th>+ Tax</th>
-                        <td style="text-align: right;">{{ money_format('%(#2n', $printer->tax/100 ) }}</td>
+                        <th>Tax</th>
+                        <td style="text-align: right;">+ {{ money_format('%(#2n', $printer->tax/100 ) }}</td>
                     </tr>
                     <tr style="border-top: 2px solid #dedede; font-size: 1.2em;">
                         <th>Total Cost</th>
@@ -63,6 +69,24 @@
     <div class="col-md-9 col-xs-12">
 
         <div class="x_panel">
+            @if(!request()->has('coupon'))
+                <div class="x_content">
+                    <div class="flex">
+                        {!! BootForm::open()->action(route('submit'))->post() !!}
+                            <div class="row">
+                                <div class="col-md-9">
+                                    {!! BootForm::text('Coupon Code', "coupon_code") !!}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label" for="submit">&nbsp;</label>
+                                    {!! BootForm::submit('Apply')->class('btn btn-block btn-success') !!}
+                                </div>
+                            </div>
+                        {!! BootForm::close() !!}
+                    </div>
+                </div>
+            @endif
+            {!! BootForm::open()->action(route('submit'))->post()->enctype('multipart/form-data') !!}
             <div class="x_content">
                 <div class="flex">
                     <table class="table table-striped">
@@ -123,17 +147,21 @@
                         </div>
                     @endif
                     {!! BootForm::textarea('Note', "note")->style('height: 100px;') !!}
-                    {!! BootForm::text('Coupon Code', "coupon_code") !!}
+
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
                     {!! BootForm::hidden('filament')->value(session('filament', request()->get('filament'))) !!}
                     {!! BootForm::hidden('color')->value(session('color', request()->get('color'))) !!}
                     {!! BootForm::hidden('printer')->value(session('printer', request()->get('printer'))) !!}
                     {!! BootForm::hidden('weight')->value(session('weight', request()->get('weight'))) !!}
                     {!! BootForm::hidden('time')->value(session('time', request()->get('time'))) !!}
+                    @if(request()->has('coupon'))
+                        {!! BootForm::hidden('coupon')->value(request()->get('coupon')) !!}
+                    @endif
                     <br />
                     {!! BootForm::submit('Submit')->class('btn btn-block btn-success') !!}
                 </div>
             </div>
+            {!! BootForm::close() !!}
         </div>
     </div>
 
@@ -141,7 +169,7 @@
 
 
 
-    {!! BootForm::close() !!}
+
 
 
 @endsection

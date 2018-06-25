@@ -41,7 +41,7 @@ class Printer extends Model implements Sortable
         //return $this->belongsToMany('App\Models\Color', 'filaments_colors', 'printer', 'colors');
     }
 
-    public function patronCostToPrint($params, $filament)
+    public function patronCostToPrint($params, $filament, $code = null)
     {
         // Get the options from the printer's filament
         $options = $filament->options($this->getKey());
@@ -55,11 +55,24 @@ class Printer extends Model implements Sortable
         if( $this->attributes['overtime_start'] > 0 ){
             $cost += ( $this->attributes['overtime_fee'] * ( (int)$params['time']/$this->attributes['overtime_start'] ) );
         }
+        if(!is_null($code)){
+            $coupon = Coupon::where('code', $code)->first();
+        }else{
+            $coupon = new Coupon();
+            $coupon->value = 0;
+        }
+
+        $this->attributes['coupon'] = $coupon->value;
         $this->attributes['netCostToPrint'] = ( $cost );
-        $this->attributes['tax'] = ( $cost * ( $this->departmentOwner->tax_rate - 1 ) );
+        $this->attributes['tax'] = ( ($this->attributes['netCostToPrint'] - $coupon->value) * ( $this->departmentOwner->tax_rate - 1 ) );
         // Add tax tax to total cost
-        $this->attributes['costToPrint'] = ( $cost * $this->departmentOwner->tax_rate );
+        if(($this->attributes['netCostToPrint'] - $coupon->value) > 0){
+            $this->attributes['costToPrint'] = ( ($this->attributes['netCostToPrint'] - $coupon->value) * $this->departmentOwner->tax_rate );
+        }else{
+            $this->attributes['costToPrint'] = 0;
+        }
         $this->attributes['timeToPrint'] = $this->timeToPrint();
+
     }
 
 
