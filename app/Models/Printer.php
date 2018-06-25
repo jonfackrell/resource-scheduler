@@ -56,7 +56,11 @@ class Printer extends Model implements Sortable
             $cost += ( $this->attributes['overtime_fee'] * ( (int)$params['time']/$this->attributes['overtime_start'] ) );
         }
         if(!is_null($code)){
-            $coupon = Coupon::where('code', $code)->first();
+            $coupon = Coupon::where('code', $code)->whereNull('redeemed_at')->first();
+            if(is_null($coupon)){
+                $coupon = new Coupon();
+                $coupon->value = 0;
+            }
         }else{
             $coupon = new Coupon();
             $coupon->value = 0;

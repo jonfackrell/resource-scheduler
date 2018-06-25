@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CostCalculator;
 use App\Events\PrintJobCreated;
 use App\Models\Color;
+use App\Models\Coupon;
 use App\Models\Filament;
 use App\Models\Messages;
 use App\Models\Printer;
@@ -13,6 +14,7 @@ use App\Models\Setting;
 use App\Models\Status;
 use App\Notifications\GenericNotification;
 use App\Notifications\QuestionNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Patron;
 use App\Models\Department;
@@ -195,6 +197,7 @@ class PatronController extends Controller
             return redirect()->to($previousUrl);
         }
 
+
         $printer = Printer::findOrFail(session('printer', $request->get('printer')));
         $filament = Filament::findOrFail(session('filament', $request->get('filament')));
         $printer->patronCostToPrint(['weight' => session('weight', $request->get('weight')), 'time' => session('time', $request->get('time'))], $filament, $request->get('coupon'));
@@ -215,6 +218,12 @@ class PatronController extends Controller
         $printjob->status = $department->initial_status;
 
         $printjob->save();
+
+        if($request->has('coupon')){
+            $coupon = Coupon::where('code', $request->get('coupon'))->first();
+            $coupon->redeemed_at = Carbon::now('America/Denver')->toDateTimeString();
+            $coupon->save();
+        }
 
         if($request->get('note')){
             $message = Messages::create([
