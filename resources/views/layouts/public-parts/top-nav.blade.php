@@ -23,10 +23,17 @@
                 <a href="{{ route('contact') }}" class="navbar-link">Contact Us</a>
             </li>
         </ul>
-        @if(strlen(auth()->guard('patrons')->user()->email) > 3)
+        @if(auth()->guard('patrons')->check())
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{{ route('register') }}" class="navbar-link">Hi {{ auth()->guard('patrons')->user()->first_name }}!</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
             </ul>
         @endif
