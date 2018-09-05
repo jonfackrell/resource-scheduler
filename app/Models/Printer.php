@@ -28,7 +28,7 @@ class Printer extends Model implements Sortable
      */
     public function filaments()
     {
-        return $this->belongsToMany('App\Models\Filament', 'printers_filaments', 'printer', 'filament');
+        return $this->belongsToMany('App\Models\Filament', 'printers_filaments', 'printer', 'filament')->withPivot('cost_per_gram', 'add_cost_per_gram', 'multiplier');
     }
 
     /**

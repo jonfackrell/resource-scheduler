@@ -91,6 +91,8 @@ Route::group(['middleware' => ['cas.auth', 'patron.auth', 'mail']], function() {
     Route::get('/contact', 'PublicController@contact')->name('contact');
     Route::post('/send-email', 'PublicController@sendEmail')->name('send-email');
 
+    Route::get('/quote', 'CostController@quote')->name('quote');
+
     // Workflow for choosing best-priced printer
     Route::get('/options', 'PatronController@options')->name('options');
     Route::get('/choose-printer', 'PatronController@choosePrinter')->name('choose-printer');
