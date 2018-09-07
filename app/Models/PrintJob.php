@@ -66,6 +66,14 @@ class PrintJob extends Model
     }
 
     /**
+     * Get the files.
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class)->orderBy('created_at', 'DESC');
+    }
+
+    /**
      * Get the printer.
      */
     public function selectedPrinter()
