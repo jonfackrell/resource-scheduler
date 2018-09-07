@@ -26,7 +26,7 @@ class AdminController extends Controller
         $dashboardStatuses = $statuses->where('dashboard_display', 1)->all();
         $printJobs = [];
         foreach($dashboardStatuses as $status){
-            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id);
+            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id)->orderBy('purpose', 'ASC');
             if($request->has('q')){
                 $printJobs[$status->id] = $printJobs[$status->id]->whereHas('owner', function($query) use ($request){
                     $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('inumber', $request->get('q'));
