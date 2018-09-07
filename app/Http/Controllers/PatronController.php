@@ -217,6 +217,12 @@ class PatronController extends Controller
         $department = Department::findOrFail($printer->departmentOwner->id);
         $printjob->status = $department->initial_status;
 
+        if($request->get('purpose') == 'academic'){
+            $printjob->purpose = 1;
+        }else{
+            $printjob->purpose = 2;
+        }
+
         $printjob->save();
 
         if($request->has('coupon')){
