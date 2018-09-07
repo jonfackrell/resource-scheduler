@@ -32,12 +32,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             {!! BootForm::text('Estimated Time', 'hours')->placeHolder('Hours')->required() !!}
-                        </div>
-                        <div class="col-md-6">
-                            {!! BootForm::text('&nbsp;', 'minutes')->placeHolder('Minutes')->required() !!}
+                            {!! BootForm::hidden('minutes')->value(0) !!}
                         </div>
                         <div class="col-md-6">
                             {!! BootForm::text('Weight (in grams)', 'weight')->required() !!}
+                        </div>
+                        <div class="col-md-6">
                             {!! BootForm::submit('Submit')->class('btn btn-primary') !!}
                         </div>
                     </div>
