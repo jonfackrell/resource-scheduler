@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\FilamentUsed;
+use App\Models\Department;
 use App\Models\EmailSetting;
 use App\Models\Messages;
 use App\Models\PrintJob;
@@ -130,6 +131,42 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin', ["#$printJob->status"]);
+
+    }
+
+    /**
+     * Reprint.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reprint(Request $request, $id)
+    {
+
+        $oldPrintJob = PrintJob::findOrFail($id);
+        $printJob = $oldPrintJob->replicate();
+
+        $department = Department::findOrFail($printJob->selectedPrinter->departmentOwner->id);
+
+        $printJob->status = $department->initial_status;
+
+        $printJob->push();
+
+        //load relations on EXISTING MODEL
+        $oldPrintJob->relations = [];
+        $oldPrintJob->load('files');
+        $relations = $oldPrintJob->getRelations();
+        //re-sync everything
+        foreach ($relations as $relation) {
+            foreach ($relation as $relationRecord) {
+                $newRelationship = $relationRecord->replicate();
+                $newRelationship->print_job_id = $printJob->id;
+                $newRelationship->push();
+            }
+        }
+
+        return redirect()->route('uploadfile.edit', ['printjob' => $printJob])->with(['success' => 'Print job copied successfully!']);
 
     }
 }

@@ -5,13 +5,20 @@
 @endsection
 
 @section('content')
+    <div style="float: right;">
+        <div style="margin-top: 25px;">
+            {!! BootForm::open()->action(route('admin.reprint', $printjob))->post() !!}
+            {!! BootForm::submit('Reprint')->class('btn btn-info') !!}
+            {!! BootForm::close() !!}
+        </div>
+    </div>
     {!! BootForm::open()->action(route('uploadfile.update', $printjob))->put()->enctype('multipart/form-data') !!}
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <h2>{{ $patron->first_name . ' ' . $patron->last_name}}</h2>
                 <a href="mailto:{{ $patron->email }}"><i class="fa fa-envelope"></i> {{ $patron->email }}</a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="col-md-6 tile">
                     <label class="control-label" for="cost">Cost</label>
                     <h2 id="cost">${!! money_format('%(#2n', $printjob->total_cost) !!}</h2>
@@ -22,6 +29,7 @@
                     @endif
                 </div>
             </div>
+
         </div>
 
         <br />
