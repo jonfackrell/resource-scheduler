@@ -7,6 +7,7 @@ use App\Events\PrintJobCreated;
 use App\Models\Color;
 use App\Models\Coupon;
 use App\Models\Filament;
+use App\Models\File;
 use App\Models\Messages;
 use App\Models\Printer;
 use App\Models\PrintJob;
@@ -241,13 +242,21 @@ class PatronController extends Controller
             ]);
         }
 
+        $printjob->save();
+
         if($request->hasFile('filename')) {
             $filename = $request->file('filename')->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
-            $printjob->filename = $filename;
-            $printjob->original_filename = $request->filename->getClientOriginalName();
+            $file = new File([
+                'filename' => $filename,
+                'original_filename' => $request->filename->getClientOriginalName(),
+            ]);
+            $printjob->files()->save($file);
+            $printjob->filename = $file->filename;
+            $printjob->original_filename = $file->original_filename;
+            $printjob->save();
         }
 
-        $printjob->save();
+
 
         event(new PrintJobCreated($printjob));
 

@@ -66,7 +66,7 @@
                                         <br />
                                         <span style="font-weight: bold;margin-right: 6px;">I#: </span>{{ $row->owner->inumber  or '' }}
                                         <br />
-                                        <small>{{ $row->created_at->toDayDateTimeString() }}</small>
+                                        <small>{{ $row->created_at->tz('America/Denver')->toDayDateTimeString() }}</small>
 
                                     </td>
                                     <td>

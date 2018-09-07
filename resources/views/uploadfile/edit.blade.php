@@ -76,48 +76,61 @@
         {!! BootForm::submit('Delete')->class('btn btn-danger pull-right')->style('margin-top: -38px;') !!}
     {!! BootForm::close() !!}
     <hr />
-    <div>
+    <div class="row">
+        <div class="col-md-8">
 
-        <h4>Recent Activity</h4>
+            <h4>Recent Activity</h4>
 
-        <!-- end of user messages -->
-        <ul class="messages">
-            @foreach($printjob->messages as $message)
-                <li>
-                    @if($message->source == 'EMPLOYEE')
-                        <img src="/img/themaclab_logo.png" class="avatar" alt="Employee">
-                        @php
-                            $author_name = $message->employee->first_name . ' ' . $message->employee->last_name;
-                        @endphp
-                    @else
-                        <img src="/img/graduate-student-avatar.png" class="avatar" alt="Patron">
-                        @php
-                            $author_name = $message->patron->first_name . ' ' . $message->patron->last_name;
-                        @endphp
-                    @endif
-                    <div class="message_date">
-                        <h3 class="date text-info">{{ $message->created_at->day }}</h3>
-                        <p class="month">{{ $message->created_at->format('M') }}</p>
-                    </div>
-                    <div class="message_wrapper">
-                        <h4 class="heading">{{ $author_name }}</h4>
-                        <p class="url">
-                            <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                            <a href="#">{{ $message->subject }}</a>
+            <!-- end of user messages -->
+            <ul class="messages">
+                @foreach($printjob->messages as $message)
+                    <li>
+                        @if($message->source == 'EMPLOYEE')
+                            <img src="/img/themaclab_logo.png" class="avatar" alt="Employee">
+                            @php
+                                $author_name = $message->employee->first_name . ' ' . $message->employee->last_name;
+                            @endphp
+                        @else
+                            <img src="/img/graduate-student-avatar.png" class="avatar" alt="Patron">
+                            @php
+                                $author_name = $message->patron->first_name . ' ' . $message->patron->last_name;
+                            @endphp
+                        @endif
+                        <div class="message_date">
+                            <h3 class="date text-info">{{ $message->created_at->day }}</h3>
+                            <p class="month">{{ $message->created_at->format('M') }}</p>
+                        </div>
+                        <div class="message_wrapper">
+                            <h4 class="heading">{{ $author_name }}</h4>
+                            <p class="url">
+                                <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                <a href="#">{{ $message->subject }}</a>
+                            </p>
+                            <blockquote class="message">
+                                @if($message->source == 'EMPLOYEE')
+                                    {!! $message->message !!}
+                                @else
+                                    {{ strip_tags($message->message) }}
+                                @endif
+                            </blockquote>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+            <!-- end of user messages -->
+        </div>
+        <div class="col-md-4">
+            <h4>Files</h4>
+            <ul class="to_do">
+                @foreach($printjob->files as $file)
+                    <li>
+                        <p>
+                            <span style="float: right;">{{ $file->created_at->tz('America/Denver')->toDayDateTimeString() }}</span>
+                            <a href="{{ route('download', $file->filename) }}">{{ $file->original_filename }}</a>
                         </p>
-                        <blockquote class="message">
-                            @if($message->source == 'EMPLOYEE')
-                                {!! $message->message !!}
-                            @else
-                                {{ strip_tags($message->message) }}
-                            @endif
-                        </blockquote>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-        <!-- end of user messages -->
-
-
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 @endsection
