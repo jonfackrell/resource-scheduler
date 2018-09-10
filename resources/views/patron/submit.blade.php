@@ -87,7 +87,7 @@
                 </div>
             @endif
             {!! BootForm::open()->action(route('submit'))->post()->enctype('multipart/form-data') !!}
-            <div class="x_content">
+            <label class="x_content">
                 <div class="flex">
                     <table class="table table-striped">
                         <thead></thead>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex">
+                <label class="flex">
                     {!! BootForm::file('3D Model File', 'filename')->required()->helpBlock('Please upload your model as a <a href="https://www.lulzbot.com/cura" target="_blank">Cura</a> project (.curaproject). You may also upload a .3mf or .stl, but none of the print settings will be saved in these formats.') !!}
                     @if(strlen($department->terms) > 0)
                         <div>
@@ -146,6 +146,7 @@
                             {!! BootForm::checkbox('<b>I agree</b>', 'accept_terms')->required()->inline() !!}
                         </div>
                     @endif
+
                     {!! BootForm::textarea('Note', "note")->style('height: 100px;') !!}
 
                     {!! BootForm::hidden('department')->value($printer->departmentOwner->id) !!}
@@ -157,6 +158,15 @@
                     @if(request()->has('coupon'))
                         {!! BootForm::hidden('coupon')->value(request()->get('coupon')) !!}
                     @endif
+                    <section>
+                        <legend>Purpose</legend>
+                        <label class="radio-inline">
+                            {!! BootForm::radio('Academic', "purpose")->value('academic')->required() !!}
+                        </label>
+                        <label class="radio-inline">
+                            {!! BootForm::radio('Personal', "purpose")->value('personal')->required() !!}
+                        </label>
+                    </section>
                     <br />
                     {!! BootForm::submit('Submit')->class('btn btn-block btn-success') !!}
                 </div>

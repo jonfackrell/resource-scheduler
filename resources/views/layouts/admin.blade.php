@@ -74,10 +74,9 @@
 
                             <div class="clearfix"></div>
 
-                            @include('layouts.parts.messages')
-
                         </div>
                         <div class="x_content">
+                            @include('layouts.parts.messages')
                             <br>
 
                             @yield('content')

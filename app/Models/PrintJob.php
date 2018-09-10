@@ -9,7 +9,7 @@ class PrintJob extends Model
 {
 
     protected $fillable = [
-        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed', 'weight', 'time', 'options'
+        'patron', 'color', 'filament', 'department', 'printer', 'original_filename', 'filename', 'completed', 'weight', 'time', 'options', 'purpose'
     ];
 
     public function getOptionsAttribute()
@@ -63,6 +63,14 @@ class PrintJob extends Model
     public function messages()
     {
         return $this->hasMany(Messages::class, 'printjob', 'id');
+    }
+
+    /**
+     * Get the files.
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class)->orderBy('created_at', 'DESC');
     }
 
     /**

@@ -42,6 +42,7 @@
                             <tr>
                                 <th></th>
                                 <th style="width: 20%">Patron Name</th>
+                                <th></th>
                                 <th>Printer</th>
                                 <th>Options</th>
                                 <th>Status</th>
@@ -65,7 +66,15 @@
                                         <br />
                                         <span style="font-weight: bold;margin-right: 6px;">I#: </span>{{ $row->owner->inumber  or '' }}
                                         <br />
-                                        <small>{{ $row->created_at->toDayDateTimeString() }}</small>
+                                        <small>{{ $row->created_at->tz('America/Denver')->toDayDateTimeString() }}</small>
+
+                                    </td>
+                                    <td>
+                                        @if($row->purpose == 1)
+                                            <span class="btn btn-primary btn-xs">Academic</span>
+                                        @else
+                                            <span class="btn btn-warning btn-xs">Personal</span>
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $row->selectedPrinter->name }}
@@ -128,7 +137,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="7">
                                 {!! $printJob->fragment(str_slug($key))->links() !!}
                             </td>
                         </tr>

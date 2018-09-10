@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\FilamentUsed;
+use App\Models\Department;
 use App\Models\EmailSetting;
 use App\Models\Messages;
 use App\Models\PrintJob;
@@ -28,7 +29,7 @@ class AdminController extends Controller
         $dashboardStatuses = $statuses->where('dashboard_display', 1)->all();
         $printJobs = [];
         foreach($dashboardStatuses as $status){
-            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id);
+            $printJobs[$status->id] = PrintJob::with('currentStatus', 'owner', 'getFilament')->where('status', $status->id)->orderBy('purpose', 'ASC');
             if($request->has('q')){
                 $printJobs[$status->id] = $printJobs[$status->id]->whereHas('owner', function($query) use ($request){
                     $query->where('first_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('q').'%')->orWhere('inumber', $request->get('q'));
@@ -132,6 +133,42 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin', ["#$printJob->status"]);
+
+    }
+
+    /**
+     * Reprint.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reprint(Request $request, $id)
+    {
+
+        $oldPrintJob = PrintJob::findOrFail($id);
+        $printJob = $oldPrintJob->replicate();
+
+        $department = Department::findOrFail($printJob->selectedPrinter->departmentOwner->id);
+
+        $printJob->status = $department->initial_status;
+
+        $printJob->push();
+
+        //load relations on EXISTING MODEL
+        $oldPrintJob->relations = [];
+        $oldPrintJob->load('files');
+        $relations = $oldPrintJob->getRelations();
+        //re-sync everything
+        foreach ($relations as $relation) {
+            foreach ($relation as $relationRecord) {
+                $newRelationship = $relationRecord->replicate();
+                $newRelationship->print_job_id = $printJob->id;
+                $newRelationship->push();
+            }
+        }
+
+        return redirect()->route('uploadfile.edit', ['printjob' => $printJob])->with(['success' => 'Print job copied successfully!']);
 
     }
 }

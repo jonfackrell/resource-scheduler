@@ -19,7 +19,6 @@ Route::group(['middleware' => ['auth', 'mail']], function() {
 
 	Route::get('/admin', 'AdminController@index')->name('admin');
 
-
 	Route::resource('/admin/department', 'DepartmentController');
 
     Route::post('/admin/filament/sort', 'FilamentController@sort')->name('filament.sort');
@@ -69,6 +68,7 @@ Route::group(['middleware' => ['auth', 'mail']], function() {
 
 
 	Route::resource('uploadfile', 'UploadFileController');
+    Route::post('/reprint/{id}', 'AdminController@reprint')->name('admin.reprint');
 
 	Route::resource('/patron', 'PatronController');
 

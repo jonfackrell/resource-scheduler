@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CostCalculator;
+use App\Models\File;
 use App\Models\Printer;
 use App\Models\Setting;
 use App\Models\Status;
@@ -124,12 +125,17 @@ class UploadFileController extends Controller
         if($request->hasFile('filename')) {
 
             $filename = $request->filename->store('public/upload/' . $printjob->created_at->year . '/' . $printjob->created_at->month);
-            
-            $printjob->filename = $filename;
-            $printjob->original_filename = $request->filename->getClientOriginalName();
+
+            $file = new File([
+                'filename' => $filename,
+                'original_filename' => $request->filename->getClientOriginalName(),
+            ]);
+            $printjob->files()->save($file);
+            $printjob->filename = $file->filename;
+            $printjob->original_filename = $file->original_filename;
+            $printjob->save();
         }
 
-        $printjob->save();
 
         return redirect()->route('admin', ["#$printjob->status"]);
 
