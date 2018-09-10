@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,6 +36,29 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    
+    /**
+     * Logout user and display logout screen
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        
+        if(auth()->guard()->check()){
+            \Auth::guard()->logout();
+            \Auth::guard('patrons')->logout();
+            $request->session()->invalidate();
+            return redirect()->route('admin');
+        }else{
+            \Auth::guard('patrons')->logout();
+            $request->session()->invalidate();
+            return redirect()->to('https://secure.byui.edu/cas/logout');
+        }
+        
     }
 
 }
