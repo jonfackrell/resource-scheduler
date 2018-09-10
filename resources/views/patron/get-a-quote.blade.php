@@ -7,14 +7,15 @@
 @section('content')
 	<div id="app" class="row">
         <div class="col-md-8">
-			{!! BootForm::open()->action(route('upload'))->get() !!}
+			{!! BootForm::open()->action(route('choose-printer'))->get() !!}
 			{!! BootForm::select('Filament', 'filament')->attribute('v-model:value', 'filament')
                             ->options($filaments->pluck('name', 'id'))                           
                             ->helpBlock('This page will automatically reload if you select a new filament.')
              !!}
-			{!! BootForm::text('Estimated Time', 'time')->placeHolder('Nearest Hour')->required()->attribute('v-model:value', 'time') !!}
+			{!! BootForm::text('Estimated Time', 'hours')->placeHolder('Nearest Hour')->required()->attribute('v-model:value', 'time') !!}
 			{!! BootForm::text('Weight (in grams)', 'weight')->required()->attribute('v-model:value', 'weight') !!}
 			{!! BootForm::submit('Upload Your Print')->class('btn btn-block btn-success') !!}
+			{!! BootForm::hidden('minutes')->value(0) !!}
 			{!! BootForm::close() !!}
 		</div>
 		<div class="col-md-4"> 
