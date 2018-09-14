@@ -31,7 +31,7 @@
             @foreach($departments as $department)
                 <tr data-id="{{ $department->id }}">
                     <th>
-                        <a href="/admin/department/{{ $department->id }}/edit">{{ $department->name }}</a>
+                        <a href="/3d/admin/department/{{ $department->id }}/edit">{{ $department->name }}</a>
                     </th>
                     <td>
                         {{ $department->created_at->toDayDateTimeString() }}
@@ -63,14 +63,14 @@
 
 
 @push('styles')
-    <link rel="stylesheet" href="/css/summernote.css" />
+    <link rel="stylesheet" href="/3d/css/summernote.css" />
     <style>
         .note-group-select-from-files{display: none;}
     </style>
 @endpush
 
 @push('custom-scripts')
-    <script src="/js/summernote.js"></script>
+    <script src="/3d/js/summernote.js"></script>
     <script>
         $(function(){
 

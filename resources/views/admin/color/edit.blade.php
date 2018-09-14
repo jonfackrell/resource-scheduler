@@ -19,7 +19,7 @@
 
 @push('custom-scripts')
 	<!-- Bootstrap Colorpicker -->
-	<script src="/js/bootstrap-colorpicker.min.js"></script>
+	<script src="/3d/js/bootstrap-colorpicker.min.js"></script>
 	<script>
         $(function() {
             $('#cp2').colorpicker();
