@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('admin')->group(function () {
+Route::prefix('3d')->group(function () {
 
 
     Route::group(['middleware' => ['mail']], function() {
