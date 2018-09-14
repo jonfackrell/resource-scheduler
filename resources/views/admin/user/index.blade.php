@@ -31,7 +31,7 @@
             @foreach($users as $user)
                 <tr data-id="{{ $user->id }}">
                     <th>
-                        <a href="/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
+                        <a href="/3d/admin/user/{{ $user->id }}/edit">{{ $user->first_name }} {{ $user->last_name }}</a>
                     </th>
                     <td>
                         {{ $user->role->label or '' }}

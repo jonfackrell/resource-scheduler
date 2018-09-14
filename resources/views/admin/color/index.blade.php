@@ -50,18 +50,18 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="/css/jquery-sortable.css" />
+    <link rel="stylesheet" href="/3d/css/jquery-sortable.css" />
 @endpush
 
 @push('custom-scripts')
     <!-- Bootstrap Colorpicker -->
-    <script src="/js/bootstrap-colorpicker.min.js"></script>
+    <script src="/3d/js/bootstrap-colorpicker.min.js"></script>
     <script>
         $(function() {
             $('#cp2').colorpicker();
         });
     </script>
-    <script src="/js/jquery-sortable.min.js"></script>
+    <script src="/3d/js/jquery-sortable.min.js"></script>
     <script>
         $(function(){
 

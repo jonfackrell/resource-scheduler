@@ -31,10 +31,10 @@
             @foreach($notifications as $notification)
                 <tr data-id="{{ $notification->id }}">
                     <th>
-                        <a href="/admin/notification/{{ $notification->id }}/edit">{{ $notification->display_name }}</a>
+                        <a href="/3d/admin/notification/{{ $notification->id }}/edit">{{ $notification->display_name }}</a>
                     </th>
                     <td>
-                        <a href="/admin/notification/{{ $notification->id }}/edit">{{ $notification->subject }}</a>
+                        <a href="/3d/admin/notification/{{ $notification->id }}/edit">{{ $notification->subject }}</a>
                     </td>
                     <td>
                         {!! BootForm::open()->action(route('notification.destroy', $notification->id))->delete() !!}
@@ -57,16 +57,16 @@
 @endsection
 
 @push('styles')
-	<link rel="stylesheet" href="/css/jquery-sortable.css" />
-    <link rel="stylesheet" href="/css/summernote.css" />
+	<link rel="stylesheet" href="/3d/css/jquery-sortable.css" />
+    <link rel="stylesheet" href="/3d/css/summernote.css" />
     <style>
         .note-group-select-from-files{display: none;}
     </style>
 @endpush
 
 @push('custom-scripts')
-	<script src="/js/jquery-sortable.min.js"></script>
-    <script src="/js/summernote.js"></script>
+	<script src="/3d/js/jquery-sortable.min.js"></script>
+    <script src="/3d/js/summernote.js"></script>
 	<script>
 		$(function(){
 

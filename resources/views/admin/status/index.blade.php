@@ -108,11 +108,11 @@
 @endsection
 
 @push('styles')
-	<link rel="stylesheet" href="/css/jquery-sortable.css" />
+	<link rel="stylesheet" href="/3d/css/jquery-sortable.css" />
 @endpush
 
 @push('custom-scripts')
-	<script src="/js/jquery-sortable.min.js"></script>
+	<script src="/3d/js/jquery-sortable.min.js"></script>
 	<script>
 		$(function(){
 
