@@ -10,25 +10,25 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap -->
-    <link href="/3d/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="/3d/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="/3d/css/nprogress.css" rel="stylesheet">
+    <link href="/css/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="/3d/css/green.css" rel="stylesheet">
+    <link href="/css/green.css" rel="stylesheet">
 
     <!-- bootstrap-progressbar -->
-    <link href="/3d/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="/3d/css/jqvmap.min.css" rel="stylesheet"/>
+    <link href="/css/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
-    <link href="/3d/css/daterangepicker.css" rel="stylesheet">
+    <link href="/css/daterangepicker.css" rel="stylesheet">
     <!-- Bootstrap Colorpicker -->
-    <link href="/3d/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="/3d/css/custom.min.css" rel="stylesheet">
+    <link href="/css/custom.min.css" rel="stylesheet">
 
     <style>
         .navbar{
@@ -98,47 +98,47 @@
 </div>
 
 <!-- jQuery -->
-<script src="/3d/js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/3d/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="/3d/js/fastclick.js"></script>
+<script src="/js/fastclick.js"></script>
 <!-- NProgress -->
-<script src="/3d/js/nprogress.js"></script>
+<script src="/js/nprogress.js"></script>
 <!-- Chart.js -->
-<script src="/3d/js/Chart.min.js"></script>
+<script src="/js/Chart.min.js"></script>
 <!-- gauge.js -->
-<script src="/3d/js/gauge.min.js"></script>
+<script src="/js/gauge.min.js"></script>
 <!-- bootstrap-progressbar -->
-<script src="/3d/js/bootstrap-progressbar.min.js"></script>
+<script src="/js/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->
-<script src="/3d/js/icheck.min.js"></script>
+<script src="/js/icheck.min.js"></script>
 <!-- Skycons -->
-<script src="/3d/js/skycons.js"></script>
+<script src="/js/skycons.js"></script>
 <!-- Flot -->
-<script src="/3d/js/jquery.flot.js"></script>
-<script src="/3d/js/jquery.flot.pie.js"></script>
-<script src="/3d/js/jquery.flot.time.js"></script>
-<script src="/3d/js/jquery.flot.stack.js"></script>
-<script src="/3d/js/jquery.flot.resize.js"></script>
+<script src="/js/jquery.flot.js"></script>
+<script src="/js/jquery.flot.pie.js"></script>
+<script src="/js/jquery.flot.time.js"></script>
+<script src="/js/jquery.flot.stack.js"></script>
+<script src="/js/jquery.flot.resize.js"></script>
 <!-- Flot plugins -->
-<script src="/3d/js/jquery.flot.orderBars.js"></script>
-<script src="/3d/js/jquery.flot.spline.min.js"></script>
-<script src="/3d/js/curvedLines.js"></script>
+<script src="/js/jquery.flot.orderBars.js"></script>
+<script src="/js/jquery.flot.spline.min.js"></script>
+<script src="/js/curvedLines.js"></script>
 <!-- DateJS -->
-<script src="/3d/js/date.js"></script>
+<script src="/js/date.js"></script>
 <!-- JQVMap -->
-<script src="/3d/js/jquery.vmap.js"></script>
-<script src="/3d/js/jquery.vmap.world.js"></script>
-<script src="/3d/js/jquery.vmap.sampledata.js"></script>
+<script src="/js/jquery.vmap.js"></script>
+<script src="/js/jquery.vmap.world.js"></script>
+<script src="/js/jquery.vmap.sampledata.js"></script>
 <!-- bootstrap-daterangepicker -->
-<script src="/3d/js/moment.min.js"></script>
-<script src="/3d/js/daterangepicker.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/daterangepicker.js"></script>
 
 @stack('custom-scripts')
 
 <!-- Custom Theme Scripts -->
-<script src="/3d/js/custom.min.js"></script>
+<script src="/js/custom.min.js"></script>
 
 
 @stack('scripts')
